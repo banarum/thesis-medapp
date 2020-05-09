@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/fragment_treatment">
+
+    <ImageView
+        android:id="@+id/treatmentNoDeviceConnectionImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_bluetooth_disabled"
+        android:visibility="gone"
+        tools:visibility="gone" />
+
+    <TextView
+        android:id="@+id/treatmentNoDeviceConnectionTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/treatment_no_device_connection_margin_top"
+        android:alpha="0.6"
+        android:gravity="center_horizontal"
+        android:paddingEnd="@dimen/treatment_padding_side"
+        android:paddingStart="@dimen/treatment_padding_side"
+        android:text="@string/treatment_no_device_connection"
+        android:textColor="@color/white"
+        android:textSize="@dimen/treatment_no_device_connection_title_text_size"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/treatmentNoDeviceConnectionImage"
+        tools:visibility="gone" />
+
+    <Button
+        android:id="@+id/treatmentConnectButton"
+        style="@style/AuthButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_big"
+        android:text="@string/treatment_connect"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/treatmentNoDeviceConnectionTitle"
+        tools:visibility="gone" />
+</merge>

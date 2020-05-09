@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/auth_padding_bottom"
+    android:paddingEnd="@dimen/auth_side_padding"
+    android:paddingStart="@dimen/auth_side_padding">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="@dimen/auth_image_size"
+        android:layout_height="@dimen/auth_image_size"
+        android:background="@drawable/bg_auth_image"
+        app:layout_constraintBottom_toTopOf="@+id/imageGuideline"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/imageGuideline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/auth_edit_texts_guideline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.53" />
+
+    <EditText
+        android:id="@+id/username"
+        style="@style/AuthEditText"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/auth_edit_text_height"
+        android:hint="@string/auth_username_hint"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:nextFocusDown="@+id/password"
+        app:layout_constraintTop_toBottomOf="@+id/auth_edit_texts_guideline" />
+
+    <EditText
+        android:id="@+id/password"
+        style="@style/AuthEditText"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/auth_edit_text_height"
+        android:layout_marginTop="@dimen/auth_username_edit_text_margin_bottom"
+        android:hint="@string/auth_password_hint"
+        android:imeOptions="actionSend"
+        android:inputType="textPassword"
+        android:nextFocusDown="@+id/loginButton"
+        app:layout_constraintTop_toBottomOf="@+id/username" />
+
+    <TextView
+        android:id="@+id/forgotPassword"
+        style="@style/ClickableTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/padding_big"
+        android:paddingTop="@dimen/auth_forgot_password_padding_top"
+        android:text="@string/auth_forgot_password"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password" />
+
+    <Button
+        android:id="@+id/loginButton"
+        style="@style/AuthButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/auth_login"
+        app:layout_constraintTop_toBottomOf="@+id/forgotPassword" />
+
+    <TextView
+        android:id="@+id/noAccount"
+        style="@style/ClickableTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/auth_sign_up_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
+
+

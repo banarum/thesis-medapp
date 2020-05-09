@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#6e87f6</color>
+    <color name="colorPrimaryDark">#335bc3</color>
+    <color name="colorAccent">@color/colorPrimary</color>
+    <color name="white">#fff</color>
+    <color name="black">#000</color>
+    <color name="red">#d0021b</color>
+
+    <color name="bottom_nav_bg_color_checked">#ffffff</color>
+    <color name="bottom_nav_icon_checked">@color/colorPrimary</color>
+    <color name="bottom_nav_icon_unchecked">#757575</color>
+
+    <color name="brownish_grey">#666666</color>
+
+    <!--auth-->
+    <color name="auth_edit_text_bg">#99ffffff</color>
+    <color name="auth_register_edit_text_hint_color">#61000000</color>
+    <color name="bg_auth_button">#b8e986</color>
+    <color name="bg_header">#efeff4</color>
+    <color name="auth_register_title">#de000000</color>
+    <color name="subtitle">#8b000000</color>
+
+    <!--settings-->
+    <color name="settings_title_text_color">#de000000</color>
+    <color name="settings_subtitle">#8b000000</color>
+    <color name="settings_dialog_message_title">#8b000000</color>
+    <color name="settings_dialog_message_text">#8a000000</color>
+
+    <!--syncTime-->
+    <color name="sync_text">#4a4a4a</color>
+    <color name="settings_dialog_cancel_button_text_color">#9b9b9b</color>
+    <color name="settings_dialog_ok_button_text_color">@color/colorPrimary</color>
+
+    <!--profile-->
+    <color name="profile_user_info_color">#9b9b9b</color>
+    <color name="profile_edit_icon_bg">#c5cffb</color>
+    <color name="bg_profile_button">@color/white</color>
+    <color name="grey_26">#42000000</color>
+    <color name="bg_profile_pain_level_line">@color/grey_26</color>
+    <color name="profile_graph_grid_horizontal">#99ffffff</color>
+    <color name="profile_graph_right">#ff7443</color>
+    <color name="profile_graph_left">@color/white</color>
+    <color name="profile_button_pressed">#ddd</color>
+    <color name="profile_axis_values">#ccffffff</color>
+    <color name="profile_pain_level_icon_bg">#33ffffff</color>
+    <color name="profile_pain_level_text_color">#80ffffff</color>
+    <color name="sync_progress_bg">#1a6e87f6</color>
+    <color name="treatment_date_bg">#efeff4</color>
+
+    <!--program-->
+    <color name="program_receipt_divider">#1e000000</color>
+    <color name="edit_text_hint_text">#61000000</color>
+    <color name="edit_text_bottom_line">#1e000000</color>
+
+</resources>

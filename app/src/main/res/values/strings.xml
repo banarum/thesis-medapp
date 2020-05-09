@@ -1,0 +1,175 @@
+<resources>
+    <string name="app_name">Луо менеджер</string>
+
+
+    <!--Error messages-->
+    <string name="unknown_error">Unknown error</string>
+    <string name="network_error">Network error</string>
+    <string name="not_modified_error">304 Not Modified</string>
+    <string name="bad_request_error">400 Bad Request</string>
+    <string name="unauthorized_error">401 Unauthorized</string>
+    <string name="forbidden_error">403 Forbidden</string>
+    <string name="not_found_error">404 Not Found</string>
+    <string name="method_not_allowed_error">405 Method Not Allowed</string>
+    <string name="conflict_error">409 Conflict</string>
+    <string name="unprocessable_error">422 Unprocessable</string>
+    <string name="server_error_error">500 Server Error</string>
+
+    <!--main-->
+    <string name="profile_title">Профиль</string>
+    <string name="treatment_title">Лечение</string>
+    <string name="settings_title">Настройки</string>
+
+    <!--auth-->
+    <string name="auth_forgot_password">Забыли пароль?</string>
+    <string name="auth_login">Войти</string>
+    <string name="auth_sign_up_text"><u>Нет аккаунта? Зарегистрируйтесь!</u></string>
+    <string name="auth_password_hint">Password</string>
+    <string name="auth_username_hint">Username</string>
+    <string name="error_invalid_username">Введите корректное имя</string>
+    <string name="error_invalid_password">Пароль не может быть меньше 7 символов</string>
+    <string name="auth_forgot_password_text">Введите свой емейл адрес и мы вышлем вам инстукции по смене пароля</string>
+    <string name="auth_forgot_password_send_button_text">Отправить</string>
+    <string name="error_invalid_email">Введите корректный e-mail</string>
+    <string name="auth_password_sent">Пароль отправлен на указанный e-mail</string>
+    <string name="back_title">Назад</string>
+    <string name="auth_register_email_hint">Email</string>
+    <string name="auth_register_password_hint">Пароль</string>
+    <string name="auth_register_name_hint">Имя</string>
+    <string name="auth_register_surname_hint">Фамилия</string>
+    <string name="auth_register_gender_title">Пол</string>
+    <string name="auth_register_birthdate_title">Возраст</string>
+    <string name="auth_register_height_title">Рост</string>
+    <string name="auth_register_weight_title">Вес</string>
+    <string name="auth_register_default">Не выбрано</string>
+    <string name="auth_register">Далее</string>
+    <string name="auth_gender_male">Мужской</string>
+    <string name="auth_gender_female">Женский</string>
+    <string name="auth_forgot_password_email_hint">mladoe@mail.com</string>
+    <string name="height_measure_format">%s см.</string>
+    <string name="weight_measure_format">%s кг.</string>
+
+    <!--treatment-->
+    <string name="treatment_schedule">Расписание</string>
+    <string name="treatment_start">СТАРТ</string>
+    <string name="treatment_stop">СТОП</string>
+    <string name="treatment_no_device_connection">Нет подключения к устройству подачи импульса</string>
+
+    <!--settings-->
+    <string name="settings_device_title">Устройство</string>
+    <string name="settings_locale_title">Язык локализации</string>
+    <string name="settings_pushes_title">Разрешить отправку push</string>
+    <string name="settings_logout_title">Выйти</string>
+    <string name="profile_edit_dialog_ok">OK</string>
+    <string name="locale">Русский</string>
+
+    <!--syncTime-->
+    <string name="sync_title">Синхронизация</string>
+    <string name="sync_text">Убедитесь, что устройство подачи импульса включено и находится рядом с устройством</string>
+    <string name="sync_progress">0\%</string>
+    <string name="sync_progress_format">%s\%</string>
+    <string name="treatment_connect">Подключиться</string>
+
+    <!--settings-->
+    <string name="settings_logout_dialog_title">Внимание</string>
+    <string name="settings_logout_dialog_message">Вы уверены, что хотите выйти из аккаунта?</string>
+    <string name="settings_logout_dialog_ok">Да</string>
+    <string name="settings_logout_dialog_cancel">Отмена</string>
+    <string name="settings_unbind_device_no_devices">не подключено</string>
+    <string name="settings_unbind_device_dialog_title">Внимание</string>
+    <string name="settings_unbind_device_dialog_message_format">Вы уверены, что хотите отвязать утройство %s от своего телефона?</string>
+    <string name="settings_unbind_device_dialog_ok">Отвязать</string>
+    <string name="settings_unbind_device_dialog_cancel">Отмена</string>
+
+    <!--profile-->
+    <string name="profile_data_format">%s лет, %s см, %s кг</string>
+    <string name="profile_feels_title">Чувствуете ли вы улучшение?</string>
+    <string name="profile_feels_no">Нет</string>
+    <string name="profile_feels_yes">Да</string>
+    <string name="profile_feels_undefined">Не знаю</string>
+    <string name="profile_feels_thanks">Спасибо за ваш ответ! Вы помогаете нам стать лучше!</string>
+    <string name="profile_pain_level_title">Оцените уровень боли сегодня</string>
+    <string name="profile_pain_level_text">Где 0 - не испытываю боли, 10 - сильная боль</string>
+    <string name="profile_myo_graph_title">Миограмма</string>
+    <string name="profile_myo_graph_right">Правая</string>
+    <string name="profile_myo_graph_left">Левая</string>
+    <string name="profile_myo_graph_no_values">Нет данных</string>
+    <string name="profile_validate_error">Заполните все поля</string>
+
+    <!--device_search-->
+    <string name="device_search_title">Поиск</string>
+    <string name="device_search_no_bt_text">Не включен блютус. Включите блютус в настройках вашего телефона</string>
+    <string name="device_search_no_bt_open_settings">Перейти в настройки</string>
+    <string name="device_search_in_progress_text">Убедитесь, что устройство подачи импульса включено и находится рядом с устройством</string>
+    <string name="device_search_success_text_format">Успешно создана пара с устройством\n%s</string>
+    <string name="device_search_success_another_device_text">У меня другое устройство</string>
+    <string name="device_search_next">Далее</string>
+    <string name="device_search_done">Готово</string>
+    <string name="device_search_data_dialog_title">Внимание</string>
+    <string name="device_search_data_dialog_message">После подключения будут собраны следующие данные:
+расписание лечения, данные миограммы</string>
+    <string name="device_search_data_dialog_decline">Отклонить</string>
+    <string name="device_search_data_dialog_accept">Принять</string>
+    <string name="device_search_few_devices">Было найдено несколько устройств</string>
+    <string name="treatment_program">Программа</string>
+
+    <!--program-->
+    <string name="program_title">Программа</string>
+    <string name="program_search">Поиск</string>
+    <string name="program_new_receipt_button">+ Создать новый рецепт</string>
+    <string name="program_dialog_new_receipt">Создать новый</string>
+    <string name="program_dialog_download">Скачать</string>
+
+    <string name="create_receipt_title">Новый рецепт</string>
+    <string name="create_receipt_name">Введите название</string>
+    <string name="create_receipt_schedule">Расписание</string>
+    <string name="create_receipt_type">Тип программы</string>
+    <string name="create_receipt_execution_time">Длительность сеанса = %s мин</string>
+    <string name="create_receipt_start">Начало</string>
+    <string name="create_receipt_end">Конец</string>
+    <string name="create_receipt_repeat">Повтор</string>
+    <!--types-->
+    <string name="create_receipt_type_manual">1. Ручной старт/стоп</string>
+    <string name="create_receipt_type_lite">2. Облегчённая программа (3 раза в день)</string>
+    <string name="create_receipt_type_standard">3. Стандартная программа (5 раза в день)</string>
+    <string name="create_receipt_type_hard">4. Усиленная программа  (8 раза в день)</string>
+
+    <string name="create_receipt_channel_1">Канал 1</string>
+    <string name="create_receipt_channel_2">Канал 2</string>
+    <string name="create_receipt_channel_status">Статус канала</string>
+    <string name="create_receipt_pulse_form">Форма импульса</string>
+    <string name="create_receipt_pulse_form_not_chosen">Не выбрано</string>
+    <string name="create_receipt_bipolar_regime">Двухполярный режим</string>
+    <string name="create_receipt_amperage_format">Величина тока = %s mA</string>
+    <string name="create_receipt_pulse_durability_format">Длительность импульса = %s мс</string>
+    <string name="create_receipt_pulse_frequency_format">Частота импульса = %s Гц</string>
+    <string name="create_receipt_hint">Введите название</string>
+    <string name="create_receipt_error_validate">Введите все поля</string>
+
+    <string name="download_receipt_title">Скачать рецепт</string>
+    <string name="ready">Готово</string>
+    <string name="settings_devs_letter_title">Связаться с разработчиком</string>
+    <string name="faq">Руководство</string>
+    <string name="error_time">Некорректное время</string>
+
+    <string name="error_device_does_not_support_bluetooth">Устройство не поддерживает Bluetooth LE</string>
+    <string name="error_bluetooth_off">Включите Bluetooth</string>
+    <string name="error_device">Ошибка устройства</string>
+    <string name="error_device_connection">Устройство не подключено</string>
+    <string name="today">Сегодня</string>
+    <string name="yesterday">Вчера</string>
+    <string name="time_sec_format">%d сек</string>
+    <string name="time_min_format">%d мин</string>
+    <string name="time_hour_format">%d ч</string>
+    <string name="download_program_empty">Нет программ</string>
+
+    <!--device errors-->
+    <string name="device_error_1">Json syntax error</string>
+    <string name="device_error_2">bad command</string>
+    <string name="device_error_3">bad command argument</string>
+    <string name="device_error_4">Invalid datetime</string>
+    <string name="device_error_5">Invalid treatment task</string>
+    <string name="device_error_6">Invalid treatment task</string>
+    <string name="device_error_10">Writing error (try reboot device)</string>
+
+</resources>

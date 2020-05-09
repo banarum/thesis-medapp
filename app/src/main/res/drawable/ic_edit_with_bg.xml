@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@color/profile_edit_icon_bg" />
+    <item
+        android:bottom="@dimen/profile_edit_icon_padding"
+        android:drawable="@drawable/ic_edit"
+        android:left="@dimen/profile_edit_icon_padding"
+        android:right="@dimen/profile_edit_icon_padding"
+        android:top="@dimen/profile_edit_icon_padding" />
+
+</layer-list>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/fragment_treatment">
+
+    <TextView
+        android:id="@+id/treatmentStopTimeTextView"
+        style="@style/ClickableTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/treatment_stop_margin_top"
+        android:includeFontPadding="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/treatmentStartImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="2:34"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/treatmentStartImageView"
+        android:layout_width="@dimen/treatment_start_size"
+        android:layout_height="@dimen/treatment_start_size"
+        android:layout_marginTop="@dimen/treatment_start_margin_top"
+        android:background="@drawable/ic_treatment_start"
+        android:cropToPadding="false"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/treatmentStartTextView"
+        style="@style/ClickableTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:text="@string/treatment_start"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/treatmentStartImageView"
+        tools:visibility="visible" />
+</merge>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/fragment_auth_registration">
+
+    <EditText
+        android:id="@+id/auth_register_email_edit_text"
+        style="@style/AuthRegisterEditText"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/auth_edit_text_height"
+        android:hint="@string/auth_register_email_hint"
+        android:imeOptions="actionNext"
+        android:inputType="textEmailAddress"
+        android:nextFocusDown="@+id/auth_register_password_edit_text" />
+
+    <EditText
+        android:id="@+id/auth_register_password_edit_text"
+        style="@style/AuthRegisterEditText"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/auth_edit_text_height"
+        android:layout_marginTop="@dimen/auth_register_edit_text_margin_bottom"
+        android:hint="@string/auth_register_password_hint"
+        android:imeOptions="actionNext"
+        android:inputType="textPassword"
+        android:nextFocusDown="@+id/auth_register_name_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/auth_register_email_edit_text" />
+
+    <EditText
+        android:id="@+id/auth_register_name_edit_text"
+        style="@style/AuthRegisterEditText"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/auth_edit_text_height"
+        android:layout_marginTop="@dimen/auth_register_edit_text_margin_bottom"
+        android:hint="@string/auth_register_name_hint"
+        android:imeOptions="actionNext"
+        android:inputType="textPersonName|textCapSentences"
+        android:nextFocusDown="@+id/auth_register_surname_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/auth_register_password_edit_text" />
+
+    <EditText
+        android:id="@+id/auth_register_surname_edit_text"
+        style="@style/AuthRegisterEditText"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/auth_edit_text_height"
+        android:layout_marginTop="@dimen/auth_register_edit_text_margin_bottom"
+        android:hint="@string/auth_register_surname_hint"
+        android:imeOptions="actionNext"
+        android:inputType="textPersonName|textCapSentences"
+        android:nextFocusDown="@+id/genderTitle"
+        app:layout_constraintTop_toBottomOf="@+id/auth_register_name_edit_text" />
+</merge>

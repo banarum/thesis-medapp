@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <include layout="@layout/toolbar"/>
+
+    <android.support.constraint.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/sync_padding_side"
+        android:paddingTop="@dimen/sync_padding_top"
+        android:paddingEnd="@dimen/sync_padding_side">
+
+        <TextView
+            android:id="@+id/syncTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/sync_title"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/syncText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingTop="@dimen/padding_big"
+            android:text="@string/sync_text"
+            android:textColor="@color/sync_text"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/syncTitle"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/syncProgressTopGuideline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.3"/>
+
+        <com.koenigmed.luomanager.presentation.ui.widget.SyncProgressView
+            android:id="@+id/syncProgressView"
+            android:layout_width="@dimen/sync_progress_size"
+            android:layout_height="@dimen/sync_progress_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/syncProgressTopGuideline"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>

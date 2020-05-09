@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/padding_big"
+    tools:showIn="@layout/fragment_profile">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profileFaqImageView"
+        android:layout_width="@dimen/profile_edit_size"
+        android:layout_height="@dimen/profile_edit_size"
+        android:layout_marginEnd="@dimen/profile_edit_margin_start"
+        android:src="@drawable/ic_faq_with_bg"
+        app:layout_constraintBottom_toBottomOf="@+id/profileUserImageView"
+        app:layout_constraintEnd_toStartOf="@+id/profileUserImageView"
+        app:layout_constraintTop_toTopOf="@+id/profileUserImageView" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profileUserImageView"
+        android:layout_width="@dimen/profile_image_size"
+        android:layout_height="@dimen/profile_image_size"
+        android:src="@drawable/ic_user"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profileEditImageView"
+        android:layout_width="@dimen/profile_edit_size"
+        android:layout_height="@dimen/profile_edit_size"
+        android:layout_marginStart="@dimen/profile_edit_margin_start"
+        android:src="@drawable/ic_edit_with_bg"
+        app:layout_constraintBottom_toBottomOf="@+id/profileUserImageView"
+        app:layout_constraintStart_toEndOf="@+id/profileUserImageView"
+        app:layout_constraintTop_toTopOf="@+id/profileUserImageView" />
+
+    <TextView
+        android:id="@+id/profileUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_medium"
+        android:textColor="@color/black"
+        android:textSize="@dimen/profile_user_name_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileUserImageView"
+        tools:text="Иван Иванов" />
+
+    <TextView
+        android:id="@+id/profileUserInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/profile_user_info_margin_top"
+        android:textColor="@color/profile_user_info_color"
+        android:textSize="@dimen/text_size_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileUserName"
+        tools:text="36 лет, 185 см, 98 кг" />
+
+</android.support.constraint.ConstraintLayout>
+
+            

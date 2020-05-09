@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/deviceSearchSuccessLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingEnd="@dimen/device_search_side_padding"
+    android:paddingStart="@dimen/device_search_side_padding"
+    android:paddingBottom="@dimen/device_search_no_bt_content_padding_bottom"
+    android:visibility="gone"
+    app:layout_constraintTop_toBottomOf="@+id/device_search_title"
+    tools:visibility="visible">
+
+    <TextView
+        android:id="@+id/deviceSearchSuccessText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingEnd="@dimen/device_search_side_padding"
+        android:paddingStart="@dimen/device_search_side_padding"
+        android:textColor="@color/sync_text"
+        android:textSize="@dimen/text_size_small"
+        tools:text="@string/device_search_success_text_format"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/deviceSearchSuccessImageView"
+        android:layout_width="@dimen/device_search_success_image_view_width"
+        android:layout_height="@dimen/device_search_success_image_view_height"
+        app:layout_constraintTop_toBottomOf="@+id/deviceSearchSuccessText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/ic_device_search_pair_success"/>
+
+    <TextView
+        android:id="@+id/deviceSearchSuccessAnotherDeviceTextView"
+        style="@style/ClickableTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/device_search_success_another_device_text"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_small"
+        app:layout_constraintTop_toBottomOf="@+id/deviceSearchSuccessImageView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

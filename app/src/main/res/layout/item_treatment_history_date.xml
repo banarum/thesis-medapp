@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/treatmentDateTextView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/treatment_date_bg"
+    android:paddingBottom="9dp"
+    android:paddingEnd="15dp"
+    android:paddingStart="15dp"
+    android:paddingTop="14dp"
+    android:textColor="@color/brownish_grey"
+    tools:text="Сегодня" />

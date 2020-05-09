@@ -1,0 +1,1252 @@
+[
+  {
+    "id": "1",
+    "name": "Релакс",
+    "executionMethodId": 1,
+    "executionTimeS": 1200,
+    "recommendation": "расслабление после физической работы",
+    "recommendationFull": "",
+    "startTimes": [
+      "09:30:00",
+      "16:00:00",
+      "23:59:00"
+    ],
+    "myoProgramMyoTask": [
+      {
+        "id": 1,
+        "myoTaskId": 6,
+        "myoProgramId": 1,
+        "executionOrder": 1,
+        "executionTimeS": 120,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 6,
+          "name": "меандр-10-1",
+          "current": 10,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 2,
+        "myoTaskId": 6,
+        "myoProgramId": 1,
+        "executionOrder": 1,
+        "executionTimeS": 120,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 6,
+          "name": "меандр-10-1",
+          "current": 10,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 3,
+        "myoTaskId": 7,
+        "myoProgramId": 1,
+        "executionOrder": 2,
+        "executionTimeS": 180,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 7,
+          "name": "меандр-10-2",
+          "current": 10,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 4,
+        "myoTaskId": 7,
+        "myoProgramId": 1,
+        "executionOrder": 2,
+        "executionTimeS": 180,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 7,
+          "name": "меандр-10-2",
+          "current": 10,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 5,
+        "myoTaskId": 8,
+        "myoProgramId": 1,
+        "executionOrder": 3,
+        "executionTimeS": 300,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 8,
+          "name": "меандр-10-3",
+          "current": 10,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 6,
+        "myoTaskId": 10,
+        "myoProgramId": 1,
+        "executionOrder": 3,
+        "executionTimeS": 120,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 10,
+          "name": "меандр-12-1",
+          "current": 12,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 7,
+        "myoTaskId": 12,
+        "myoProgramId": 1,
+        "executionOrder": 4,
+        "executionTimeS": 30,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 12,
+          "name": "меандр-15-2",
+          "current": 15,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 8,
+        "myoTaskId": 13,
+        "myoProgramId": 1,
+        "executionOrder": 4,
+        "executionTimeS": 30,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 13,
+          "name": "трапеция-8",
+          "current": 8,
+          "waveFormId": 3,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 9,
+        "myoTaskId": 17,
+        "myoProgramId": 1,
+        "executionOrder": 5,
+        "executionTimeS": 300,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 17,
+          "name": "синус-8",
+          "current": 8,
+          "waveFormId": 4,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 10,
+        "myoTaskId": 17,
+        "myoProgramId": 1,
+        "executionOrder": 5,
+        "executionTimeS": 300,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 17,
+          "name": "синус-8",
+          "current": 8,
+          "waveFormId": 4,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 11,
+        "myoTaskId": 10,
+        "myoProgramId": 1,
+        "executionOrder": 6,
+        "executionTimeS": 120,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 10,
+          "name": "меандр-12-1",
+          "current": 12,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 12,
+        "myoTaskId": 10,
+        "myoProgramId": 1,
+        "executionOrder": 6,
+        "executionTimeS": 240,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 10,
+          "name": "меандр-12-1",
+          "current": 12,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 13,
+        "myoTaskId": 11,
+        "myoProgramId": 1,
+        "executionOrder": 7,
+        "executionTimeS": 30,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 11,
+          "name": "меандр-15-1",
+          "current": 15,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 14,
+        "myoTaskId": 1,
+        "myoProgramId": 1,
+        "executionOrder": 7,
+        "executionTimeS": 30,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 1,
+          "name": "канал отключен",
+          "current": 0,
+          "waveFormId": 1,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 15,
+        "myoTaskId": 6,
+        "myoProgramId": 1,
+        "executionOrder": 8,
+        "executionTimeS": 180,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 6,
+          "name": "меандр-10-1",
+          "current": 10,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 16,
+        "myoTaskId": 6,
+        "myoProgramId": 1,
+        "executionOrder": 8,
+        "executionTimeS": 180,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 6,
+          "name": "меандр-10-1",
+          "current": 10,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      }
+    ],
+    "prescription": []
+  },
+  {
+    "id": "2",
+    "name": "Спорт",
+    "executionMethodId": 2,
+    "executionTimeS": 1800,
+    "recommendation": "расслабление после силовых занятий",
+    "recommendationFull": "",
+    "startTimes": [
+      "09:30:00",
+      "16:00:00",
+      "23:59:00"
+    ],
+    "myoProgramMyoTask": [
+      {
+        "id": 17,
+        "myoTaskId": 2,
+        "myoProgramId": 2,
+        "executionOrder": 1,
+        "executionTimeS": 300,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 2,
+          "name": "меандр-8-1",
+          "current": 8,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 18,
+        "myoTaskId": 2,
+        "myoProgramId": 2,
+        "executionOrder": 1,
+        "executionTimeS": 300,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 2,
+          "name": "меандр-8-1",
+          "current": 8,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      }
+    ],
+    "prescription": []
+  },
+  {
+    "id": "3",
+    "name": "Противоболевая",
+    "executionMethodId": 3,
+    "executionTimeS": 3600,
+    "recommendation": "снятие болей",
+    "recommendationFull": "",
+    "startTimes": [
+      "09:30:00",
+      "16:00:00",
+      "23:59:00"
+    ],
+    "myoProgramMyoTask": [
+      {
+        "id": 19,
+        "myoTaskId": 6,
+        "myoProgramId": 3,
+        "executionOrder": 2,
+        "executionTimeS": 120,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 6,
+          "name": "меандр-10-1",
+          "current": 10,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 20,
+        "myoTaskId": 1,
+        "myoProgramId": 3,
+        "executionOrder": 2,
+        "executionTimeS": 120,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 1,
+          "name": "канал отключен",
+          "current": 0,
+          "waveFormId": 1,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 21,
+        "myoTaskId": 1,
+        "myoProgramId": 3,
+        "executionOrder": 3,
+        "executionTimeS": 30,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 1,
+          "name": "канал отключен",
+          "current": 0,
+          "waveFormId": 1,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 22,
+        "myoTaskId": 6,
+        "myoProgramId": 3,
+        "executionOrder": 3,
+        "executionTimeS": 30,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 6,
+          "name": "меандр-10-1",
+          "current": 10,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 23,
+        "myoTaskId": 7,
+        "myoProgramId": 3,
+        "executionOrder": 4,
+        "executionTimeS": 300,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 7,
+          "name": "меандр-10-2",
+          "current": 10,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 24,
+        "myoTaskId": 7,
+        "myoProgramId": 3,
+        "executionOrder": 4,
+        "executionTimeS": 300,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 7,
+          "name": "меандр-10-2",
+          "current": 10,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 25,
+        "myoTaskId": 8,
+        "myoProgramId": 3,
+        "executionOrder": 5,
+        "executionTimeS": 300,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 8,
+          "name": "меандр-10-3",
+          "current": 10,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 26,
+        "myoTaskId": 8,
+        "myoProgramId": 3,
+        "executionOrder": 5,
+        "executionTimeS": 300,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 8,
+          "name": "меандр-10-3",
+          "current": 10,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 27,
+        "myoTaskId": 9,
+        "myoProgramId": 3,
+        "executionOrder": 6,
+        "executionTimeS": 120,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 9,
+          "name": "меандр-10-4",
+          "current": 10,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 28,
+        "myoTaskId": 9,
+        "myoProgramId": 3,
+        "executionOrder": 6,
+        "executionTimeS": 120,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 9,
+          "name": "меандр-10-4",
+          "current": 10,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 29,
+        "myoTaskId": 10,
+        "myoProgramId": 3,
+        "executionOrder": 7,
+        "executionTimeS": 30,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 10,
+          "name": "меандр-12-1",
+          "current": 12,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 30,
+        "myoTaskId": 10,
+        "myoProgramId": 3,
+        "executionOrder": 7,
+        "executionTimeS": 30,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 10,
+          "name": "меандр-12-1",
+          "current": 12,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 31,
+        "myoTaskId": 12,
+        "myoProgramId": 3,
+        "executionOrder": 8,
+        "executionTimeS": 180,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 12,
+          "name": "меандр-15-2",
+          "current": 15,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 32,
+        "myoTaskId": 1,
+        "myoProgramId": 3,
+        "executionOrder": 8,
+        "executionTimeS": 180,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 1,
+          "name": "канал отключен",
+          "current": 0,
+          "waveFormId": 1,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      }
+    ],
+    "prescription": []
+  },
+  {
+    "id": "4",
+    "name": "Поддерживающая",
+    "executionMethodId": 1,
+    "executionTimeS": 900,
+    "recommendation": "при необходимости длительного ношения",
+    "recommendationFull": "",
+    "startTimes": [
+      "09:30:00",
+      "16:00:00",
+      "23:59:00"
+    ],
+    "myoProgramMyoTask": [
+      {
+        "id": 33,
+        "myoTaskId": 2,
+        "myoProgramId": 4,
+        "executionOrder": 2,
+        "executionTimeS": 120,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 2,
+          "name": "меандр-8-1",
+          "current": 8,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 34,
+        "myoTaskId": 1,
+        "myoProgramId": 4,
+        "executionOrder": 2,
+        "executionTimeS": 120,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 1,
+          "name": "канал отключен",
+          "current": 0,
+          "waveFormId": 1,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 35,
+        "myoTaskId": 1,
+        "myoProgramId": 4,
+        "executionOrder": 3,
+        "executionTimeS": 120,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 1,
+          "name": "канал отключен",
+          "current": 0,
+          "waveFormId": 1,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 36,
+        "myoTaskId": 2,
+        "myoProgramId": 4,
+        "executionOrder": 3,
+        "executionTimeS": 120,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 2,
+          "name": "меандр-8-1",
+          "current": 8,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 37,
+        "myoTaskId": 3,
+        "myoProgramId": 4,
+        "executionOrder": 4,
+        "executionTimeS": 180,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 3,
+          "name": "меандр-8-2",
+          "current": 8,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 38,
+        "myoTaskId": 3,
+        "myoProgramId": 4,
+        "executionOrder": 4,
+        "executionTimeS": 180,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 3,
+          "name": "меандр-8-2",
+          "current": 8,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 39,
+        "myoTaskId": 4,
+        "myoProgramId": 4,
+        "executionOrder": 5,
+        "executionTimeS": 180,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 4,
+          "name": "меандр-8-3",
+          "current": 8,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 40,
+        "myoTaskId": 4,
+        "myoProgramId": 4,
+        "executionOrder": 5,
+        "executionTimeS": 180,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 4,
+          "name": "меандр-8-3",
+          "current": 8,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 41,
+        "myoTaskId": 5,
+        "myoProgramId": 4,
+        "executionOrder": 6,
+        "executionTimeS": 150,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 5,
+          "name": "меандр-8-4",
+          "current": 8,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 42,
+        "myoTaskId": 5,
+        "myoProgramId": 4,
+        "executionOrder": 6,
+        "executionTimeS": 150,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 5,
+          "name": "меандр-8-4",
+          "current": 8,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 43,
+        "myoTaskId": 11,
+        "myoProgramId": 4,
+        "executionOrder": 7,
+        "executionTimeS": 30,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 11,
+          "name": "меандр-15-1",
+          "current": 15,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 44,
+        "myoTaskId": 11,
+        "myoProgramId": 4,
+        "executionOrder": 7,
+        "executionTimeS": 30,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 11,
+          "name": "меандр-15-1",
+          "current": 15,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 45,
+        "myoTaskId": 3,
+        "myoProgramId": 4,
+        "executionOrder": 8,
+        "executionTimeS": 120,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 3,
+          "name": "меандр-8-2",
+          "current": 8,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 46,
+        "myoTaskId": 3,
+        "myoProgramId": 4,
+        "executionOrder": 8,
+        "executionTimeS": 120,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 3,
+          "name": "меандр-8-2",
+          "current": 8,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      }
+    ],
+    "prescription": []
+  },
+  {
+    "id": "5",
+    "name": "Восстановительная",
+    "executionMethodId": 2,
+    "executionTimeS": 1800,
+    "recommendation": "при восстановлении после операции",
+    "recommendationFull": "",
+    "startTimes": [
+      "09:30:00",
+      "16:00:00",
+      "23:59:00"
+    ],
+    "myoProgramMyoTask": [
+      {
+        "id": 47,
+        "myoTaskId": 4,
+        "myoProgramId": 5,
+        "executionOrder": 2,
+        "executionTimeS": 120,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 4,
+          "name": "меандр-8-3",
+          "current": 8,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 48,
+        "myoTaskId": 4,
+        "myoProgramId": 5,
+        "executionOrder": 2,
+        "executionTimeS": 120,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 4,
+          "name": "меандр-8-3",
+          "current": 8,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 49,
+        "myoTaskId": 6,
+        "myoProgramId": 5,
+        "executionOrder": 3,
+        "executionTimeS": 120,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 6,
+          "name": "меандр-10-1",
+          "current": 10,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 50,
+        "myoTaskId": 8,
+        "myoProgramId": 5,
+        "executionOrder": 3,
+        "executionTimeS": 120,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 8,
+          "name": "меандр-10-3",
+          "current": 10,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 51,
+        "myoTaskId": 11,
+        "myoProgramId": 5,
+        "executionOrder": 4,
+        "executionTimeS": 180,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 11,
+          "name": "меандр-15-1",
+          "current": 15,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 52,
+        "myoTaskId": 13,
+        "myoProgramId": 5,
+        "executionOrder": 4,
+        "executionTimeS": 180,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 13,
+          "name": "трапеция-8",
+          "current": 8,
+          "waveFormId": 3,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 53,
+        "myoTaskId": 11,
+        "myoProgramId": 5,
+        "executionOrder": 5,
+        "executionTimeS": 180,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 11,
+          "name": "меандр-15-1",
+          "current": 15,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 54,
+        "myoTaskId": 23,
+        "myoProgramId": 5,
+        "executionOrder": 5,
+        "executionTimeS": 30,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 23,
+          "name": "пила-12",
+          "current": 12,
+          "waveFormId": 5,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 55,
+        "myoTaskId": 5,
+        "myoProgramId": 5,
+        "executionOrder": 6,
+        "executionTimeS": 150,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 5,
+          "name": "меандр-8-4",
+          "current": 8,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 56,
+        "myoTaskId": 5,
+        "myoProgramId": 5,
+        "executionOrder": 6,
+        "executionTimeS": 150,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 5,
+          "name": "меандр-8-4",
+          "current": 8,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 57,
+        "myoTaskId": 11,
+        "myoProgramId": 5,
+        "executionOrder": 7,
+        "executionTimeS": 30,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 11,
+          "name": "меандр-15-1",
+          "current": 15,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 58,
+        "myoTaskId": 12,
+        "myoProgramId": 5,
+        "executionOrder": 7,
+        "executionTimeS": 30,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 12,
+          "name": "меандр-15-2",
+          "current": 15,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 59,
+        "myoTaskId": 12,
+        "myoProgramId": 5,
+        "executionOrder": 8,
+        "executionTimeS": 30,
+        "channelNumber": 1,
+        "myoTask": {
+          "id": 12,
+          "name": "меандр-15-2",
+          "current": 15,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      },
+      {
+        "id": 60,
+        "myoTaskId": 11,
+        "myoProgramId": 5,
+        "executionOrder": 8,
+        "executionTimeS": 30,
+        "channelNumber": 2,
+        "myoTask": {
+          "id": 11,
+          "name": "меандр-15-1",
+          "current": 15,
+          "waveFormId": 2,
+          "burstMs": 4,
+          "pauseMs": 1,
+          "pulseMs": 1,
+          "bipolar": false
+        }
+      }
+    ],
+    "prescription": []
+  },
+  {
+    "id": "6",
+    "name": "АнтиСпазм",
+    "executionMethodId": 3,
+    "executionTimeS": 3600,
+    "recommendation": "при спазматических болях мышц спины",
+    "recommendationFull": "",
+    "startTimes": [
+      "09:30:00",
+      "16:00:00",
+      "23:59:00"
+    ],
+    "myoProgramMyoTask": [],
+    "prescription": []
+  },
+  {
+    "id": "7",
+    "name": "Корсет-1",
+    "executionMethodId": 1,
+    "executionTimeS": 900,
+    "recommendation": "при ношении корсета более 2 час",
+    "recommendationFull": "",
+    "startTimes": [
+      "09:30:00",
+      "16:00:00",
+      "23:59:00"
+    ],
+    "myoProgramMyoTask": [],
+    "prescription": []
+  },
+  {
+    "id": "8",
+    "name": "Корсет-2",
+    "executionMethodId": 2,
+    "executionTimeS": 1500,
+    "recommendation": "при ношени корсета и болях",
+    "recommendationFull": "",
+    "startTimes": [
+      "09:30:00",
+      "16:00:00",
+      "23:59:00"
+    ],
+    "myoProgramMyoTask": [],
+    "prescription": []
+  },
+  {
+    "id": "9",
+    "name": "Корсет-4",
+    "executionMethodId": 1,
+    "executionTimeS": 600,
+    "recommendation": "после оперативного вмешательства",
+    "recommendationFull": "",
+    "startTimes": [
+      "09:30:00",
+      "16:00:00",
+      "23:59:00"
+    ],
+    "myoProgramMyoTask": [],
+    "prescription": []
+  },
+  {
+    "id": "10",
+    "name": "Антигрыжа",
+    "executionMethodId": 1,
+    "executionTimeS": 300,
+    "recommendation": "при грыжах диска",
+    "recommendationFull": "",
+    "startTimes": [
+      "09:30:00",
+      "16:00:00",
+      "23:59:00"
+    ],
+    "myoProgramMyoTask": [],
+    "prescription": []
+  },
+  {
+    "id": "11",
+    "name": "Антисколиоз",
+    "executionMethodId": 2,
+    "executionTimeS": 2400,
+    "recommendation": "при сколиозе",
+    "recommendationFull": "",
+    "startTimes": [
+      "09:30:00",
+      "16:00:00",
+      "23:59:00"
+    ],
+    "myoProgramMyoTask": [],
+    "prescription": []
+  }
+]

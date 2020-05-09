@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="genders">
+        <item>@string/auth_gender_male</item>
+        <item>@string/auth_gender_female</item>
+    </string-array>
+
+    <string-array name="program_types">
+        <item>@string/create_receipt_type_manual</item>
+        <item>@string/create_receipt_type_lite</item>
+        <item>@string/create_receipt_type_standard</item>
+        <item>@string/create_receipt_type_hard</item>
+    </string-array>
+
+</resources>

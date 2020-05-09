@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/item_treatment_history_task_height"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingEnd="8dp"
+    android:paddingStart="14dp">
+
+    <TextView
+        android:id="@+id/treatmentHistoryTaskTimeStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingEnd="14dp"
+        android:textColor="@color/brownish_grey"
+        tools:text="16:15" />
+
+    <TextView
+        android:id="@+id/treatmentHistoryTaskName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="left"
+        android:paddingEnd="15dp"
+        android:textColor="@color/brownish_grey"
+        tools:text="Фитнес" />
+
+    <TextView
+        android:id="@+id/treatmentHistoryTaskTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/brownish_grey"
+        tools:text="2 мин" />
+
+</LinearLayout>

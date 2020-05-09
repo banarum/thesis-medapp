@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/deviceSearchButton"
+        android:layout_below="@+id/toolbar"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/device_search_padding_top">
+
+        <TextView
+            android:id="@+id/device_search_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/device_search_title_padding_bottom"
+            android:paddingEnd="@dimen/device_search_side_padding"
+            android:paddingStart="@dimen/device_search_side_padding"
+            android:text="@string/device_search_title"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <include layout="@layout/content_device_search_no_bt" />
+
+        <include layout="@layout/content_device_search_in_progress" />
+
+        <include layout="@layout/content_device_search_few_devices" />
+
+        <include layout="@layout/content_device_search_success" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/deviceSearchButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:enabled="false"
+        android:alpha="@dimen/device_search_next_button_alpha"
+        android:background="@drawable/bg_device_search_button"
+        android:text="@string/device_search_next"
+        android:textSize="@dimen/text_size"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="parent" />
+
+</RelativeLayout>

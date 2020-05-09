@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <dimen name="padding_small">5dp</dimen>
+    <dimen name="padding_medium">10dp</dimen>
+    <dimen name="padding_big">15dp</dimen>
+    <dimen name="padding_giant">20dp</dimen>
+
+    <dimen name="toolbar_text_size">18sp</dimen>
+    <dimen name="toolbar_title_padding_start">28dp</dimen>
+
+    <!--auth-->
+    <dimen name="auth_image_size">86dp</dimen>
+    <dimen name="auth_side_padding">24dp</dimen>
+    <dimen name="auth_padding_bottom">38dp</dimen>
+    <dimen name="text_size">16sp</dimen>
+    <dimen name="auth_forgot_password_padding_top">12dp</dimen>
+    <dimen name="auth_username_edit_text_margin_bottom">1dp</dimen>
+    <dimen name="auth_edit_text_height">48dp</dimen>
+    <dimen name="auth_username_edit_text_margin_top">80dp</dimen>
+    <dimen name="auth_edit_text_side_padding">18dp</dimen>
+
+    <!--main-->
+    <dimen name="design_bottom_navigation_height" tools:override="true">56dp</dimen>
+    <dimen name="auth_forgot_password_email_margin_top">22dp</dimen>
+    <dimen name="auth_forgot_password_text_view_padding_top">40dp</dimen>
+    <dimen name="auth_forgot_password_send_button_margin_top">50dp</dimen>
+    <dimen name="auth_register_padding_top">43dp</dimen>
+    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="auth_inputs_margin_bottom">40dp</dimen>
+    <dimen name="auth_text_margin_bottom">110dp</dimen>
+    <dimen name="auth_register_padding_left">16dp</dimen>
+    <dimen name="auth_register_padding_right">19dp</dimen>
+
+    <!--profile-->
+    <dimen name="profile_user_name_text_size">18sp</dimen>
+    <dimen name="profile_image_size">87dp</dimen>
+    <dimen name="profile_edit_size">42dp</dimen>
+    <dimen name="profile_edit_margin_start">25dp</dimen>
+    <dimen name="profile_padding_side">8dp</dimen>
+    <dimen name="profile_user_info_margin_top">8dp</dimen>
+    <dimen name="auth_register_edit_text_margin_bottom">15dp</dimen>
+    <dimen name="profile_edit_icon_padding">11dp</dimen>
+    <dimen name="profile_faq_icon_padding">8dp</dimen>
+    <dimen name="profile_edit_padding_top">25dp</dimen>
+    <dimen name="profile_edit_dialog_edit_text_margin">20dp</dimen>
+    <dimen name="profile_button_height">36dp</dimen>
+    <dimen name="profile_card_corner_radius">2dp</dimen>
+    <dimen name="profile_feels_layout_height">123dp</dimen>
+    <dimen name="profile_feels_button_width">93dp</dimen>
+    <dimen name="profile_feels_title_padding_top">19dp</dimen>
+    <dimen name="profile_feels_title_padding_start">16dp</dimen>
+    <dimen name="profile_feels_card_padding_bottom">22dp</dimen>
+    <dimen name="profile_feels_thanks_padding_side">29dp</dimen>
+
+    <dimen name="profile_pain_level_subtitle_text_size">12sp</dimen>
+    <dimen name="profile_pain_level_title_padding_bottom">4dp</dimen>
+    <dimen name="profile_pain_level_text_padding_bottom">17dp</dimen>
+    <dimen name="profile_graph_margin_top">26dp</dimen>
+    <dimen name="profile_pain_level_margin_top">16dp</dimen>
+    <dimen name="profile_myo_graph_padding_top">10dp</dimen>
+    <dimen name="profile_myo_graph_legend_width">30dp</dimen>
+    <dimen name="profile_myo_graph_legend_height">2dp</dimen>
+    <dimen name="profile_myo_graph_legend_text_size">11sp</dimen>
+
+    <!--treatment-->
+    <dimen name="treatment_start_size">58dp</dimen>
+    <dimen name="treatment_start_margin_top">96dp</dimen>
+    <dimen name="treatment_bg_height">266dp</dimen>
+    <dimen name="settings_padding_left">16dp</dimen>
+    <dimen name="settings_padding_right">20dp</dimen>
+    <dimen name="treatment_padding_side">40dp</dimen>
+    <dimen name="treatment_no_device_connection_title_text_size">17sp</dimen>
+    <dimen name="treatment_no_device_connection_margin_top">12dp</dimen>
+    <dimen name="treatment_stop_image_size">60dp</dimen>
+    <dimen name="treatment_stop_image_square_size">26dp</dimen>
+    <dimen name="treatment_stop_margin_top">17dp</dimen>
+    <dimen name="treatment_stop_icon_padding">17dp</dimen>
+    <dimen name="treatment_schedule_grid_bottom_space">20dp</dimen>
+
+    <!--settings-->
+    <dimen name="settings_logout_margin_top">23dp</dimen>
+    <dimen name="settings_pushes_margin_top">26dp</dimen>
+    <dimen name="settings_padding_top">25dp</dimen>
+    <dimen name="settings_subtitle_padding_top">3dp</dimen>
+
+    <!--syncTime-->
+    <dimen name="sync_padding_top">43dp</dimen>
+    <dimen name="sync_padding_side">38dp</dimen>
+    <dimen name="sync_device_image_view_width">47dp</dimen>
+    <dimen name="sync_device_image_view_height">71dp</dimen>
+    <dimen name="sync_progress_size">180dp</dimen>
+    <dimen name="sync_progress_width">9dp</dimen>
+    <dimen name="sync_progress_text_size">15sp</dimen>
+    <dimen name="sync_device_check_width">18dp</dimen>
+    <dimen name="sync_device_check_height">14dp</dimen>
+    <dimen name="sync_device_refresh_size">16dp</dimen>
+
+    <!--device_search-->
+    <dimen name="device_search_padding_top">43dp</dimen>
+    <dimen name="device_search_button_padding_vertical">16dp</dimen>
+    <dimen name="device_search_side_padding">39dp</dimen>
+    <dimen name="device_search_title_padding_bottom">16dp</dimen>
+    <dimen name="device_search_no_bt_image_size">100dp</dimen>
+    <dimen name="device_search_no_bt_image_margin_bottom">65dp</dimen>
+    <dimen name="device_search_no_bt_content_padding_bottom">60dp</dimen>
+    <dimen name="device_search_success_image_view_width">144dp</dimen>
+    <dimen name="device_search_success_image_view_height">84dp</dimen>
+    <dimen name="item_treatment_history_task_height">42dp</dimen>
+    <dimen name="create_receipt_seek_bar_margin_top">14dp</dimen>
+    <dimen name="create_receipt_seek_bar_margin_bottom">10dp</dimen>
+    <dimen name="profile_feels_thank_image_size">34dp</dimen>
+    <item name="device_search_next_button_alpha" format="float" type="dimen">0.5</item>
+
+</resources>

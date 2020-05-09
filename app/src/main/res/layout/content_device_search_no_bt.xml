@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/deviceSearchNoBtLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/device_search_no_bt_content_padding_bottom"
+    android:paddingEnd="@dimen/device_search_side_padding"
+    android:paddingStart="@dimen/device_search_side_padding"
+    android:visibility="gone"
+    app:layout_constraintTop_toBottomOf="@+id/device_search_title"
+    tools:visibility="visible">
+
+    <TextView
+        android:id="@+id/device_search_no_bt_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingEnd="@dimen/device_search_side_padding"
+        android:paddingStart="@dimen/device_search_side_padding"
+        android:text="@string/device_search_no_bt_text"
+        android:textColor="@color/sync_text"
+        android:textSize="@dimen/text_size_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/device_search_no_bt_image"
+        android:layout_width="@dimen/device_search_no_bt_image_size"
+        android:layout_height="@dimen/device_search_no_bt_image_size"
+        android:src="@drawable/ic_device_search_no_bluetooth"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/device_search_no_bt_open_settings_text_view"
+        style="@style/ClickableTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/device_search_no_bt_open_settings"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

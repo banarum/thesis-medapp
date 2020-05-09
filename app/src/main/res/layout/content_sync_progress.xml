@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/sync_progress_size"
+    android:layout_height="@dimen/sync_progress_size">
+
+    <com.github.guilhe.circularprogressview.CircularProgressView
+        android:id="@+id/syncProgressCircleView"
+        android:layout_width="@dimen/sync_progress_size"
+        android:layout_height="@dimen/sync_progress_size"
+        app:progress="0"
+        app:progressBarColor="@color/colorPrimary"
+        app:backgroundColor="@color/sync_progress_bg"
+        app:progressBarThickness="@dimen/sync_progress_width"
+        app:shadow="false" />
+
+    <ImageView
+        android:id="@+id/syncDeviceImageView"
+        android:layout_width="@dimen/sync_device_image_view_width"
+        android:layout_height="@dimen/sync_device_image_view_height"
+        android:background="@drawable/ic_device"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/syncDeviceProgressTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingStart="2dp"
+        android:paddingTop="@dimen/padding_small"
+        android:text="@string/sync_progress"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sync_progress_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/syncDeviceCheck"
+        android:layout_width="@dimen/sync_device_check_width"
+        android:layout_height="@dimen/sync_device_check_height"
+        android:background="@drawable/ic_check"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/syncDeviceRetry"
+        android:layout_width="@dimen/sync_device_refresh_size"
+        android:layout_height="@dimen/sync_device_refresh_size"
+        android:background="@drawable/ic_refresh"
+        android:clickable="false"
+        android:focusable="false"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

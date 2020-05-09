@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:showIn="@layout/fragment_profile_edit">
+
+    <TextView
+        android:id="@+id/profileEditSurnameTitleTextView"
+        style="@style/AuthRegisterTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/auth_register_surname_hint"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/profileEditSurnameTextView"
+        style="@style/AuthRegisterText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Иванов"
+        app:layout_constraintTop_toBottomOf="@+id/profileEditSurnameTitleTextView" />
+
+    <TextView
+        android:id="@+id/profileEditNameTitleTextView"
+        style="@style/AuthRegisterTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/auth_inputs_margin_bottom"
+        android:text="@string/auth_register_name_hint"
+        app:layout_constraintTop_toBottomOf="@+id/profileEditSurnameTextView" />
+
+    <TextView
+        android:id="@+id/profileEditNameTextView"
+        style="@style/AuthRegisterText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Иван"
+        app:layout_constraintTop_toBottomOf="@+id/profileEditNameTitleTextView" />
+
+    <TextView
+        android:id="@+id/profileEditAgeTitleTextView"
+        style="@style/AuthRegisterTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/auth_inputs_margin_bottom"
+        android:text="@string/auth_register_birthdate_title"
+        app:layout_constraintTop_toBottomOf="@+id/profileEditNameTextView" />
+
+    <TextView
+        android:id="@+id/profileEditAgeTextView"
+        style="@style/AuthRegisterText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/auth_register_default"
+        app:layout_constraintTop_toBottomOf="@+id/profileEditAgeTitleTextView" />
+
+
+    <TextView
+        android:id="@+id/profileEditHeightTitleTextView"
+        style="@style/AuthRegisterTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/auth_inputs_margin_bottom"
+        android:text="@string/auth_register_height_title"
+        app:layout_constraintTop_toBottomOf="@+id/profileEditAgeTextView" />
+
+    <TextView
+        android:id="@+id/profileEditHeightTextView"
+        style="@style/AuthRegisterText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/auth_register_default"
+        app:layout_constraintTop_toBottomOf="@+id/profileEditHeightTitleTextView" />
+
+
+    <TextView
+        android:id="@+id/profileEditWeightTitleTextView"
+        style="@style/AuthRegisterTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/auth_inputs_margin_bottom"
+        android:text="@string/auth_register_weight_title"
+        app:layout_constraintTop_toBottomOf="@+id/profileEditHeightTextView" />
+
+    <TextView
+        android:id="@+id/profileEditWeightTextView"
+        style="@style/AuthRegisterText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/auth_register_default"
+        android:paddingBottom="@dimen/auth_text_margin_bottom"
+        app:layout_constraintTop_toBottomOf="@+id/profileEditWeightTitleTextView" />
+</merge>

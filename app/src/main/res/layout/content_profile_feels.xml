@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profileFeelsLayout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/profile_feels_layout_height"
+    android:layout_marginTop="@dimen/profile_pain_level_margin_top"
+    app:cardBackgroundColor="@color/colorPrimary"
+    app:cardCornerRadius="@dimen/profile_card_corner_radius"
+    app:cardUseCompatPadding="false"
+    app:contentPaddingBottom="@dimen/profile_feels_card_padding_bottom"
+    app:contentPaddingLeft="@dimen/profile_feels_title_padding_start"
+    app:contentPaddingRight="@dimen/profile_feels_title_padding_start"
+    app:contentPaddingTop="@dimen/profile_feels_title_padding_top"
+    tools:showIn="@layout/fragment_profile">
+
+    <android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/profile_feels_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingBottom="30dp"
+            android:text="@string/profile_feels_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_small" />
+
+        <Button
+            android:id="@+id/profile_feels_no_button"
+            style="@style/ProfileButton"
+            android:layout_width="@dimen/profile_feels_button_width"
+            android:layout_height="@dimen/profile_button_height"
+            android:text="@string/profile_feels_no"
+            app:layout_constraintEnd_toStartOf="@+id/profile_feels_yes_button"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_feels_title" />
+
+        <Button
+            android:id="@+id/profile_feels_yes_button"
+            style="@style/ProfileButton"
+            android:layout_width="@dimen/profile_feels_button_width"
+            android:layout_height="@dimen/profile_button_height"
+            android:text="@string/profile_feels_yes"
+            app:layout_constraintEnd_toStartOf="@+id/profile_feels_undefined_button"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toEndOf="@+id/profile_feels_no_button"
+            app:layout_constraintTop_toBottomOf="@+id/profile_feels_title" />
+
+        <Button
+            android:id="@+id/profile_feels_undefined_button"
+            style="@style/ProfileButton"
+            android:layout_width="@dimen/profile_feels_button_width"
+            android:layout_height="@dimen/profile_button_height"
+            android:text="@string/profile_feels_undefined"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toEndOf="@id/profile_feels_yes_button"
+            app:layout_constraintTop_toBottomOf="@+id/profile_feels_title" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>
+        

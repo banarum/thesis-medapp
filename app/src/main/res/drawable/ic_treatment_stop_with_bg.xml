@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/ic_treatment_stop_bg" />
+    <item
+        android:bottom="@dimen/treatment_stop_icon_padding"
+        android:drawable="@drawable/ic_square"
+        android:left="@dimen/treatment_stop_icon_padding"
+        android:right="@dimen/treatment_stop_icon_padding"
+        android:top="@dimen/treatment_stop_icon_padding" />
+
+</layer-list>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:showIn="@layout/content_profile_myo_graph">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingStart="@dimen/profile_feels_title_padding_start"
+        android:paddingEnd="@dimen/profile_feels_title_padding_start"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/profile_myo_graph_legend_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:drawablePadding="@dimen/padding_big"
+            android:drawableStart="@drawable/bg_profile_my_graph_legend_left"
+            android:gravity="center_vertical"
+            android:text="@string/profile_myo_graph_left"
+            android:textColor="@color/profile_axis_values"
+            android:textSize="@dimen/profile_myo_graph_legend_text_size" />
+
+        <TextView
+            android:id="@+id/profile_myo_graph_legend_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/padding_big"
+            android:drawableStart="@drawable/bg_profile_my_graph_legend_right"
+            android:gravity="center_vertical"
+            android:text="@string/profile_myo_graph_right"
+            android:textColor="@color/profile_axis_values"
+            android:textSize="@dimen/profile_myo_graph_legend_text_size" />
+
+    </LinearLayout>
+
+</merge>

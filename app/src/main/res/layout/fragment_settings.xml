@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:clickable="true"
+              android:focusable="true"
+              android:orientation="vertical">
+
+    <include layout="@layout/toolbar"/>
+
+    <android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 android:paddingStart="@dimen/settings_padding_left"
+                                                 android:paddingTop="@dimen/settings_padding_top"
+                                                 android:paddingEnd="@dimen/settings_padding_right">
+
+        <TextView
+            android:id="@+id/settingsDeviceTitle"
+            style="@style/SettingsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="@dimen/settings_padding_right"
+            android:text="@string/settings_device_title"/>
+
+        <TextView
+            android:id="@+id/settingsDeviceSubtitle"
+            style="@style/SettingsSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/settings_subtitle_padding_top"
+            android:paddingEnd="@dimen/settings_padding_right"
+            app:layout_constraintTop_toBottomOf="@+id/settingsDeviceTitle"
+            tools:text="#56"/>
+
+        <ImageView
+            android:id="@+id/settingsDeviceIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_settings_bluetooth"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+        <TextView
+            android:id="@+id/settingsLocaleTitle"
+            style="@style/SettingsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/settings_pushes_margin_top"
+            android:text="@string/settings_locale_title"
+            app:layout_constraintTop_toBottomOf="@+id/settingsDeviceSubtitle"/>
+
+        <TextView
+            android:id="@+id/settingsLocaleSubtitle"
+            style="@style/SettingsSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/settings_pushes_margin_top"
+            android:paddingTop="@dimen/settings_subtitle_padding_top"
+            android:paddingEnd="@dimen/settings_padding_right"
+            android:paddingBottom="@dimen/settings_pushes_margin_top"
+            app:layout_constraintTop_toBottomOf="@+id/settingsLocaleTitle"
+            tools:text="Русский"/>
+
+
+        <TextView
+            android:id="@+id/settingsPushesTitle"
+            style="@style/SettingsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/settings_pushes_margin_top"
+            android:paddingEnd="@dimen/settings_padding_right"
+            android:text="@string/settings_pushes_title"
+            app:layout_constraintBaseline_toBaselineOf="@+id/settingsPushesSwitch"
+            app:layout_constraintTop_toBottomOf="@+id/settingsLocaleSubtitle"/>
+
+        <Switch
+            android:id="@+id/settingsPushesSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/settingsLocaleSubtitle"/>
+
+        <TextView
+            android:id="@+id/settingsLogoutTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/settings_pushes_margin_top"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="@string/settings_logout_title"
+            android:textColor="@color/red"
+            android:textSize="@dimen/text_size"
+            app:layout_constraintTop_toBottomOf="@+id/settingsPushesTitle"/>
+
+        <TextView
+            android:id="@+id/settingsDevsLetterTitle"
+            style="@style/SettingsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/settings_pushes_margin_top"
+            android:paddingEnd="@dimen/settings_padding_right"
+            android:text="@string/settings_devs_letter_title"
+            app:layout_constraintTop_toBottomOf="@+id/settingsLogoutTitle"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>

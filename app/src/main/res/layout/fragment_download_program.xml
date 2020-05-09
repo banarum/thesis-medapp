@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/toolbar"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:padding="8dp">
+
+        <SearchView
+            android:id="@+id/programDownloadSearchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:focusedByDefault="true"
+            android:queryHint="@string/program_search"/>
+
+    </FrameLayout>
+
+    <com.koenigmed.luomanager.presentation.ui.widget.RecyclerViewEmptySupport
+        android:id="@+id/programsDownloadRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"/>
+
+    <TextView
+        android:id="@+id/programsDownloadEmpty"
+        style="@style/Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="@dimen/padding_big"
+        android:text="@string/download_program_empty"
+        android:textSize="22sp"
+        android:visibility="gone"/>
+
+</LinearLayout>
