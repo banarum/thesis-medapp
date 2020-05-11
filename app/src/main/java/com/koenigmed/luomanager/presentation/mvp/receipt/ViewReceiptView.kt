@@ -14,4 +14,9 @@ interface ViewReceiptView : BaseView {
     fun setProgramDuration(duration: Int)
     fun setProgramStartTime(time: String)
     fun setProgramEndTime(time: String)
+    fun showTimePicker(start: Boolean, time: LocalTime)
+    fun showTimeSet(start: Boolean, time: String)
+    fun showTypesDialog(types: Array<String>, positionSelected: Int)
+    fun setIsSchedule(isSchedule: Boolean)
+    fun setProgramChannel(id: Int, activated: Boolean, impulseType: String, bipolar: Boolean, powerA: Int, duration: Int, frequency: Int)
 }

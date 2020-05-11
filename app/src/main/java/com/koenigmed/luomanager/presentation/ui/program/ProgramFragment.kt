@@ -83,14 +83,6 @@ class ProgramFragment : BaseFragment(), ProgramView {
             title = getString(R.string.program_title)
             setNavigationOnClickListener { onBackPressed() }
             inflateMenu(R.menu.menu_program)
-            setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.action_program_edit -> {
-                        presenter.onProgramEditClick()
-                    }
-                }
-                true
-            }
         }
 
         programNewReceiptButton.setOnClickListener {

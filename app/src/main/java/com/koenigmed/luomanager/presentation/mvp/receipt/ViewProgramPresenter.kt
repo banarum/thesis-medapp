@@ -31,12 +31,10 @@ class ViewProgramPresenter @Inject constructor(
         private val errorHandler: ErrorHandler,
         private val schedulers: SchedulersProvider,
         private val programInteractor: ProgramInteractor
-        ) : BasePresenter<ViewReceiptView>() {
+) : BasePresenter<ViewReceiptView>() {
 
-    private var pulseForm1: PulseForm? = null
-    private var pulseForm2: PulseForm? = null
-    private var receiptPresentation = ReceiptPresentation()
-    var program: MyoProgram? = null
+    var receiptPresentation = ReceiptPresentation()
+    private var programId: String? = null
 
     @SuppressLint("CheckResult")
     override fun onFirstViewAttach() {
@@ -46,40 +44,132 @@ class ViewProgramPresenter @Inject constructor(
     }
 
     @SuppressLint("CheckResult")
-    fun setProgramPresentation(programId: String){
-        programInteractor.getProgram(programId)
-                .subscribe { program ->
-                    this.program = program
-                    this.setInfo(program)
-                    this.setType(program.programType)
-                    this.setTimes(program.startTimes!!)
-                    Timber.d(program.myoProgramMyoTaskList.toString())
+    fun setProgramPresentation(programId: String) {
+        this.programId = programId
+        programInteractor.getReceiptPresentation(programId)
+                .subscribe { receiptPresentation ->
+                    this.receiptPresentation = receiptPresentation
+                    this.setInfo(receiptPresentation)
+                    this.setType(receiptPresentation.programType)
+                    setChannels(receiptPresentation)
                 }
     }
 
     private fun setType(programType: ProgramType) {
         val types = resourceManager.getStringArray(R.array.program_types)
         viewState.setProgramType(types[programType.number - 1])
+
     }
 
-    private fun setInfo(program: MyoProgram) {
-        viewState.setProgramTitle(program.name)
-        viewState.setProgramDuration(TimeUnit.SECONDS.toMinutes(program.executionTimeS).toInt())
+    fun onStartClick() {
+        viewState.showTimePicker(true, receiptPresentation.startTime)
     }
 
-    private fun setTimes(times: List<LocalTime>) {
-        if (times.size == 1) {
-            viewState.setProgramStartTime(times[0].getTimeString())
-            viewState.setProgramEndTime(times[0].getTimeString())
-        }else{
-            val duration = Duration.between(times[0], times[1]).toMinutes()
-            viewState.setProgramStartTime(times[0].minusMinutes(duration).getTimeString())
-            viewState.setProgramEndTime(times.last().getTimeString())
+    fun onEndClick() {
+        viewState.showTimePicker(false, receiptPresentation.endTime)
+    }
+
+    fun onStartProgram() {
+        router.navigateTo(Screens.SYNC_SCREEN, this.programId)
+    }
+
+    fun onTimeChosen(isStart: Boolean, time: LocalTime) {
+        if (isStart) {
+            if (!time.isBefore(receiptPresentation.endTime)) {
+                viewState.showMessage(resourceManager.getString(R.string.error_time))
+                return
+            }
+            receiptPresentation.startTime = time
+        } else {
+            if (!time.isAfter(receiptPresentation.startTime)) {
+                viewState.showMessage(resourceManager.getString(R.string.error_time))
+                return
+            }
+            receiptPresentation.endTime = time
         }
+        viewState.showTimeSet(isStart, time.getTimeString())
     }
 
-    private fun setChannels(){
+    private fun setInfo(receiptPresentation: ReceiptPresentation) {
+        viewState.setProgramTitle(receiptPresentation.name)
+        viewState.setProgramDuration(TimeUnit.SECONDS.toMinutes(receiptPresentation.executionTimeS).toInt())
+        viewState.setProgramStartTime(receiptPresentation.startTime.getTimeString())
+        viewState.setProgramEndTime(receiptPresentation.endTime.getTimeString())
+        viewState.setIsSchedule(receiptPresentation.programType.isSchedule())
+    }
 
+    @SuppressLint("CheckResult")
+    private fun setChannels(program: ReceiptPresentation) {
+        val pulseForms = listOf(program.channel1Data?.pulseForm, program.channel2Data?.pulseForm)
+        Timber.d(program.channel1Data!!.frequency.toString())
+        receiptInteractor.getPulseForms()
+                .subscribe({ forms ->
+                    if (pulseForms[0] != null) {
+
+                        viewState.setProgramChannel(1,
+                                program.channel1Data!!.isEnabled,
+                                forms.find { pulseForms[0]!!.id == it.id }!!.name,
+                                program.channel1Data!!.bipolar,
+                                program.channel1Data!!.amperage,
+                                program.channel1Data!!.durationMs.toInt(),
+                                program.channel1Data!!.frequency
+                        )
+                    }
+                    if (pulseForms[1] != null) {
+                        viewState.setProgramChannel(2,
+                                program.channel2Data!!.isEnabled,
+                                forms.find { pulseForms[1]!!.id == it.id }!!.name,
+                                program.channel2Data!!.bipolar,
+                                program.channel2Data!!.amperage,
+                                program.channel2Data!!.durationMs.toInt(),
+                                program.channel2Data!!.frequency
+                        )
+                    }
+
+                }, { Timber.e(it) })
+
+    }
+
+    fun onProgramTypeClick() {
+        val types = resourceManager.getStringArray(R.array.program_types)
+        viewState.showTypesDialog(types, receiptPresentation.programType.number - 1)
+    }
+
+    fun onProgramTypeChosen(programTypePosition: Int) {
+        val programType = ProgramType.fromNumber(programTypePosition + 1)
+        viewState.setIsSchedule(programType.isSchedule())
+        receiptPresentation.programType = programType
+    }
+
+    @SuppressLint("CheckResult")
+    fun deleteProgram() {
+        programInteractor.deletePrograms(mutableSetOf(this.programId!!)).subscribe({
+            router.exitWithResult(Screens.RESULT_CODE_PROGRAM_ADDED, null)
+        },
+                { Timber.e(it) })
+    }
+
+    @SuppressLint("CheckResult")
+    fun onSaveReceiptClick(executionTimeMin: Long) {
+
+        receiptPresentation.apply {
+            this.executionTimeS = TimeUnit.MINUTES.toSeconds(executionTimeMin)
+        }
+        if (!receiptPresentation.isValid()) {
+            viewState.showMessage(resourceManager.getString(R.string.create_receipt_error_validate))
+            return
+        }
+        receiptInteractor.saveReceipt(receiptPresentation)
+                .subscribe(
+                        {
+                            programInteractor.deletePrograms(mutableSetOf(this.programId!!)).subscribe({
+                                router.exitWithResult(Screens.RESULT_CODE_PROGRAM_ADDED, null)
+                            },
+                                    { Timber.e(it) })
+
+                        },
+                        { Timber.e(it) }
+                )
     }
 
     fun onBackPressed() = router.exit()

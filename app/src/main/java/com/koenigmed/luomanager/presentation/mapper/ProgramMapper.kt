@@ -1,11 +1,13 @@
 package com.koenigmed.luomanager.presentation.mapper
 
 import com.koenigmed.luomanager.domain.model.program.*
+import com.koenigmed.luomanager.extension.getTimeString
 import com.koenigmed.luomanager.presentation.mvp.program.MyoProgramPresentation
 import com.koenigmed.luomanager.presentation.mvp.receipt.ChannelData
 import com.koenigmed.luomanager.presentation.mvp.receipt.DownloadStatus
 import com.koenigmed.luomanager.presentation.mvp.receipt.MyoProgramDownloadPresentation
 import com.koenigmed.luomanager.presentation.mvp.receipt.ReceiptPresentation
+import org.threeten.bp.Duration
 import org.threeten.bp.LocalDateTime
 import javax.inject.Inject
 
@@ -21,14 +23,26 @@ class ProgramMapper @Inject constructor() {
                 program.createdByUser)
     }
 
-    fun mapToReceipt(program: MyoProgram, selectedProgram: MyoProgram? = null): MyoProgramPresentation {
-        return MyoProgramPresentation(
-                program.id!!,
-                program.name,
-                program.id == selectedProgram?.id,
-                program.startTimes,
-                program.programType,
-                program.createdByUser)
+    fun mapToReceipt(program: MyoProgram): ReceiptPresentation {
+        val result = ReceiptPresentation()
+        result.name = program.name
+
+        result.channel1Data = mapToChannelData(1, program.myoProgramMyoTaskList!!)
+        result.channel2Data = mapToChannelData(2, program.myoProgramMyoTaskList)
+
+        result.executionTimeS = program.executionTimeS
+        result.programType = program.programType
+        if (program.startTimes!=null) {
+            if (program.startTimes.size == 1) {
+                result.startTime = program.startTimes[0]
+                result.endTime = program.startTimes[0]
+            } else {
+                val duration = Duration.between(program.startTimes[0], program.startTimes[1]).toMinutes()
+                result.startTime = program.startTimes[0].minusMinutes(duration)
+                result.endTime = program.startTimes.last()
+            }
+        }
+        return result
     }
 
 
@@ -60,10 +74,11 @@ class ProgramMapper @Inject constructor() {
         val result = ChannelData()
         for (task in tasks){
             if (task.channelNumber == channelId) {
+                result.isEnabled = true
                 result.amperage = task.myoTask!!.current!!
                 result.bipolar = task.myoTask.bipolar!!
                 result.durationMs = task.myoTask.burstMs!!
-                result.frequency = (task.myoTask.pulseMs!! / 1_000).toInt()
+                result.frequency = (1000.0 / task.myoTask.pulseMs!!).toInt()
                 result.pulseForm = PulseForm(task.myoTask.waveFormId!!, "")
                 break
             }

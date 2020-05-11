@@ -68,29 +68,38 @@ class ViewProgramFragment : BaseFragment(), ViewReceiptView {
     private fun initToolbar() {
         toolbar.apply {
             setNavigationOnClickListener { presenter.onBackPressed() }
-            inflateMenu(R.menu.menu_create_receipt)
+            inflateMenu(R.menu.menu_view_receipt)
+
             setOnMenuItemClickListener { item ->
                 when (item.itemId) {
-                    R.id.action_create_receipt_save -> {
+                    R.id.action_view_receipt_delete -> {
+                        presenter.deleteProgram()
+                    }
+                    R.id.action_view_receipt_save -> {
                         onSaveClick()
                     }
                 }
                 true
             }
         }
-
-
-
     }
 
     private fun initData() {
         if (this.arguments != null){
             this.presenter.setProgramPresentation(this.arguments!!.getString(ViewProgramFragment.KEY_PROGRAM_ID,""))
+            if (!this.arguments!!.getBoolean(ViewProgramFragment.KEY_PROGRAM_USER_CREATED)) {
+                toolbar.menu.removeItem(R.id.action_view_receipt_delete)
+                toolbar.menu.removeItem(R.id.action_view_receipt_save)
+            }
+        }
+
+        start_btn.setOnClickListener {
+            presenter.onStartProgram()
         }
 
         scheduleViews = listOf(start, startValue, end, endValue)
-        type.setOnClickListener { /*presenter.onProgramTypeClick()*/ }
-        typeValue.setOnClickListener { /*presenter.onProgramTypeClick()*/ }
+        type.setOnClickListener { presenter.onProgramTypeClick() }
+        typeValue.setOnClickListener { presenter.onProgramTypeClick() }
         executionTimeSeekBar.max = EXECUTION_TIME_MAX - EXECUTION_TIME_MIN
         executionTimeSeekBar.onProgressChanged { _: SeekBar?, progress: Int, _: Boolean ->
             executionTimeTextView.text =
@@ -101,10 +110,30 @@ class ViewProgramFragment : BaseFragment(), ViewReceiptView {
         executionTimeTextView.text =
                 getString(R.string.create_receipt_execution_time, (executionTime + EXECUTION_TIME_MIN).toString())
 
-        start.setOnClickListener { /*presenter.onStartClick() */}
-        startValue.setOnClickListener { /*presenter.onStartClick() */}
-        end.setOnClickListener { /*presenter.onEndClick() */}
-        endValue.setOnClickListener { /*presenter.onEndClick() */}
+        start.setOnClickListener {presenter.onStartClick()}
+        startValue.setOnClickListener {presenter.onStartClick() }
+        end.setOnClickListener { presenter.onEndClick() }
+        endValue.setOnClickListener { presenter.onEndClick() }
+    }
+
+    override fun setProgramChannel(id: Int, activated: Boolean, impulseType: String, bipolar: Boolean, powerA: Int, duration: Int, frequency: Int) {
+        if (id==1) {
+            channel1.visibility = View.VISIBLE
+            channel1.channelStatusSwitch.isChecked = activated
+            channel1.pulseFormValueTextView.text = impulseType
+            channel1.bipolarRegimeSwitch.isChecked = bipolar
+            channel1.amperageSeekBar.progress = powerA
+            channel1.pulseDurabilitySeekBar.progress = duration - DURABILITY_MIN
+            channel1.pulseFrequencySeekBar.progress = frequency - PULSE_FREQUENCY_MIN
+        } else {
+            channel2.visibility = View.VISIBLE
+            channel2.channelStatusSwitch.isChecked = activated
+            channel2.pulseFormValueTextView.text = impulseType
+            channel2.bipolarRegimeSwitch.isChecked = bipolar
+            channel2.amperageSeekBar.progress = powerA
+            channel2.pulseDurabilitySeekBar.progress = duration - DURABILITY_MIN
+            channel2.pulseFrequencySeekBar.progress = frequency - PULSE_FREQUENCY_MIN
+        }
     }
 
     override fun setProgramStartTime(time: String) {
@@ -134,19 +163,25 @@ class ViewProgramFragment : BaseFragment(), ViewReceiptView {
             /*view.createReceiptAmperageTextView.text = getString(R.string.create_receipt_amperage_format, "230")
             view.createReceiptPulseDurabilityTextView.text = getString(R.string.create_receipt_pulse_durability_format, "10")
             view.createReceiptPulseFrequencyTextView.text = getString(R.string.create_receipt_pulse_frequency_format, "10")*/
+            view.visibility = View.GONE
             view.apply {
                 amperageSeekBar.max = AMPERAGE_MAX - AMPERAGE_MIN
                 amperageSeekBar.onProgressChanged { _: SeekBar?, progress: Int, _: Boolean ->
                     amperageTextView.text =
                             getString(R.string.create_receipt_amperage_format, (AMPERAGE_MIN + progress).toString())
                 }
+                amperageSeekBar.isEnabled = false
                 amperageSeekBar.progress = 230 - AMPERAGE_MIN
+
+                view.channelStatusSwitch.isClickable = false
+                view.bipolarRegimeSwitch.isClickable = false
 
                 pulseDurabilitySeekBar.max = DURABILITY_MAX - DURABILITY_MIN
                 pulseDurabilitySeekBar.onProgressChanged { _: SeekBar?, progress: Int, _: Boolean ->
                     pulseDurabilityTextView.text =
                             getString(R.string.create_receipt_pulse_durability_format, (DURABILITY_MIN + progress).toString())
                 }
+                pulseDurabilitySeekBar.isEnabled = false
                 val pulseDurability = (DURABILITY_MAX - DURABILITY_MIN) / 2
                 pulseDurabilitySeekBar.progress = pulseDurability
                 pulseFrequencyTextView.text =
@@ -157,6 +192,7 @@ class ViewProgramFragment : BaseFragment(), ViewReceiptView {
                     pulseFrequencyTextView.text =
                             getString(R.string.create_receipt_pulse_frequency_format, (PULSE_FREQUENCY_MIN + progress).toString())
                 }
+                pulseFrequencySeekBar.isEnabled = false
                 val pulseFreqValue = (PULSE_FREQUENCY_MAX - PULSE_FREQUENCY_MIN) / 2
                 pulseFrequencySeekBar.progress = pulseFreqValue
                 pulseFrequencyTextView.text =
@@ -171,29 +207,51 @@ class ViewProgramFragment : BaseFragment(), ViewReceiptView {
         channelContainer.addView(channel2)
     }
 
+    override fun setIsSchedule(isSchedule: Boolean) {
+        executionTimeTextView.visibleOrGone(isSchedule)
+        executionTimeSeekBar.visibleOrGone(isSchedule)
+        scheduleViews.forEach { it.visibleOrGone(isSchedule) }
+    }
+
+    override fun showTypesDialog(types: Array<String>, positionSelected: Int) {
+        AlertDialog.Builder(activity!!)
+                .setSingleChoiceItems(types, positionSelected)
+                { dialog, i ->
+                    presenter.onProgramTypeChosen(i)
+                    typeValue.text = types[i]
+                    dialog.dismiss()
+                }
+                .setOnKeyListener { dialog, keyCode, _ ->
+                    if (keyCode == KeyEvent.KEYCODE_BACK) dialog.dismiss()
+                    true
+                }
+                .show()
+    }
+
+    override fun showTimeSet(start: Boolean, time: String) {
+        if (start) {
+            startValue.text = time
+        } else {
+            endValue.text = time
+        }
+    }
+
+    override fun showTimePicker(start: Boolean, time: LocalTime) {
+        val timePicker: android.app.TimePickerDialog
+        timePicker = TimePickerDialog(activity, TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+            presenter.onTimeChosen(start, LocalTime.of(hourOfDay, minute, 0))
+        }, time.hour, time.minute, true)
+        timePicker.setTitle(if (start) getString(R.string.create_receipt_start) else getString(R.string.create_receipt_end))
+        timePicker.show()
+    }
+
     override fun setProgramDuration(duration: Int) {
         executionTimeSeekBar.progress = duration - EXECUTION_TIME_MIN
     }
 
     private fun onSaveClick() {
-        val channel1Data = getChannelData(channel1)
-        val channel2Data = getChannelData(channel2)
-        /*presenter.onSaveReceiptClick(
-                name.text.toString(),
-                executionTimeSeekBar.progress.toLong() + EXECUTION_TIME_MIN,
-                channel1Data,
-                channel2Data
-        )*/
-    }
-
-    private fun getChannelData(channel: View): ChannelData {
-        return ChannelData(
-                channel.channelStatusSwitch.isChecked,
-                null,
-                channel.bipolarRegimeSwitch.isChecked,
-                channel.amperageSeekBar.progress,
-                channel.pulseDurabilitySeekBar.progress.toLong() + DURABILITY_MIN,
-                channel.pulseFrequencySeekBar.progress + PULSE_FREQUENCY_MIN
+        presenter.onSaveReceiptClick(
+                executionTimeSeekBar.progress.toLong() + EXECUTION_TIME_MIN
         )
     }
 
@@ -204,13 +262,19 @@ class ViewProgramFragment : BaseFragment(), ViewReceiptView {
 
     companion object {
         val KEY_PROGRAM_ID = "key_program_id"
+        val KEY_PROGRAM_USER_CREATED = "key_program_user_created"
 
-        fun newInstance(programId: String): ViewProgramFragment? {
+        fun newInstance(params: ViewProgramBundle): ViewProgramFragment? {
             val viewFragment = ViewProgramFragment()
             val bundle = Bundle()
-            bundle.putString(ViewProgramFragment.KEY_PROGRAM_ID, programId)
+            bundle.putString(ViewProgramFragment.KEY_PROGRAM_ID, params.programId)
+            bundle.putBoolean(ViewProgramFragment.KEY_PROGRAM_USER_CREATED, params.programIsUserCreated)
             viewFragment.arguments = bundle
             return viewFragment
         }
     }
+
+
 }
+
+data class ViewProgramBundle(val programId: String, val programIsUserCreated: Boolean)
