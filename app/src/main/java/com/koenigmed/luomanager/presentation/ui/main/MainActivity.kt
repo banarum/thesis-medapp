@@ -19,6 +19,7 @@ import com.koenigmed.luomanager.presentation.ui.profile.ProfileEditFragment
 import com.koenigmed.luomanager.presentation.ui.program.ProgramFragment
 import com.koenigmed.luomanager.presentation.ui.receipt.CreateProgramFragment
 import com.koenigmed.luomanager.presentation.ui.receipt.DownloadProgramFragment
+import com.koenigmed.luomanager.presentation.ui.receipt.ViewProgramFragment
 import com.koenigmed.luomanager.presentation.ui.sync.SyncFragment
 import com.koenigmed.luomanager.toothpick.DI
 import com.koenigmed.luomanager.toothpick.module.MainActivityModule
@@ -86,6 +87,11 @@ class MainActivity : BaseActivity(), MainActivityView {
             Screens.DEVICE_SEARCH_SCREEN -> DeviceSearchFragment()
             Screens.PROGRAM_SCREEN -> ProgramFragment()
             Screens.PROGRAM_CREATE_RECEIPT_SCREEN -> CreateProgramFragment()
+            Screens.PROGRAM_VIEW_RECEIPT_SCREEN -> if (data != null) {
+                ViewProgramFragment.newInstance(data.toString())
+            }else {
+                ViewProgramFragment()
+            }
             Screens.PROGRAM_DOWNLOAD_RECEIPT_SCREEN -> DownloadProgramFragment()
             Screens.FAQ -> FaqFragment()
             else -> null

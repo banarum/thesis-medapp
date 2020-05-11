@@ -12,10 +12,12 @@ import com.koenigmed.luomanager.presentation.mvp.program.MyoProgramPresentation
 import com.koenigmed.luomanager.presentation.ui.widget.BetterCheckBox
 import com.koenigmed.luomanager.util.RxUtil
 import kotlinx.android.synthetic.main.item_program.view.*
+import timber.log.Timber
 
 class ProgramDelegate(
         private val switchListener: (String) -> Unit,
-        private val deleteListener: (String) -> Unit
+        private val deleteListener: (String) -> Unit,
+        private val clickListener: (MyoProgramPresentation) -> Unit
 ) : AdapterDelegate<MutableList<Any>>() {
     var multiSelect: Boolean = false
 
@@ -32,14 +34,14 @@ class ProgramDelegate(
     private inner class ProgramViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private lateinit var program: MyoProgramPresentation
-        private lateinit var betterSwitch: BetterCheckBox
+        //private lateinit var betterSwitch: BetterCheckBox
 
         private val onCheckedChangeListener: CompoundButton.OnCheckedChangeListener =
                 CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
                     buttonView.isClickable = false
 
                     if (program.isSelected) {
-                        betterSwitch.silentlySetChecked(true)
+                        //betterSwitch.silentlySetChecked(true)
                     } else {
                         switchListener(program.id)
                         program.isSelected = true
@@ -56,8 +58,11 @@ class ProgramDelegate(
             this.program = program
             with(itemView) {
                 programTitle.text = program.name
+                itemView.setOnClickListener {
+                    clickListener(program)
+                }
                 if (multiSelect) {
-                    programSwitch.visibleOrGone(false)
+                    //programSwitch.visibleOrGone(false)
                     if (program.createdByUser) {
                         programDelete.visibleOrGone(true)
                         programDelete.setOnClickListener {
@@ -65,11 +70,11 @@ class ProgramDelegate(
                         }
                     }
                 } else {
-                    programSwitch.visibleOrGone(true)
+                    //programSwitch.visibleOrGone(true)
                     programDelete.visibleOrGone(false)
-                    betterSwitch = BetterCheckBox(itemView.context, programSwitch)
-                    betterSwitch.silentlySetChecked(program.isSelected)
-                    betterSwitch.setOnCheckedChangeListener(onCheckedChangeListener)
+                    //betterSwitch = BetterCheckBox(itemView.context, programSwitch)
+                    //betterSwitch.silentlySetChecked(program.isSelected)
+                    //betterSwitch.setOnCheckedChangeListener(onCheckedChangeListener)
                 }
             }
         }

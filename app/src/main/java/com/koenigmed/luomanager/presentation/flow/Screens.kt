@@ -13,6 +13,7 @@ object Screens {
     const val DEVICE_SEARCH_SCREEN = "device_search_screen"
     const val PROGRAM_SCREEN = "program_screen"
     const val PROGRAM_CREATE_RECEIPT_SCREEN = "program_create_receipt_screen"
+    const val PROGRAM_VIEW_RECEIPT_SCREEN = "program_view_receipt_screen"
     const val PROGRAM_DOWNLOAD_RECEIPT_SCREEN = "program_download_receipt_screen"
     const val FAQ = "FAQ"
     const val SYNC_SCREEN = "syncTime"

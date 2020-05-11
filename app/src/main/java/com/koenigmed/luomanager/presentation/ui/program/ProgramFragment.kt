@@ -46,7 +46,9 @@ class ProgramFragment : BaseFragment(), ProgramView {
         ProgramsAdapter({ programId ->
             selectProgram(false, programId)
             presenter.onSelectedProgramSwitch(programId)
-        }, {})
+        }, {}, {program ->
+            presenter.onProgramSelected(program)
+        })
     }
 
     override fun selectProgram(userProgmar: Boolean, programId: String) {
@@ -64,6 +66,8 @@ class ProgramFragment : BaseFragment(), ProgramView {
         }, { programId ->
             presenter.onProgramAddedToDelete(programId)
             userProgramsAdapter.deleteItem(programId)
+        }, {program ->
+            presenter.onProgramSelected(program)
         })
     }
 

@@ -13,7 +13,8 @@ import timber.log.Timber
 
 class ProgramsAdapter(
         switchListener: (String) -> Unit,
-        deleteListener: (String) -> Unit
+        deleteListener: (String) -> Unit,
+        clickListener: (MyoProgramPresentation) -> Unit
 ) : ListDelegationAdapter<MutableList<Any>>() {
 
     private val disposables = CompositeDisposable()
@@ -21,7 +22,7 @@ class ProgramsAdapter(
 
     init {
         items = mutableListOf()
-        programDelegate = ProgramDelegate(switchListener, deleteListener)
+        programDelegate = ProgramDelegate(switchListener, deleteListener, clickListener)
         delegatesManager.addDelegate(programDelegate)
     }
 

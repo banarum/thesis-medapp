@@ -94,5 +94,10 @@ class ProgramInteractor
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.ui())
 
+    fun getProgramPresentation(programId: String) = programRepository.getProgram(programId)
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.ui())
+            .map {programMapper.mapToPresentation(it)}
+
     fun initPrograms() {} // must be empty
 }

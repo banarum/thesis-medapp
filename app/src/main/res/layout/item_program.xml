@@ -11,15 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:paddingBottom="11dp"
-        android:paddingEnd="60dp"
         android:paddingTop="13dp"
+        android:gravity="center"
         tools:text="Фитнес"/>
-
-    <Switch
-        android:id="@+id/programSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|center_vertical"/>
 
     <ImageView
         android:id="@+id/programDelete"

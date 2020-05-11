@@ -112,6 +112,10 @@ class ProgramPresenter @Inject constructor(
                 )
     }
 
+    fun onProgramSelected(program: MyoProgramPresentation){
+        router.navigateTo(Screens.PROGRAM_VIEW_RECEIPT_SCREEN, program.id)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         router.removeResultListener(RESULT_CODE_DEVICE_PROGRAM_SET)

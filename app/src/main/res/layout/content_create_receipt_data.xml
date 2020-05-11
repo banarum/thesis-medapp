@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -23,14 +24,14 @@
         android:paddingBottom="28dp"
         android:text="@string/create_receipt_channel_status"
         style="@style/Title"
-        app:layout_constraintTop_toBottomOf="@+id/channelName" />
+        />
 
     <Switch
         android:id="@+id/channelStatusSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/channelName" />
+        />
 
     <TextView
         android:id="@+id/pulseFormTextView"
@@ -38,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/create_receipt_pulse_form"
-        app:layout_constraintTop_toBottomOf="@+id/channelStatusTextView" />
+        />
 
     <TextView
         android:id="@+id/pulseFormValueTextView"
@@ -46,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="26dp"
-        app:layout_constraintTop_toBottomOf="@+id/pulseFormTextView"
+
         android:text="@string/create_receipt_pulse_form_not_chosen" />
 
 
@@ -56,15 +57,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="21dp"
-        android:text="@string/create_receipt_bipolar_regime"
-        app:layout_constraintTop_toBottomOf="@+id/pulseFormValueTextView" />
+        android:text="@string/create_receipt_bipolar_regime" />
+
 
     <Switch
         android:id="@+id/bipolarRegimeSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pulseFormValueTextView" />
+        app:layout_constraintRight_toRightOf="parent" />
+
 
 
     <TextView
@@ -74,15 +75,15 @@
         android:paddingBottom="@dimen/create_receipt_seek_bar_margin_top"
         android:paddingTop="@dimen/create_receipt_seek_bar_margin_bottom"
         android:text="@string/create_receipt_amperage_format"
-        style="@style/Title"
-        app:layout_constraintTop_toBottomOf="@+id/bipolarRegimeTextView" />
+        style="@style/Title" />
+
 
     <SeekBar
         android:id="@+id/amperageSeekBar"
         style="@style/CreateReceiptSeekBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/amperageTextView" />
+        android:layout_height="wrap_content" />
+
 
     <TextView
         android:id="@+id/pulseDurabilityTextView"
@@ -92,14 +93,13 @@
         android:paddingTop="@dimen/create_receipt_seek_bar_margin_bottom"
         style="@style/Title"
         android:text="@string/create_receipt_pulse_durability_format"
-        app:layout_constraintTop_toBottomOf="@+id/amperageSeekBar" />
+        />
 
     <SeekBar
         android:id="@+id/pulseDurabilitySeekBar"
         style="@style/CreateReceiptSeekBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/pulseDurabilityTextView" />
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/pulseFrequencyTextView"
@@ -109,13 +109,12 @@
         android:paddingTop="@dimen/create_receipt_seek_bar_margin_bottom"
         style="@style/Title"
         android:text="@string/create_receipt_pulse_frequency_format"
-        app:layout_constraintTop_toBottomOf="@+id/pulseDurabilitySeekBar" />
+        />
 
     <SeekBar
         android:id="@+id/pulseFrequencySeekBar"
         style="@style/CreateReceiptSeekBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/pulseFrequencyTextView" />
+        android:layout_height="wrap_content" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
