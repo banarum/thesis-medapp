@@ -16,4 +16,6 @@ interface TreatmentView : BaseView {
     fun showProgram(myoProgram: MyoProgramPresentation)
 
     fun showHistory(dateTreatmentMap: Map<LocalDate, List<MyoProgramHistoryPresentation>>)
+
+    fun setLoading(isLoading: Boolean, isSuccess: Boolean = false)
 }

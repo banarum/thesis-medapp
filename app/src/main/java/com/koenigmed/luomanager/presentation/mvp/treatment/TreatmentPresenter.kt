@@ -1,5 +1,6 @@
 package com.koenigmed.luomanager.presentation.mvp.treatment
 
+import android.annotation.SuppressLint
 import android.os.Handler
 import com.arellomobile.mvp.InjectViewState
 import com.koenigmed.luomanager.R
@@ -34,10 +35,17 @@ class TreatmentPresenter @Inject constructor(
     private var screenState: TreatmentState? = null
     private var runningTimeDisposable: Disposable? = null
 
+    @SuppressLint("CheckResult")
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         if (btInteractor.isDeviceConnected() && deviceInteractor.needSync()) {
             showSync()
+        }
+
+        onBtStateChange(btInteractor.btState)
+
+        btInteractor.stateObservable.observeOn(schedulers.ui()).subscribe {
+            onBtStateChange(it)
         }
 
         programInteractor.getSelectedProgram()
@@ -64,8 +72,20 @@ class TreatmentPresenter @Inject constructor(
     }
 
     private fun showSync() {
+        if (btInteractor.btState == BtInteractor.BT_CONNECTION_ACTIVE)
         Handler().post {
             router.navigateTo(Screens.SYNC_SCREEN)
+        }
+    }
+
+    private fun onBtStateChange(state: Int) {
+        when (state) {
+            BtInteractor.BT_CONNECTION_PROGRESS ->
+                viewState.setLoading(true)
+            BtInteractor.BT_CONNECTION_ACTIVE ->
+                viewState.setLoading(false, true)
+            BtInteractor.BT_CONNECTION_INACTIVE ->
+                viewState.setLoading(false, false)
         }
     }
 

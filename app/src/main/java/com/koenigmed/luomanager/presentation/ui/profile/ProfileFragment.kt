@@ -1,6 +1,7 @@
 package com.koenigmed.luomanager.presentation.ui.profile
 
 import android.os.Bundle
+import android.view.View
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.koenigmed.luomanager.R
@@ -49,6 +50,12 @@ class ProfileFragment : BaseFragment(), ProfileView {
         initUserData()
         initFeelsData()
         initPainLevelData()
+    }
+
+    override fun setLoading(isLoading: Boolean, isSuccess: Boolean) {
+        toolbar_progress_bar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        toolbar_device_fail.visibility = if (isLoading || isSuccess) View.GONE else View.VISIBLE
+        toolbar_device_success.visibility = if (isLoading || !isSuccess) View.GONE else View.VISIBLE
     }
 
     private fun initUserData() {

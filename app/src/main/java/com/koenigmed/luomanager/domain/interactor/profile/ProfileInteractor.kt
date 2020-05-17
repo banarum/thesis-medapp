@@ -11,6 +11,7 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import org.threeten.bp.Duration
 import org.threeten.bp.Instant
+import org.threeten.bp.LocalDate
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -35,6 +36,19 @@ class ProfileInteractor
                         showPainLevel
                         )
                 }
+    }
+
+    fun getOfflineUserProfileData() : Single<UserProfilePresentation> {
+        val showFeels = Duration.between(Instant.ofEpochSecond(prefsRepository.feelsAnsweredDate), Instant.now()) > Duration.ofDays(1)
+        val showPainLevel = Duration.between(Instant.ofEpochSecond(prefsRepository.painLevelAnsweredDate), Instant.now()) > Duration.ofDays(1)
+        return Single.just(UserProfilePresentation(UserDataPresentation("johndoe@gmail.com", "John", "Doe", LocalDate.MIN, "180", "60"), true, true))
+        //     .map {
+        //         UserProfilePresentation(
+        //             userMapper.mapToPresentation(it),
+        //             showFeels,
+        //             showPainLevel
+        //             )
+        //     }
     }
 
     fun saveUserData(userData: UserDataPresentation) =

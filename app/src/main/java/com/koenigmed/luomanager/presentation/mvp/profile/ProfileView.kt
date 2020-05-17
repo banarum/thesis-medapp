@@ -11,6 +11,8 @@ interface ProfileView : BaseView {
 
     fun showProfileData(profileData: UserProfilePresentation)
 
+    fun setLoading(isLoading: Boolean, isSuccess: Boolean = false)
+
     /*fun showMyoGraph(rightEntries: ArrayList<Entry>, leftEntries: ArrayList<Entry>)
     fun showEmptyMyoGraph()*/
 

@@ -21,8 +21,13 @@ import com.koenigmed.luomanager.domain.model.program.MyoProgram
 import com.koenigmed.luomanager.extension.toUUID
 import com.koenigmed.luomanager.system.IResourceManager
 import com.koenigmed.luomanager.util.PermissionUtil
+import io.reactivex.Observable
+import io.reactivex.ObservableEmitter
+import io.reactivex.disposables.Disposable
+import io.reactivex.observables.ConnectableObservable
 import timber.log.Timber
 import java.util.*
+
 import javax.inject.Inject
 
 class BtInteractor
@@ -34,6 +39,16 @@ class BtInteractor
     private lateinit var btStateListener: (Boolean) -> Unit
     private var deviceSearchListener: DeviceSearchListener? = null
     private lateinit var unbindListener: (Boolean) -> Unit
+
+    var btState = BT_CONNECTION_INACTIVE
+
+    private lateinit var stateEmmiter: ObservableEmitter<Int>
+    var stateObservable: ConnectableObservable<Int> = Observable.create<Int> { emitter -> stateEmmiter = emitter}.publish()
+
+    private val stateObserverDisposable: Disposable = stateObservable.subscribe {
+        this.btState = it
+        Timber.d("YEAH BT State ${this.btState}")
+    }
 
     interface DeviceSearchListener {
         fun onError(message: String)
@@ -90,6 +105,7 @@ class BtInteractor
                 && isBtEnabled() && !isDeviceConnected()) {
             startSearch()
         }
+        stateObservable.connect()
     }
 
     private fun onBtStateChanged(intent: Intent) {
@@ -136,7 +152,8 @@ class BtInteractor
         Timber.d("device $device")
         Timber.d("gatt == null " + (gatt == null))
         if (gatt == null) {
-            gatt = device.connectGatt(context, false, gattCallback)
+            stateEmmiter.onNext(BT_CONNECTION_PROGRESS)
+            gatt = device.connectGatt(context, true, gattCallback)
         }
     }
 
@@ -146,9 +163,10 @@ class BtInteractor
             super.onConnectionStateChange(gatt, status, newState)
             Timber.d("onConnectionStateChange $gatt, status $status, state $newState")
             Timber.d("gatt $gatt")
-            /*if (status != GATT_SUCCESS) {
-                killGatt()
-            }*/
+            if (newState == BluetoothGatt.STATE_DISCONNECTED) {
+                stateEmmiter.onNext(BT_CONNECTION_INACTIVE)
+            }
+
             val result = gatt.discoverServices()
             Timber.d("discover services $result")
         }
@@ -169,6 +187,7 @@ class BtInteractor
                 val characteristic = service.characteristics[0]
                 val result = setCharacteristicNotification(gatt, characteristic, true)
                 Timber.d("result $result")
+                stateEmmiter.onNext(BT_CONNECTION_ACTIVE)
                 deviceApi = DeviceApi(gatt, characteristic)
                 Timber.d("service.characteristics ${service.characteristics}")
             } else {
@@ -233,7 +252,11 @@ class BtInteractor
         deviceApi?.syncTime(progressCallback)
     }
 
-    fun getDevice(): BluetoothDevice? {
+    fun isDeviceActive(): Boolean {
+        return this.getDevice() != null
+    }
+
+    private fun getDevice(): BluetoothDevice? {
         val bluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         val devices = bluetoothManager.getConnectedDevices(BluetoothProfile.GATT)
         return if (devices.isNotEmpty()) devices[0] else null
@@ -243,6 +266,7 @@ class BtInteractor
 
     fun unbindDevice() {
         prefsRepository.deviceName = ""
+        stateEmmiter.onNext(BT_CONNECTION_INACTIVE)
         if (removeDevice()) return
         val bluetoothManager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         val devices = bluetoothManager.getConnectedDevices(BluetoothProfile.GATT)
@@ -283,6 +307,9 @@ class BtInteractor
     }
 
     companion object {
+        val BT_CONNECTION_INACTIVE = 0
+        val BT_CONNECTION_ACTIVE = 1
+        val BT_CONNECTION_PROGRESS = 2
         private const val SERVICE_UUID = "0000ffe0-0000-1000-8000-00805f9b34fb"
         //private val CHARACTERISTIC_UPDATE_NOTIFICATION_DESCRIPTOR_UUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")
         private val CHARACTERISTIC_UPDATE_NOTIFICATION_DESCRIPTOR_UUID = UUID.fromString("0000ffe1-0000-1000-8000-00805f9b34fb")

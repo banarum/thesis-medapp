@@ -1,6 +1,8 @@
 package com.koenigmed.luomanager.presentation.mvp.profile
 
+import android.annotation.SuppressLint
 import com.arellomobile.mvp.InjectViewState
+import com.koenigmed.luomanager.domain.interactor.device.BtInteractor
 import com.koenigmed.luomanager.domain.interactor.profile.ProfileInteractor
 import com.koenigmed.luomanager.presentation.flow.FlowRouter
 import com.koenigmed.luomanager.presentation.flow.Screens
@@ -18,7 +20,8 @@ class ProfilePresenter @Inject constructor(
         private val router: FlowRouter,
         private val profileInteractor: ProfileInteractor,
         private val errorHandler: ErrorHandler,
-        private val schedulers: SchedulersProvider
+        private val schedulers: SchedulersProvider,
+        private val btInteractor: BtInteractor
 ) : BasePresenter<ProfileView>() {
 
     init {
@@ -27,13 +30,31 @@ class ProfilePresenter @Inject constructor(
         }
     }
 
+    @SuppressLint("CheckResult")
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         getUserInfo()
+
+        onBtStateChange(btInteractor.btState)
+        btInteractor.stateObservable.observeOn(schedulers.ui()).subscribe {
+            onBtStateChange(it)
+        }
+    }
+
+
+    private fun onBtStateChange(state: Int) {
+        when (state) {
+            BtInteractor.BT_CONNECTION_PROGRESS ->
+                viewState.setLoading(true)
+            BtInteractor.BT_CONNECTION_ACTIVE ->
+                viewState.setLoading(false, true)
+            BtInteractor.BT_CONNECTION_INACTIVE ->
+                viewState.setLoading(false, false)
+        }
     }
 
     fun getUserInfo() {
-        profileInteractor.getUserProfileData()
+        profileInteractor.getOfflineUserProfileData()
                 .subscribeOn(schedulers.io())
                 .observeOn(schedulers.ui())
                 .subscribe({ viewState.showProfileData(it) }, { Timber.e(it) })

@@ -3,6 +3,7 @@ package com.koenigmed.luomanager.presentation.ui.treatment
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.koenigmed.luomanager.R
@@ -93,6 +94,12 @@ class TreatmentFragment : BaseFragment(), TreatmentView {
 
     override fun showProgram(myoProgram: MyoProgramPresentation) {
         treatmentProgramNameTextView.text = myoProgram.name
+    }
+
+    override fun setLoading(isLoading: Boolean, isSuccess: Boolean) {
+        toolbar_progress_bar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        toolbar_device_fail.visibility = if (isLoading || isSuccess) View.GONE else View.VISIBLE
+        toolbar_device_success.visibility = if (isLoading || !isSuccess) View.GONE else View.VISIBLE
     }
 
     override fun setScreenState(state: TreatmentState) {

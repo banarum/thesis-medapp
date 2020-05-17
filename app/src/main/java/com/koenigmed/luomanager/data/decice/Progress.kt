@@ -17,7 +17,6 @@ data class Progress(val progress: Int, val response: String? = null) {
             response?.let { GsonUtil.gson().fromJson(it, DeviceResponse::class.java) }
         } catch (ex: JsonSyntaxException) {
         }
-        return ((response as DeviceResponse?)?.error?.messageResId
-                ?: R.string.error_device)
+        return R.string.error_device
     }
 }
