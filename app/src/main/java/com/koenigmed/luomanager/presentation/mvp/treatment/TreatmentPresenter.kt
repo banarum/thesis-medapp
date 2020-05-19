@@ -42,11 +42,21 @@ class TreatmentPresenter @Inject constructor(
             showSync()
         }
 
+        btInteractor.chargeNotifier.observeOn(schedulers.ui()).subscribe({
+            Timber.d("$it")
+            if (it?.isCompleted() == true)
+                viewState.setBattery((((it.result!!.voltage!!.dropLast(2).toFloat() - 2300f) / (4500f - 2300f))*100).toInt())
+        }, {Timber.d("$it")})
+
         onBtStateChange(btInteractor.btState)
 
         btInteractor.stateObservable.observeOn(schedulers.ui()).subscribe {
             onBtStateChange(it)
         }
+
+
+
+
 
         programInteractor.getSelectedProgram()
                 .subscribe(
@@ -76,6 +86,8 @@ class TreatmentPresenter @Inject constructor(
         Handler().post {
             router.navigateTo(Screens.SYNC_SCREEN)
         }
+
+
     }
 
     private fun onBtStateChange(state: Int) {

@@ -23,11 +23,12 @@
 
     <ProgressBar
         android:id="@+id/toolbar_progress_bar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:indeterminateTint="@color/bg_auth_button"
         android:indeterminateTintMode="src_in"
         android:indeterminate="true"
+        android:padding="10dp"
         android:layout_gravity="right"
         android:visibility="gone"
         />
@@ -51,6 +52,17 @@
         android:layout_gravity="right"
         android:visibility="gone"
         />
+
+    <com.koenigmed.luomanager.presentation.ui.widget.BatteryView
+        android:id="@+id/battery_view"
+        android:layout_width="16dp"
+        android:layout_height="30dp"
+        android:padding = "10dp"
+        android:src="@drawable/ic_charging"
+        app:bv_charging="false"
+        app:bv_percent="100"
+        android:layout_gravity="right"
+        android:visibility="gone"/>
 
 
 

@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.content_treatment_start.*
 import kotlinx.android.synthetic.main.fragment_treatment.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.threeten.bp.LocalDate
+import timber.log.Timber
 import toothpick.Toothpick
 
 class TreatmentFragment : BaseFragment(), TreatmentView {
@@ -100,6 +101,7 @@ class TreatmentFragment : BaseFragment(), TreatmentView {
         toolbar_progress_bar.visibility = if (isLoading) View.VISIBLE else View.GONE
         toolbar_device_fail.visibility = if (isLoading || isSuccess) View.GONE else View.VISIBLE
         toolbar_device_success.visibility = if (isLoading || !isSuccess) View.GONE else View.VISIBLE
+        battery_view.visibility = if (isLoading || !isSuccess) View.GONE else battery_view.visibility
     }
 
     override fun setScreenState(state: TreatmentState) {
@@ -186,6 +188,12 @@ class TreatmentFragment : BaseFragment(), TreatmentView {
         treatmentProgramHistoryRecycler.post {
             historyAdapter.setData(dateTreatmentMap)
         }
+    }
+
+    override fun setBattery(charge: Int) {
+        battery_view.visibility = View.VISIBLE
+        Timber.d("$charge")
+        battery_view.setPercent(charge)
     }
 
     companion object {

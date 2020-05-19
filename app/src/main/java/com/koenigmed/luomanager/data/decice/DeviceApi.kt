@@ -1,121 +1,47 @@
 package com.koenigmed.luomanager.data.decice
 
 import android.bluetooth.BluetoothGatt
-import android.bluetooth.BluetoothGatt.GATT_SUCCESS
+
 import android.bluetooth.BluetoothGattCharacteristic
-import com.google.gson.GsonBuilder
+
 import com.koenigmed.luomanager.data.model.device.*
-import com.koenigmed.luomanager.data.server.deserializer.BooleanTypeAdapter
-import com.koenigmed.luomanager.data.server.deserializer.DateTimeTypeAdapter
-import com.koenigmed.luomanager.data.server.deserializer.TimeTypeAdapter
-import com.koenigmed.luomanager.extension.isValidJson
+import io.reactivex.Observable
+
 import org.threeten.bp.LocalDateTime
-import org.threeten.bp.LocalTime
-import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
-class DeviceApi(private val gatt: BluetoothGatt,
-                private val characteristic: BluetoothGattCharacteristic) {
+class DeviceApi(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic): BtEventReceiver {
 
-    private var deviceStatus = DeviceStatus.READY
+    private val btApi: BtApi<DeviceCommand, JsonDeviceResponse> = DeviceBtApi(gatt, characteristic)
 
-    private val gson by lazy {
-        GsonBuilder()
-                .registerTypeAdapter(Boolean::class.javaObjectType, BooleanTypeAdapter())
-                .registerTypeAdapter(LocalTime::class.java, TimeTypeAdapter())
-                .registerTypeAdapter(LocalDateTime::class.java, DateTimeTypeAdapter())
-                .create()
-    }
-    private var commandChunks: List<String>? = null
-    private var chunkIndexToWrite = 0
-    private lateinit var progressCallback: (Progress) -> Unit
-
-    private var responseString = ""
-    private var isError = false
-
-    fun syncTime(progressCallback: (Progress) -> Unit) {
-        executeCommand(progressCallback, SyncTimeCommand(LocalDateTime.now()))
+    fun syncTime(): Observable<ProgressResponse<JsonDeviceResponse>> {
+        return btApi.executeCommand(SyncTimeCommand(LocalDateTime.now()))
     }
 
-    fun sendProgram(programCommand: ProgramCommand, progressCallback: (Progress) -> Unit) {
+    fun sendProgram(programCommand: ProgramCommand): Observable<ProgressResponse<JsonDeviceResponse>> {
         programCommand.tasks?.forEach { it.amperage = it.amperage.coerceAtMost(10) }//todo! remove crutch
-        executeCommand(progressCallback, programCommand)
+        return btApi.executeCommand(programCommand)
     }
 
-    fun sendStart(progressCallback: (Progress) -> Unit) {
-        executeCommand(progressCallback, StartCommand())
+    fun sendStart(): Observable<ProgressResponse<JsonDeviceResponse>> {
+        return btApi.executeCommand(StartCommand())
     }
 
-    fun sendStop(progressCallback: (Progress) -> Unit) {
-        executeCommand(progressCallback, StopCommand())
+    fun sendStop(): Observable<ProgressResponse<JsonDeviceResponse>> {
+        return btApi.executeCommand(StopCommand())
     }
 
-    private fun executeCommand(progressCallback: (Progress) -> Unit, command: DeviceCommand) {
-        if (deviceStatus == DeviceStatus.COMMAND_SENDING) {
-            return
-        }
-        deviceStatus = DeviceStatus.COMMAND_SENDING
-        this.progressCallback = progressCallback
-        sendCommand(command)
+    private fun <T> throwErrorIf(isError: Boolean, message: String, obj: T): T {
+        if (isError) throw Exception(message) else return obj
     }
 
-    fun onCharacteristicWrite(status: Int, response: String?) {
-        if (isError) return
-        if (status != GATT_SUCCESS) {
-            progressCallback.invoke(Progress(-1, response))
-            onCommandFinished()
-            return
-        }
-        val percent = chunkIndexToWrite * 100 / commandChunks!!.size
-        if (percent < 100) progressCallback.invoke(Progress(percent))
-        if (chunkIndexToWrite < commandChunks!!.size) {
-            writeChunk(commandChunks!![chunkIndexToWrite++])
-        } else {
-            onCommandFinished()
-        }
+    fun getChargeLevel(isChained: Boolean=false): Observable<ProgressResponse<JsonDeviceResponse>> {
+        return btApi.executeCommand(DeviceCommand("getVoltage"), isChained)
+                .map { throwErrorIf(it.isCompleted() && it.result!!.voltage == null, "Undefined command", it) }
     }
 
-    private fun sendCommand(command: Any) {
-        val json = gson.toJson(command)
-        Timber.d("sendCommand $json")
-        isError = false
-        commandChunks = json.chunked(CHUNK_LETTERS_COUNT)
-        writeChunk(commandChunks!![chunkIndexToWrite++])
-    }
-
-    private fun writeChunk(chunk: String) {
-        Timber.d("writeChunk $chunk")
-        val b = chunk.toByteArray()
-        println("b " + b.size)
-        characteristic.setValue(chunk)
-        gatt.writeCharacteristic(characteristic)
-    }
-
-    private fun onCommandFinished() {
-        deviceStatus = DeviceStatus.READY
-        commandChunks = null
-        chunkIndexToWrite = 0
-    }
-
-    fun onCharacteristicChanged(chunk: String) {
-        responseString += chunk
-        if (responseString.isValidJson()) {
-            val response = gson.fromJson(responseString, JsonDeviceResponse::class.java)
-            if (response.isOk()) {
-                progressCallback.invoke(Progress(100))
-            } else {
-                isError = true
-                progressCallback.invoke(Progress(-1, responseString))
-            }
-            responseString = ""
-        }
-    }
-
-    fun onDeviceDisconnected() {
-        onCommandFinished()
-    }
-
-    companion object {
-        const val CHUNK_LETTERS_COUNT = 20
-    }
-
+    override fun onCharacteristicChanged(chunk: String) = btApi.onCharacteristicChanged(chunk)
+    override fun onCharacteristicWrite(status: Int, response: String?) = btApi.onCharacteristicWrite(status, response)
+    override fun onDeviceDisconnected() = btApi.onDeviceDisconnected()
 }
+

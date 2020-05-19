@@ -15,7 +15,9 @@ import android.os.ParcelUuid
 import com.koenigmed.luomanager.R
 import com.koenigmed.luomanager.data.decice.DeviceApi
 import com.koenigmed.luomanager.data.decice.Progress
+import com.koenigmed.luomanager.data.decice.ProgressResponse
 import com.koenigmed.luomanager.data.mapper.program.ProgramMapper
+import com.koenigmed.luomanager.data.model.device.JsonDeviceResponse
 import com.koenigmed.luomanager.data.repository.prefs.PrefsRepository
 import com.koenigmed.luomanager.domain.model.program.MyoProgram
 import com.koenigmed.luomanager.extension.toUUID
@@ -27,6 +29,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.observables.ConnectableObservable
 import timber.log.Timber
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 import javax.inject.Inject
 
@@ -47,8 +50,11 @@ class BtInteractor
 
     private val stateObserverDisposable: Disposable = stateObservable.subscribe {
         this.btState = it
-        Timber.d("YEAH BT State ${this.btState}")
     }
+
+    val chargeNotifier: Observable<ProgressResponse<JsonDeviceResponse>> = Observable.interval(0, 10, TimeUnit.SECONDS)
+            .flatMap { if (deviceApi!= null) deviceApi!!.getChargeLevel() else Observable.empty() }
+            .publish().autoConnect()
 
     interface DeviceSearchListener {
         fun onError(message: String)
@@ -58,7 +64,7 @@ class BtInteractor
 
     private val btAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
     private var gatt: BluetoothGatt? = null
-    private var deviceApi: DeviceApi? = null
+    var deviceApi: DeviceApi? = null
 
     private val btReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -236,20 +242,28 @@ class BtInteractor
         }
     }
 
+    @SuppressLint("CheckResult")
     fun sendStart(progressCallback: (Progress) -> Unit) {
-        deviceApi?.sendStart(progressCallback)
+        deviceApi?.sendStart()
+                ?.subscribe({progressCallback.invoke(Progress((it.progress * 100).toInt())) }, {})
     }
 
+    @SuppressLint("CheckResult")
     fun sendStop(progressCallback: (Progress) -> Unit) {
-        deviceApi?.sendStop(progressCallback)
+        deviceApi?.sendStop()
+                ?.subscribe({progressCallback.invoke(Progress((it.progress * 100).toInt())) }, {})
     }
 
+    @SuppressLint("CheckResult")
     fun sendProgram(program: MyoProgram, progressCallback: (Progress) -> Unit) {
-        deviceApi?.sendProgram(programMapper.mapToProgramCommand(program), progressCallback)
+        deviceApi?.sendProgram(programMapper.mapToProgramCommand(program))
+                ?.subscribe({progressCallback.invoke(Progress((it.progress * 100).toInt())) }, {})
     }
 
+    @SuppressLint("CheckResult")
     fun sync(progressCallback: (Progress) -> Unit) {
-        deviceApi?.syncTime(progressCallback)
+        deviceApi?.syncTime()
+                ?.subscribe({progressCallback.invoke(Progress((it.progress * 100).toInt())) }, {})
     }
 
     fun isDeviceActive(): Boolean {

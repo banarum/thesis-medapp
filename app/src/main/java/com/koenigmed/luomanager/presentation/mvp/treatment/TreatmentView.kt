@@ -18,4 +18,6 @@ interface TreatmentView : BaseView {
     fun showHistory(dateTreatmentMap: Map<LocalDate, List<MyoProgramHistoryPresentation>>)
 
     fun setLoading(isLoading: Boolean, isSuccess: Boolean = false)
+
+    fun setBattery(charge: Int)
 }
