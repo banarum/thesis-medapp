@@ -61,7 +61,7 @@ class BtInteractor
             .retry()
             .publish().autoConnect()
 
-    val rssiNotifier: Observable<BtPower> = Observable.interval(0, 2, TimeUnit.SECONDS)
+    val rssiNotifier: Observable<BtPower> = Observable.interval(0, 500, TimeUnit.MILLISECONDS)
             .flatMap { if (deviceApi!= null) deviceApi!!.getRssi() else Observable.empty() }
             .map { BtPower.getPower(it) }
             .retry()
@@ -382,8 +382,8 @@ class BtInteractor
         STRONG;
         companion object {
             fun getPower(rssi: Int): BtPower {
-                if (abs(rssi).toDouble() < 9 * 9) return STRONG
-                if (abs(rssi).toDouble() < 10 * 10) return MID
+                if (abs(rssi).toDouble() < 8.5 * 8.5) return STRONG
+                if (abs(rssi).toDouble() < 9.2 * 9.2) return MID
                 return WEAK
             }
         }
