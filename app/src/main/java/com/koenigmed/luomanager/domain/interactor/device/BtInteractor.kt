@@ -54,6 +54,7 @@ class BtInteractor
 
     val chargeNotifier: Observable<ProgressResponse<JsonDeviceResponse>> = Observable.interval(0, 10, TimeUnit.SECONDS)
             .flatMap { if (deviceApi!= null) deviceApi!!.getChargeLevel() else Observable.empty() }
+            .retry()
             .publish().autoConnect()
 
     interface DeviceSearchListener {
@@ -218,6 +219,41 @@ class BtInteractor
             val chunk = String(characteristic.value)
             Timber.d("onCharacteristicChanged $chunk")
             deviceApi?.onCharacteristicChanged(chunk)
+        }
+
+        override fun onDescriptorRead(gatt: BluetoothGatt?, descriptor: BluetoothGattDescriptor?, status: Int) {
+            super.onDescriptorRead(gatt, descriptor, status)
+            Timber.d("onDescriptorRead")
+        }
+
+        override fun onDescriptorWrite(gatt: BluetoothGatt?, descriptor: BluetoothGattDescriptor?, status: Int) {
+            super.onDescriptorWrite(gatt, descriptor, status)
+            Timber.d("onDescriptorWrite")
+        }
+
+        override fun onMtuChanged(gatt: BluetoothGatt?, mtu: Int, status: Int) {
+            super.onMtuChanged(gatt, mtu, status)
+            Timber.d("onMtuChanged")
+        }
+
+        override fun onPhyRead(gatt: BluetoothGatt?, txPhy: Int, rxPhy: Int, status: Int) {
+            super.onPhyRead(gatt, txPhy, rxPhy, status)
+            Timber.d("onPhyRead")
+        }
+
+        override fun onPhyUpdate(gatt: BluetoothGatt?, txPhy: Int, rxPhy: Int, status: Int) {
+            super.onPhyUpdate(gatt, txPhy, rxPhy, status)
+            Timber.d("onPhyUpdate")
+        }
+
+        override fun onReadRemoteRssi(gatt: BluetoothGatt?, rssi: Int, status: Int) {
+            super.onReadRemoteRssi(gatt, rssi, status)
+            Timber.d("onReadRemoteRssi")
+        }
+
+        override fun onReliableWriteCompleted(gatt: BluetoothGatt?, status: Int) {
+            super.onReliableWriteCompleted(gatt, status)
+            Timber.d("onReliableWriteCompleted")
         }
     }
 
