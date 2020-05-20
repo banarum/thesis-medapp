@@ -5,6 +5,7 @@ import android.view.View
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.koenigmed.luomanager.R
+import com.koenigmed.luomanager.domain.interactor.device.BtInteractor
 import com.koenigmed.luomanager.extension.visibleOrGone
 import com.koenigmed.luomanager.presentation.mvp.profile.ProfileFeelsState
 import com.koenigmed.luomanager.presentation.mvp.profile.ProfilePresenter
@@ -18,6 +19,7 @@ import kotlinx.android.synthetic.main.content_profile_feels_thanks.*
 import kotlinx.android.synthetic.main.content_profile_pain_level.*
 import kotlinx.android.synthetic.main.content_profile_user_data.*
 import kotlinx.android.synthetic.main.toolbar.*
+import timber.log.Timber
 import toothpick.Toothpick
 
 class ProfileFragment : BaseFragment(), ProfileView {
@@ -55,7 +57,7 @@ class ProfileFragment : BaseFragment(), ProfileView {
     override fun setLoading(isLoading: Boolean, isSuccess: Boolean) {
         toolbar_progress_bar.visibility = if (isLoading) View.VISIBLE else View.GONE
         toolbar_device_fail.visibility = if (isLoading || isSuccess) View.GONE else View.VISIBLE
-        toolbar_device_success.visibility = if (isLoading || !isSuccess) View.GONE else View.VISIBLE
+        bt_connection.visibility = if (isLoading || !isSuccess) View.GONE else View.VISIBLE
     }
 
     private fun initUserData() {
@@ -101,6 +103,19 @@ class ProfileFragment : BaseFragment(), ProfileView {
                 presenter.onPainLevelClick(id)
             }
         })
+    }
+
+    override fun setBattery(charge: Int) {
+        battery_view.visibility = View.VISIBLE
+        battery_view.setPercent(charge)
+    }
+
+    override fun setBtPower(state: BtInteractor.BtPower) {
+        when (state){
+            BtInteractor.BtPower.STRONG -> bt_connection.setImageResource(R.drawable.bt_strong)
+            BtInteractor.BtPower.MID -> bt_connection.setImageResource(R.drawable.bt_mid)
+            BtInteractor.BtPower.WEAK -> bt_connection.setImageResource(R.drawable.bt_weak)
+        }
     }
 
     companion object {

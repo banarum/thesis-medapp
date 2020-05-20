@@ -48,6 +48,10 @@ class TreatmentPresenter @Inject constructor(
                 viewState.setBattery((((it.result!!.voltage!!.dropLast(2).toFloat() - 2300f) / (4500f - 2300f))*100).toInt())
         }, {Timber.d("$it")})
 
+        btInteractor.rssiNotifier.observeOn(schedulers.ui()).subscribe {
+            viewState.setBtPower(it)
+        }
+
         onBtStateChange(btInteractor.btState)
 
         btInteractor.stateObservable.observeOn(schedulers.ui()).subscribe {

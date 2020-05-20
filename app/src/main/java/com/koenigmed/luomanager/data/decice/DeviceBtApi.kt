@@ -42,6 +42,8 @@ class DeviceBtApi(private val gatt: BluetoothGatt,
     private var responseString = ""
     private var isError = false
 
+    private var rssiEmmiters: MutableList<ObservableEmitter<Int>> = mutableListOf()
+
     private val chainedMap: HashMap<PublishSubject<ProgressResponse<JsonDeviceResponse>>, Boolean> = HashMap()
 
 
@@ -146,8 +148,21 @@ class DeviceBtApi(private val gatt: BluetoothGatt,
         onCommandFinished()
     }
 
+    override fun onReadRemoteRssi(gatt: BluetoothGatt?, rssi: Int, status: Int) {
+        rssiEmmiters.onEach {
+            it.onNext(rssi)
+            it.onComplete()
+        }
+        rssiEmmiters.clear()
+    }
+
     companion object {
         const val CHUNK_LETTERS_COUNT = 20
+    }
+
+    override fun getRssi(): Observable<Int> {
+        gatt.readRemoteRssi()
+        return Observable.create { emmiter -> rssiEmmiters.add(emmiter)}
     }
 }
 

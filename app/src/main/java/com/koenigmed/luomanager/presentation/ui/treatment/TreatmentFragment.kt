@@ -7,6 +7,7 @@ import android.view.View
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.koenigmed.luomanager.R
+import com.koenigmed.luomanager.domain.interactor.device.BtInteractor
 import com.koenigmed.luomanager.extension.getDrawable
 import com.koenigmed.luomanager.extension.visibleOrGone
 import com.koenigmed.luomanager.presentation.mvp.program.MyoProgramPresentation
@@ -100,7 +101,7 @@ class TreatmentFragment : BaseFragment(), TreatmentView {
     override fun setLoading(isLoading: Boolean, isSuccess: Boolean) {
         toolbar_progress_bar.visibility = if (isLoading) View.VISIBLE else View.GONE
         toolbar_device_fail.visibility = if (isLoading || isSuccess) View.GONE else View.VISIBLE
-        toolbar_device_success.visibility = if (isLoading || !isSuccess) View.GONE else View.VISIBLE
+        bt_connection.visibility = if (isLoading || !isSuccess) View.GONE else View.VISIBLE
         battery_view.visibility = if (isLoading || !isSuccess) View.GONE else battery_view.visibility
     }
 
@@ -194,6 +195,14 @@ class TreatmentFragment : BaseFragment(), TreatmentView {
         battery_view.visibility = View.VISIBLE
         Timber.d("$charge")
         battery_view.setPercent(charge)
+    }
+
+    override fun setBtPower(state: BtInteractor.BtPower) {
+        when (state){
+            BtInteractor.BtPower.STRONG -> bt_connection.setImageResource(R.drawable.bt_strong)
+            BtInteractor.BtPower.MID -> bt_connection.setImageResource(R.drawable.bt_mid)
+            BtInteractor.BtPower.WEAK -> bt_connection.setImageResource(R.drawable.bt_weak)
+        }
     }
 
     companion object {

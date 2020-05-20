@@ -40,8 +40,11 @@ class DeviceApi(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic
                 .map { throwErrorIf(it.isCompleted() && it.result!!.voltage == null, "Undefined command", it) }
     }
 
+    fun getRssi() = btApi.getRssi()
+
     override fun onCharacteristicChanged(chunk: String) = btApi.onCharacteristicChanged(chunk)
     override fun onCharacteristicWrite(status: Int, response: String?) = btApi.onCharacteristicWrite(status, response)
     override fun onDeviceDisconnected() = btApi.onDeviceDisconnected()
+    override fun onReadRemoteRssi(gatt: BluetoothGatt?, rssi: Int, status: Int) = btApi.onReadRemoteRssi(gatt, rssi, status)
 }
 

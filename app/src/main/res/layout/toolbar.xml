@@ -44,13 +44,13 @@
         />
 
     <ImageView
-        android:id="@+id/toolbar_device_success"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_download_complete"
-        android:padding="10dp"
+        android:layout_width="50dp"
+        android:id="@+id/bt_connection"
+        android:layout_height="50dp"
         android:layout_gravity="right"
         android:visibility="gone"
+        android:padding="10dp"
+        android:src="@drawable/bt_weak"
         />
 
     <com.koenigmed.luomanager.presentation.ui.widget.BatteryView

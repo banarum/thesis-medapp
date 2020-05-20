@@ -27,11 +27,15 @@ import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.reactivex.disposables.Disposable
 import io.reactivex.observables.ConnectableObservable
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 import javax.inject.Inject
+import kotlin.math.abs
+import kotlin.math.sqrt
 
 class BtInteractor
 @Inject constructor(resourceManager: IResourceManager,
@@ -54,6 +58,12 @@ class BtInteractor
 
     val chargeNotifier: Observable<ProgressResponse<JsonDeviceResponse>> = Observable.interval(0, 10, TimeUnit.SECONDS)
             .flatMap { if (deviceApi!= null) deviceApi!!.getChargeLevel() else Observable.empty() }
+            .retry()
+            .publish().autoConnect()
+
+    val rssiNotifier: Observable<BtPower> = Observable.interval(0, 2, TimeUnit.SECONDS)
+            .flatMap { if (deviceApi!= null) deviceApi!!.getRssi() else Observable.empty() }
+            .map { BtPower.getPower(it) }
             .retry()
             .publish().autoConnect()
 
@@ -249,6 +259,7 @@ class BtInteractor
         override fun onReadRemoteRssi(gatt: BluetoothGatt?, rssi: Int, status: Int) {
             super.onReadRemoteRssi(gatt, rssi, status)
             Timber.d("onReadRemoteRssi")
+            deviceApi?.onReadRemoteRssi(gatt, rssi, status)
         }
 
         override fun onReliableWriteCompleted(gatt: BluetoothGatt?, status: Int) {
@@ -363,5 +374,18 @@ class BtInteractor
         private const val SERVICE_UUID = "0000ffe0-0000-1000-8000-00805f9b34fb"
         //private val CHARACTERISTIC_UPDATE_NOTIFICATION_DESCRIPTOR_UUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")
         private val CHARACTERISTIC_UPDATE_NOTIFICATION_DESCRIPTOR_UUID = UUID.fromString("0000ffe1-0000-1000-8000-00805f9b34fb")
+    }
+
+    enum class BtPower {
+        WEAK,
+        MID,
+        STRONG;
+        companion object {
+            fun getPower(rssi: Int): BtPower {
+                if (abs(rssi).toDouble() < 9 * 9) return STRONG
+                if (abs(rssi).toDouble() < 10 * 10) return MID
+                return WEAK
+            }
+        }
     }
 }
