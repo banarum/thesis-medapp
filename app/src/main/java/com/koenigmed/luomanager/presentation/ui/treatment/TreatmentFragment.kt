@@ -59,14 +59,6 @@ class TreatmentFragment : BaseFragment(), TreatmentView {
             navigationIcon = null
             title = getString(R.string.treatment_title)
             inflateMenu(R.menu.menu_treatment)
-            setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.action_treatment_synchronize -> {
-                        presenter.onSyncClick()
-                    }
-                }
-                true
-            }
         }
 
         treatmentStartImageView.setOnClickListener {

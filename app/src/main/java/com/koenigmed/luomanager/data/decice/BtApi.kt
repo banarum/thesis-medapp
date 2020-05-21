@@ -3,7 +3,7 @@ package com.koenigmed.luomanager.data.decice
 import io.reactivex.Observable
 
 interface BtApi<T, K>: BtEventReceiver {
-    fun executeCommand(command: T, chained: Boolean=false): Observable<ProgressResponse<K>>
+    fun executeCommand(command: T): Observable<ProgressResponse<K>>
     fun getRssi(): Observable<Int>
 }
 

@@ -21,11 +21,12 @@ import java.util.*
 import kotlin.collections.HashMap
 
 class DeviceBtApi(private val gatt: BluetoothGatt,
-                private val characteristic: BluetoothGattCharacteristic) : BtApi<DeviceCommand, JsonDeviceResponse> {
+                  private val characteristic: BluetoothGattCharacteristic) : BtApi<DeviceCommand, JsonDeviceResponse> {
 
     private var deviceStatus = DeviceStatus.READY
 
-    private val resultSubjects: Queue<PublishSubject<ProgressResponse<JsonDeviceResponse>>> = LinkedList<PublishSubject<ProgressResponse<JsonDeviceResponse>>>()
+    private val resultSubjects: Queue<PublishSubject<ProgressResponse<JsonDeviceResponse>>> = LinkedList()
+    private val commands: Queue<DeviceCommand> = LinkedList()
 
     private val gson by lazy {
         GsonBuilder()
@@ -44,20 +45,21 @@ class DeviceBtApi(private val gatt: BluetoothGatt,
 
     private var rssiEmmiters: MutableList<ObservableEmitter<Int>> = mutableListOf()
 
-    private val chainedMap: HashMap<PublishSubject<ProgressResponse<JsonDeviceResponse>>, Boolean> = HashMap()
 
-
-    override fun executeCommand(command: DeviceCommand, chained: Boolean): Observable<ProgressResponse<JsonDeviceResponse>> {
-        if (deviceStatus == DeviceStatus.COMMAND_SENDING) {
-            return PublishSubject.empty()
-        }
-        deviceStatus = DeviceStatus.COMMAND_SENDING
-        sendCommand(command)
+    override fun executeCommand(command: DeviceCommand): Observable<ProgressResponse<JsonDeviceResponse>> {
         val subject = PublishSubject.create<ProgressResponse<JsonDeviceResponse>>()
         currentPublisher = subject
-        chainedMap[subject] = chained
         resultSubjects.add(subject)
+        commands.add(command)
+        onProceedQueue()
         return subject
+    }
+
+    private fun onProceedQueue(){
+        if (deviceStatus == DeviceStatus.READY && !commands.isEmpty()) {
+            deviceStatus = DeviceStatus.COMMAND_SENDING
+            sendCommand(commands.poll())
+        }
     }
 
     override fun onCharacteristicWrite(status: Int, response: String?) {
@@ -76,7 +78,7 @@ class DeviceBtApi(private val gatt: BluetoothGatt,
         }
     }
 
-    private fun sendCommand(command: Any) {
+    private fun sendCommand(command: DeviceCommand) {
         val json = gson.toJson(command)
         Timber.d("sendCommand $json")
         isError = false
@@ -97,13 +99,13 @@ class DeviceBtApi(private val gatt: BluetoothGatt,
         deviceStatus = DeviceStatus.READY
         commandChunks = null
         chunkIndexToWrite = 0
+        onProceedQueue()
     }
 
     override fun onCharacteristicChanged(chunk: String) {
         responseString += chunk
         Timber.d(responseString)
         if (responseString.isValidJson()) {
-
             val response = gson.fromJson(responseString, JsonDeviceResponse::class.java)
             onResponseReceived(response)
             responseString = ""
@@ -113,9 +115,9 @@ class DeviceBtApi(private val gatt: BluetoothGatt,
     private fun onResponseReceived(response: JsonDeviceResponse?) {
         if (response != null && response.isOk()) {
             onResponseSuccess(response)
-        }else if (response != null && !response.isOk()) {
+        } else if (response != null && !response.isOk()) {
             onResponseFail(response)
-        }else if (response == null) {
+        } else if (response == null) {
             onResponseMalformed()
         }
     }
@@ -124,13 +126,7 @@ class DeviceBtApi(private val gatt: BluetoothGatt,
             resultSubject?.onNext(ProgressResponse(null, progress))
 
     private fun onResponseSuccess(response: JsonDeviceResponse, resultSubject: PublishSubject<ProgressResponse<JsonDeviceResponse>>? = takeNextResultSubject()) =
-            resultSubject?.apply {
-                onNext(ProgressResponse(response, 1f))
-                if (chainedMap[resultSubject]!=true)
-                    onComplete()
-                chainedMap.remove(resultSubject)
-            }
-
+            resultSubject?.apply {onNext(ProgressResponse(response, 1f)); onComplete()}
     private fun onResponseFail(response: JsonDeviceResponse, resultSubject: PublishSubject<ProgressResponse<JsonDeviceResponse>>? = takeNextResultSubject()) =
             resultSubject?.onError(Exception("${response.response} ${response.errorCode}"))
 
@@ -162,7 +158,7 @@ class DeviceBtApi(private val gatt: BluetoothGatt,
 
     override fun getRssi(): Observable<Int> {
         gatt.readRemoteRssi()
-        return Observable.create { emmiter -> rssiEmmiters.add(emmiter)}
+        return Observable.create { emmiter -> rssiEmmiters.add(emmiter) }
     }
 }
 

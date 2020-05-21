@@ -35,8 +35,8 @@ class DeviceApi(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic
         if (isError) throw Exception(message) else return obj
     }
 
-    fun getChargeLevel(isChained: Boolean=false): Observable<ProgressResponse<JsonDeviceResponse>> {
-        return btApi.executeCommand(DeviceCommand("getVoltage"), isChained)
+    fun getChargeLevel(): Observable<ProgressResponse<JsonDeviceResponse>> {
+        return btApi.executeCommand(DeviceCommand("getVoltage"))
                 .map { throwErrorIf(it.isCompleted() && it.result!!.voltage == null, "Undefined command", it) }
     }
 

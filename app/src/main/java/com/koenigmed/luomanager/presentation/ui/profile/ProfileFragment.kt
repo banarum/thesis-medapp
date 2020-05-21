@@ -58,6 +58,7 @@ class ProfileFragment : BaseFragment(), ProfileView {
         toolbar_progress_bar.visibility = if (isLoading) View.VISIBLE else View.GONE
         toolbar_device_fail.visibility = if (isLoading || isSuccess) View.GONE else View.VISIBLE
         bt_connection.visibility = if (isLoading || !isSuccess) View.GONE else View.VISIBLE
+        battery_view.visibility = if (isLoading || !isSuccess) View.GONE else battery_view.visibility
     }
 
     private fun initUserData() {
