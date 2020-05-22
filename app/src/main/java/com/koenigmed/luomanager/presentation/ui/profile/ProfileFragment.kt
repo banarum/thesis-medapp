@@ -116,6 +116,7 @@ class ProfileFragment : BaseFragment(), ProfileView {
             BtInteractor.BtPower.STRONG -> bt_connection.setImageResource(R.drawable.bt_strong)
             BtInteractor.BtPower.MID -> bt_connection.setImageResource(R.drawable.bt_mid)
             BtInteractor.BtPower.WEAK -> bt_connection.setImageResource(R.drawable.bt_weak)
+            BtInteractor.BtPower.EXTRA_WEAK -> bt_connection.setImageResource(R.drawable.bt_extra_weak)
         }
     }
 

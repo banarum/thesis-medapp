@@ -377,14 +377,16 @@ class BtInteractor
     }
 
     enum class BtPower {
+        EXTRA_WEAK,
         WEAK,
         MID,
         STRONG;
         companion object {
             fun getPower(rssi: Int): BtPower {
                 if (abs(rssi).toDouble() < 8.5 * 8.5) return STRONG
-                if (abs(rssi).toDouble() < 9.2 * 9.2) return MID
-                return WEAK
+                if (abs(rssi).toDouble() < 8.85 * 8.85) return MID
+                if (abs(rssi).toDouble() < 9.2 * 9.2) return WEAK
+                return EXTRA_WEAK
             }
         }
     }
