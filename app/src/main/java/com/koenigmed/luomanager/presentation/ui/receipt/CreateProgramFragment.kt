@@ -30,8 +30,7 @@ class CreateProgramFragment : BaseFragment(), CreateReceiptView {
     @InjectPresenter
     lateinit var presenter: CreateProgramPresenter
 
-    private lateinit var channel1: View
-    private lateinit var channel2: View
+    private var channels: MutableList<View> = mutableListOf()
 
     private lateinit var scheduleViews: List<View>
 
@@ -51,7 +50,6 @@ class CreateProgramFragment : BaseFragment(), CreateReceiptView {
         super.onActivityCreated(savedInstanceState)
         initToolbar()
         initData()
-        initChannels()
     }
 
     private fun initToolbar() {
@@ -88,13 +86,14 @@ class CreateProgramFragment : BaseFragment(), CreateReceiptView {
         startValue.setOnClickListener { presenter.onStartClick() }
         end.setOnClickListener { presenter.onEndClick() }
         endValue.setOnClickListener { presenter.onEndClick() }
+        add_channel.setOnClickListener { addChannels() }
     }
 
-    private fun initChannels() {
-        channel1 = layoutInflater.inflate(R.layout.content_create_receipt_data, channelContainer, false)
-        channel1.channelName.text = getString(R.string.create_receipt_channel_1)
+    private fun addChannels() {
+        val channel1 = layoutInflater.inflate(R.layout.content_create_receipt_data, channelContainer, false)
+        channel1.channelName.text = "Програма ${channels.size/2 + 1}\n\n"+getString(R.string.create_receipt_channel_1)
 
-        channel2 = layoutInflater.inflate(R.layout.content_create_receipt_data, channelContainer, false)
+        val channel2 = layoutInflater.inflate(R.layout.content_create_receipt_data, channelContainer, false)
         channel2.channelName.text = getString(R.string.create_receipt_channel_2)
 
         listOf(channel1, channel2).forEachIndexed { index, view: View ->
@@ -129,13 +128,17 @@ class CreateProgramFragment : BaseFragment(), CreateReceiptView {
                 pulseFrequencyTextView.text =
                         getString(R.string.create_receipt_pulse_frequency_format, (pulseFreqValue).toString())
 
-                pulseFormTextView.setOnClickListener { presenter.onPulseFormClick(index) }
-                pulseFormValueTextView.setOnClickListener { presenter.onPulseFormClick(index) }
+                val currentIndex = channels.size
+
+                pulseFormTextView.setOnClickListener { presenter.onPulseFormClick(currentIndex) }
+                pulseFormValueTextView.setOnClickListener { presenter.onPulseFormClick(currentIndex) }
+                presenter.setChannelIndex(currentIndex, index + 1)
             }
+            channelContainer.addView(view)
+            channels.add(view)
         }
 
-        channelContainer.addView(channel1)
-        channelContainer.addView(channel2)
+
     }
 
     override fun setIsSchedule(isSchedule: Boolean) {
@@ -186,10 +189,7 @@ class CreateProgramFragment : BaseFragment(), CreateReceiptView {
                         checkedItemPosition)
                 { dialog, i ->
                     presenter.onPulseFormChosen(forms[i], channelIndex)
-                    when (channelIndex) {
-                        0 -> channel1.pulseFormValueTextView.text = formsNames[i]
-                        1 -> channel2.pulseFormValueTextView.text = formsNames[i]
-                    }
+                    channels[channelIndex].pulseFormValueTextView.text = formsNames[i]
                     dialog.dismiss()
                 }
                 .setOnKeyListener { dialog, keyCode, _ ->
@@ -202,13 +202,10 @@ class CreateProgramFragment : BaseFragment(), CreateReceiptView {
     }
 
     private fun onSaveClick() {
-        val channel1Data = getChannelData(channel1)
-        val channel2Data = getChannelData(channel2)
         presenter.onSaveReceiptClick(
                 name.text.toString(),
                 executionTimeSeekBar.progress.toLong() + EXECUTION_TIME_MIN,
-                channel1Data,
-                channel2Data
+                channels.map { getChannelData(it) }
         )
     }
 
@@ -219,7 +216,8 @@ class CreateProgramFragment : BaseFragment(), CreateReceiptView {
                 channel.bipolarRegimeSwitch.isChecked,
                 channel.amperageSeekBar.progress,
                 channel.pulseDurabilitySeekBar.progress.toLong() + DURABILITY_MIN,
-                channel.pulseFrequencySeekBar.progress + PULSE_FREQUENCY_MIN
+                channel.pulseFrequencySeekBar.progress + PULSE_FREQUENCY_MIN,
+                1
         )
     }
 

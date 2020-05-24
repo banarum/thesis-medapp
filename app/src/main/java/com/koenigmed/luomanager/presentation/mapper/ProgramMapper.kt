@@ -27,8 +27,7 @@ class ProgramMapper @Inject constructor() {
         val result = ReceiptPresentation()
         result.name = program.name
 
-        result.channel1Data = mapToChannelData(1, program.myoProgramMyoTaskList!!)
-        result.channel2Data = mapToChannelData(2, program.myoProgramMyoTaskList)
+        result.channels = mapToChannelData(program.myoProgramMyoTaskList!!)
 
         result.executionTimeS = program.executionTimeS
         result.programType = program.programType
@@ -62,28 +61,15 @@ class ProgramMapper @Inject constructor() {
     }
 
     private fun mapToTaskList(program: ReceiptPresentation): List<MyoProgramMyoTask> {
-        val channel1Data = program.channel1Data
-        val channel2Data = program.channel2Data
-        val result = mutableListOf<MyoProgramMyoTask>()
-        if (channel1Data?.isEnabled == true) result.add(mapToTask(program.executionTimeS, channel1Data, 1))
-        if (channel2Data?.isEnabled == true) result.add(mapToTask(program.executionTimeS, channel2Data, 2))
-        return result
+        return program.channels
+                .filter { it.isEnabled }
+                .map {mapToTask(program.executionTimeS, it, it.channelIndex)}
     }
 
-    private fun mapToChannelData(channelId: Int, tasks: List<MyoProgramMyoTask>) : ChannelData{
-        val result = ChannelData()
-        for (task in tasks){
-            if (task.channelNumber == channelId) {
-                result.isEnabled = true
-                result.amperage = task.myoTask!!.current!!
-                result.bipolar = task.myoTask.bipolar!!
-                result.durationMs = task.myoTask.burstMs!!
-                result.frequency = (1000.0 / task.myoTask.pulseMs!!).toInt()
-                result.pulseForm = PulseForm(task.myoTask.waveFormId!!, "")
-                break
-            }
+    private fun mapToChannelData(tasks: List<MyoProgramMyoTask>) : List<ChannelData>{
+        return tasks.map {
+            ChannelData(true, PulseForm(it.myoTask!!.waveFormId!!, ""), it.myoTask.bipolar!!, it.myoTask.current!!, it.myoTask.burstMs!!, (1000.0 / it.myoTask.pulseMs!!).toInt(), it.channelNumber!!)
         }
-        return result
     }
 
     private fun mapToTask(executionTimeS: Long, channel: ChannelData, channelNumber: Int): MyoProgramMyoTask {

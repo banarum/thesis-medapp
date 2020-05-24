@@ -17,10 +17,9 @@ class ReceiptPresentation(
     var executionTimeS: Long = DEFAULT_EXECUTION_TIME_S
     var startTime: LocalTime = LocalTime.of(8, 0, 0)
     var endTime: LocalTime = LocalTime.of(20, 0, 0)
-    var channel1Data: ChannelData? = null
-    var channel2Data: ChannelData? = null
+    var channels: List<ChannelData> = listOf()
 
-    fun isValid() = name.isNotBlank() && channel1Data?.isValid() == true && channel2Data?.isValid() == true
+    fun isValid() = name.isNotBlank() && !channels.map { it.isValid() } .contains(false)
 
     fun getDurationSec() = 0L
 
@@ -50,7 +49,8 @@ data class ChannelData(
         var bipolar: Boolean = false,
         var amperage: Int = 230,
         var durationMs: Long = 10,
-        var frequency: Int = 10
+        var frequency: Int = 10,
+        var channelIndex: Int
 ) {
     fun isValid(): Boolean {
         if (!isEnabled) {

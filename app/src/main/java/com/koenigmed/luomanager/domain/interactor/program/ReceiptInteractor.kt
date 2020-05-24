@@ -24,7 +24,13 @@ class ReceiptInteractor
     }
 
     fun getPulseForms(): Single<List<PulseForm>> {
-        return programRepository.getPulseForms()
+        return Single.just(listOf(
+                PulseForm(0, "Нет Импульсов"),
+                PulseForm(1, "Меандр"),
+                PulseForm(2, "Трапеция"),
+                PulseForm(3, "Синусоида"),
+                PulseForm(4, "Пила")
+                ))
                 .subscribeOn(schedulers.io())
                 .observeOn(schedulers.ui())
     }

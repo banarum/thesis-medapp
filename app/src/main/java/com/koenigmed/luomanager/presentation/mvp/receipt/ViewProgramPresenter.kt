@@ -100,32 +100,12 @@ class ViewProgramPresenter @Inject constructor(
 
     @SuppressLint("CheckResult")
     private fun setChannels(program: ReceiptPresentation) {
-        val pulseForms = listOf(program.channel1Data?.pulseForm, program.channel2Data?.pulseForm)
-        Timber.d(program.channel1Data!!.frequency.toString())
         receiptInteractor.getPulseForms()
                 .subscribe({ forms ->
-                    if (pulseForms[0] != null) {
-
-                        viewState.setProgramChannel(1,
-                                program.channel1Data!!.isEnabled,
-                                forms.find { pulseForms[0]!!.id == it.id }!!.name,
-                                program.channel1Data!!.bipolar,
-                                program.channel1Data!!.amperage,
-                                program.channel1Data!!.durationMs.toInt(),
-                                program.channel1Data!!.frequency
-                        )
+                    program.channels.onEach {channel ->
+                        channel.pulseForm = forms.find { it.id == channel.pulseForm?.id }
                     }
-                    if (pulseForms[1] != null) {
-                        viewState.setProgramChannel(2,
-                                program.channel2Data!!.isEnabled,
-                                forms.find { pulseForms[1]!!.id == it.id }!!.name,
-                                program.channel2Data!!.bipolar,
-                                program.channel2Data!!.amperage,
-                                program.channel2Data!!.durationMs.toInt(),
-                                program.channel2Data!!.frequency
-                        )
-                    }
-
+                    viewState.setProgramChannels(program.channels)
                 }, { Timber.e(it) })
 
     }

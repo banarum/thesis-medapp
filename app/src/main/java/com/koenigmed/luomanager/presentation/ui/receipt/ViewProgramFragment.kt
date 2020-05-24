@@ -31,6 +31,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 import org.threeten.bp.LocalTime
 import timber.log.Timber
 import toothpick.Toothpick
+import java.util.concurrent.TimeUnit
 
 class ViewProgramFragment : BaseFragment(), ViewReceiptView {
     override val layoutRes: Int
@@ -39,8 +40,7 @@ class ViewProgramFragment : BaseFragment(), ViewReceiptView {
     @InjectPresenter
     lateinit var presenter: ViewProgramPresenter
 
-    private lateinit var channel1: View
-    private lateinit var channel2: View
+    private val channels: MutableList<View> = mutableListOf()
 
     private lateinit var scheduleViews: List<View>
 
@@ -62,7 +62,6 @@ class ViewProgramFragment : BaseFragment(), ViewReceiptView {
         super.onActivityCreated(savedInstanceState)
         initToolbar()
         initData()
-        initChannels()
     }
 
     private fun initToolbar() {
@@ -116,23 +115,18 @@ class ViewProgramFragment : BaseFragment(), ViewReceiptView {
         endValue.setOnClickListener { presenter.onEndClick() }
     }
 
-    override fun setProgramChannel(id: Int, activated: Boolean, impulseType: String, bipolar: Boolean, powerA: Int, duration: Int, frequency: Int) {
-        if (id==1) {
-            channel1.visibility = View.VISIBLE
-            channel1.channelStatusSwitch.isChecked = activated
-            channel1.pulseFormValueTextView.text = impulseType
-            channel1.bipolarRegimeSwitch.isChecked = bipolar
-            channel1.amperageSeekBar.progress = powerA
-            channel1.pulseDurabilitySeekBar.progress = duration - DURABILITY_MIN
-            channel1.pulseFrequencySeekBar.progress = frequency - PULSE_FREQUENCY_MIN
-        } else {
-            channel2.visibility = View.VISIBLE
-            channel2.channelStatusSwitch.isChecked = activated
-            channel2.pulseFormValueTextView.text = impulseType
-            channel2.bipolarRegimeSwitch.isChecked = bipolar
-            channel2.amperageSeekBar.progress = powerA
-            channel2.pulseDurabilitySeekBar.progress = duration - DURABILITY_MIN
-            channel2.pulseFrequencySeekBar.progress = frequency - PULSE_FREQUENCY_MIN
+    override fun setProgramChannels(data: List<ChannelData>) {
+        data.forEach { item ->
+            addChannel().apply {
+                visibility = View.VISIBLE
+                channelStatusSwitch.isChecked = item.isEnabled
+                pulseFormValueTextView.text = item.pulseForm?.name
+                bipolarRegimeSwitch.isChecked = item.bipolar
+                amperageSeekBar.progress = item.amperage
+                pulseDurabilitySeekBar.progress = item.durationMs.toInt() - DURABILITY_MIN
+                pulseFrequencySeekBar.progress = item.frequency - PULSE_FREQUENCY_MIN
+                channelName.text = if (item.channelIndex==1) "Програма ${channels.size/2 + 1}\n\n"+getString(R.string.create_receipt_channel_1) else getString(R.string.create_receipt_channel_2)
+            }
         }
     }
 
@@ -152,59 +146,50 @@ class ViewProgramFragment : BaseFragment(), ViewReceiptView {
         typeValue.text = typeName
     }
 
-    private fun initChannels() {
-        channel1 = layoutInflater.inflate(R.layout.content_create_receipt_data, channelContainer, false)
-        channel1.channelName.text = getString(R.string.create_receipt_channel_1)
-
-        channel2 = layoutInflater.inflate(R.layout.content_create_receipt_data, channelContainer, false)
-        channel2.channelName.text = getString(R.string.create_receipt_channel_2)
-
-        listOf(channel1, channel2).forEachIndexed { index, view: View ->
-            /*view.createReceiptAmperageTextView.text = getString(R.string.create_receipt_amperage_format, "230")
-            view.createReceiptPulseDurabilityTextView.text = getString(R.string.create_receipt_pulse_durability_format, "10")
-            view.createReceiptPulseFrequencyTextView.text = getString(R.string.create_receipt_pulse_frequency_format, "10")*/
-            view.visibility = View.GONE
-            view.apply {
-                amperageSeekBar.max = AMPERAGE_MAX - AMPERAGE_MIN
-                amperageSeekBar.onProgressChanged { _: SeekBar?, progress: Int, _: Boolean ->
-                    amperageTextView.text =
-                            getString(R.string.create_receipt_amperage_format, (AMPERAGE_MIN + progress).toString())
-                }
-                amperageSeekBar.isEnabled = false
-                amperageSeekBar.progress = 230 - AMPERAGE_MIN
-
-                view.channelStatusSwitch.isClickable = false
-                view.bipolarRegimeSwitch.isClickable = false
-
-                pulseDurabilitySeekBar.max = DURABILITY_MAX - DURABILITY_MIN
-                pulseDurabilitySeekBar.onProgressChanged { _: SeekBar?, progress: Int, _: Boolean ->
-                    pulseDurabilityTextView.text =
-                            getString(R.string.create_receipt_pulse_durability_format, (DURABILITY_MIN + progress).toString())
-                }
-                pulseDurabilitySeekBar.isEnabled = false
-                val pulseDurability = (DURABILITY_MAX - DURABILITY_MIN) / 2
-                pulseDurabilitySeekBar.progress = pulseDurability
-                pulseFrequencyTextView.text =
-                        getString(R.string.create_receipt_pulse_frequency_format, (pulseDurability).toString())
-
-                pulseFrequencySeekBar.max = PULSE_FREQUENCY_MAX - PULSE_FREQUENCY_MIN
-                pulseFrequencySeekBar.onProgressChanged { _: SeekBar?, progress: Int, _: Boolean ->
-                    pulseFrequencyTextView.text =
-                            getString(R.string.create_receipt_pulse_frequency_format, (PULSE_FREQUENCY_MIN + progress).toString())
-                }
-                pulseFrequencySeekBar.isEnabled = false
-                val pulseFreqValue = (PULSE_FREQUENCY_MAX - PULSE_FREQUENCY_MIN) / 2
-                pulseFrequencySeekBar.progress = pulseFreqValue
-                pulseFrequencyTextView.text =
-                        getString(R.string.create_receipt_pulse_frequency_format, (pulseFreqValue).toString())
-
-                pulseFormTextView.setOnClickListener { /*presenter.onPulseFormClick(index)*/ }
-                pulseFormValueTextView.setOnClickListener { /*presenter.onPulseFormClick(index)*/ }
+    private fun addChannel(): View {
+        val channel = layoutInflater.inflate(R.layout.content_create_receipt_data, channelContainer, false)
+        channel.visibility = View.GONE
+        return channel.apply {
+            amperageSeekBar.max = AMPERAGE_MAX - AMPERAGE_MIN
+            amperageSeekBar.onProgressChanged { _: SeekBar?, progress: Int, _: Boolean ->
+                amperageTextView.text =
+                        getString(R.string.create_receipt_amperage_format, (AMPERAGE_MIN + progress).toString())
             }
-        }
 
-        channelContainer.addView(channel1)
-        channelContainer.addView(channel2)
+            amperageSeekBar.isEnabled = false
+            amperageSeekBar.progress = 230 - AMPERAGE_MIN
+
+            channel.channelStatusSwitch.isClickable = false
+            channel.bipolarRegimeSwitch.isClickable = false
+
+            pulseDurabilitySeekBar.max = DURABILITY_MAX - DURABILITY_MIN
+            pulseDurabilitySeekBar.onProgressChanged { _: SeekBar?, progress: Int, _: Boolean ->
+                pulseDurabilityTextView.text =
+                        getString(R.string.create_receipt_pulse_durability_format, (DURABILITY_MIN + progress).toString())
+            }
+            pulseDurabilitySeekBar.isEnabled = false
+            val pulseDurability = (DURABILITY_MAX - DURABILITY_MIN) / 2
+            pulseDurabilitySeekBar.progress = pulseDurability
+            pulseFrequencyTextView.text =
+                    getString(R.string.create_receipt_pulse_frequency_format, (pulseDurability).toString())
+
+            pulseFrequencySeekBar.max = PULSE_FREQUENCY_MAX - PULSE_FREQUENCY_MIN
+            pulseFrequencySeekBar.onProgressChanged { _: SeekBar?, progress: Int, _: Boolean ->
+                pulseFrequencyTextView.text =
+                        getString(R.string.create_receipt_pulse_frequency_format, (PULSE_FREQUENCY_MIN + progress).toString())
+            }
+            pulseFrequencySeekBar.isEnabled = false
+            val pulseFreqValue = (PULSE_FREQUENCY_MAX - PULSE_FREQUENCY_MIN) / 2
+            pulseFrequencySeekBar.progress = pulseFreqValue
+            pulseFrequencyTextView.text =
+                    getString(R.string.create_receipt_pulse_frequency_format, (pulseFreqValue).toString())
+
+            pulseFormTextView.setOnClickListener { /*presenter.onPulseFormClick(index)*/ }
+            pulseFormValueTextView.setOnClickListener { /*presenter.onPulseFormClick(index)*/ }
+
+            channels.add(this)
+            channelContainer.addView(this)
+        }
     }
 
     override fun setIsSchedule(isSchedule: Boolean) {
@@ -267,8 +252,8 @@ class ViewProgramFragment : BaseFragment(), ViewReceiptView {
         fun newInstance(params: ViewProgramBundle): ViewProgramFragment? {
             val viewFragment = ViewProgramFragment()
             val bundle = Bundle()
-            bundle.putString(ViewProgramFragment.KEY_PROGRAM_ID, params.programId)
-            bundle.putBoolean(ViewProgramFragment.KEY_PROGRAM_USER_CREATED, params.programIsUserCreated)
+            bundle.putString(KEY_PROGRAM_ID, params.programId)
+            bundle.putBoolean(KEY_PROGRAM_USER_CREATED, params.programIsUserCreated)
             viewFragment.arguments = bundle
             return viewFragment
         }

@@ -27,8 +27,8 @@ class CreateProgramPresenter @Inject constructor(
         private val schedulers: SchedulersProvider
 ) : BasePresenter<CreateReceiptView>() {
 
-    private var pulseForm1: PulseForm? = null
-    private var pulseForm2: PulseForm? = null
+    private val pulseForms: HashMap<Int, PulseForm> = HashMap()
+    private val channelIndexes: HashMap<Int, Int> = HashMap()
     private var receiptPresentation = ReceiptPresentation()
 
     @SuppressLint("CheckResult")
@@ -44,16 +44,16 @@ class CreateProgramPresenter @Inject constructor(
     fun onSaveReceiptClick(
             name: String,
             executionTimeMin: Long,
-            channel1Data: ChannelData,
-            channel2Data: ChannelData
+            channels: List<ChannelData>
     ) {
         receiptPresentation.apply {
             this.name = name
             this.executionTimeS = TimeUnit.MINUTES.toSeconds(executionTimeMin)
-            channel1Data.pulseForm = pulseForm1
-            channel2Data.pulseForm = pulseForm2
-            this.channel1Data = channel1Data
-            this.channel2Data = channel2Data
+            channels.forEachIndexed { index, channelData -> channelData.apply {
+                pulseForm = pulseForms[index]
+                channelIndex = channelIndexes[index]!!
+            } }
+            this.channels = channels
         }
         if (!receiptPresentation.isValid()) {
             viewState.showMessage(resourceManager.getString(R.string.create_receipt_error_validate))
@@ -68,11 +68,10 @@ class CreateProgramPresenter @Inject constructor(
 
     @SuppressLint("CheckResult")
     fun onPulseFormClick(channelIndex: Int) {
-        val pulseForms = listOf(pulseForm1, pulseForm2)
         receiptInteractor.getPulseForms()
                 .subscribe({ forms ->
                     val chosenFormIndex =
-                            if (pulseForms[channelIndex] != null) {
+                            if (pulseForms.containsKey(channelIndex)) {
                                 forms.indexOf(pulseForms[channelIndex])
                             } else {
                                 -1
@@ -82,11 +81,12 @@ class CreateProgramPresenter @Inject constructor(
 
     }
 
+    fun setChannelIndex(channelIndex: Int, index: Int) {
+        channelIndexes[channelIndex] = index
+    }
+
     fun onPulseFormChosen(pulseForm: PulseForm, channelIndex: Int) {
-        when (channelIndex) {
-            0 -> pulseForm1 = pulseForm
-            1 -> pulseForm2 = pulseForm
-        }
+        pulseForms[channelIndex] = pulseForm
     }
 
     fun onProgramTypeClick() {
