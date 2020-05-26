@@ -77,6 +77,9 @@ class ViewProgramFragment : BaseFragment(), ViewReceiptView {
                     R.id.action_view_receipt_save -> {
                         onSaveClick()
                     }
+                    R.id.action_view_receipt_duplicate -> {
+                        presenter.onDuplicate()
+                    }
                 }
                 true
             }
@@ -116,6 +119,9 @@ class ViewProgramFragment : BaseFragment(), ViewReceiptView {
     }
 
     override fun setProgramChannels(data: List<ChannelData>) {
+        channelContainer.removeAllViews()
+        channels.clear()
+
         data.forEach { item ->
             addChannel().apply {
                 visibility = View.VISIBLE
@@ -125,7 +131,7 @@ class ViewProgramFragment : BaseFragment(), ViewReceiptView {
                 amperageSeekBar.progress = item.amperage
                 pulseDurabilitySeekBar.progress = item.durationMs.toInt() - DURABILITY_MIN
                 pulseFrequencySeekBar.progress = item.frequency - PULSE_FREQUENCY_MIN
-                channelName.text = if (item.channelIndex==1) "Програма ${channels.size/2 + 1}\n\n"+getString(R.string.create_receipt_channel_1) else getString(R.string.create_receipt_channel_2)
+                channelName.text = if (item.channelIndex==1) "Программа ${channels.size/2 + 1}\n\n"+getString(R.string.create_receipt_channel_1) else getString(R.string.create_receipt_channel_2)
             }
         }
     }

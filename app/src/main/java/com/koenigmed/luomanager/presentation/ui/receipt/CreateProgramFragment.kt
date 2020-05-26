@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.content_create_receipt_data.view.*
 import kotlinx.android.synthetic.main.fragment_create_program.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.threeten.bp.LocalTime
+import timber.log.Timber
 import toothpick.Toothpick
 
 class CreateProgramFragment : BaseFragment(), CreateReceiptView {
@@ -50,6 +51,10 @@ class CreateProgramFragment : BaseFragment(), CreateReceiptView {
         super.onActivityCreated(savedInstanceState)
         initToolbar()
         initData()
+
+        if (this.arguments != null) {
+            this.presenter.setProgramPresentation(this.arguments!!.getString(KEY_PROGRAM_ID, ""))
+        }
     }
 
     private fun initToolbar() {
@@ -69,6 +74,7 @@ class CreateProgramFragment : BaseFragment(), CreateReceiptView {
     }
 
     private fun initData() {
+
         scheduleViews = listOf(start, startValue, end, endValue)
         type.setOnClickListener { presenter.onProgramTypeClick() }
         typeValue.setOnClickListener { presenter.onProgramTypeClick() }
@@ -89,55 +95,59 @@ class CreateProgramFragment : BaseFragment(), CreateReceiptView {
         add_channel.setOnClickListener { addChannels() }
     }
 
-    private fun addChannels() {
-        val channel1 = layoutInflater.inflate(R.layout.content_create_receipt_data, channelContainer, false)
-        channel1.channelName.text = "Програма ${channels.size/2 + 1}\n\n"+getString(R.string.create_receipt_channel_1)
-
-        val channel2 = layoutInflater.inflate(R.layout.content_create_receipt_data, channelContainer, false)
-        channel2.channelName.text = getString(R.string.create_receipt_channel_2)
-
-        listOf(channel1, channel2).forEachIndexed { index, view: View ->
-            /*view.createReceiptAmperageTextView.text = getString(R.string.create_receipt_amperage_format, "230")
-            view.createReceiptPulseDurabilityTextView.text = getString(R.string.create_receipt_pulse_durability_format, "10")
-            view.createReceiptPulseFrequencyTextView.text = getString(R.string.create_receipt_pulse_frequency_format, "10")*/
-            view.apply {
-                amperageSeekBar.max = AMPERAGE_MAX - AMPERAGE_MIN
-                amperageSeekBar.onProgressChanged { _: SeekBar?, progress: Int, _: Boolean ->
-                    amperageTextView.text =
-                            getString(R.string.create_receipt_amperage_format, (AMPERAGE_MIN + progress).toString())
-                }
-                amperageSeekBar.progress = 230 - AMPERAGE_MIN
-
-                pulseDurabilitySeekBar.max = DURABILITY_MAX - DURABILITY_MIN
-                pulseDurabilitySeekBar.onProgressChanged { _: SeekBar?, progress: Int, _: Boolean ->
-                    pulseDurabilityTextView.text =
-                            getString(R.string.create_receipt_pulse_durability_format, (DURABILITY_MIN + progress).toString())
-                }
-                val pulseDurability = (DURABILITY_MAX - DURABILITY_MIN) / 2
-                pulseDurabilitySeekBar.progress = pulseDurability
-                pulseFrequencyTextView.text =
-                        getString(R.string.create_receipt_pulse_frequency_format, (pulseDurability).toString())
-
-                pulseFrequencySeekBar.max = PULSE_FREQUENCY_MAX - PULSE_FREQUENCY_MIN
-                pulseFrequencySeekBar.onProgressChanged { _: SeekBar?, progress: Int, _: Boolean ->
-                    pulseFrequencyTextView.text =
-                            getString(R.string.create_receipt_pulse_frequency_format, (PULSE_FREQUENCY_MIN + progress).toString())
-                }
-                val pulseFreqValue = (PULSE_FREQUENCY_MAX - PULSE_FREQUENCY_MIN) / 2
-                pulseFrequencySeekBar.progress = pulseFreqValue
-                pulseFrequencyTextView.text =
-                        getString(R.string.create_receipt_pulse_frequency_format, (pulseFreqValue).toString())
-
-                val currentIndex = channels.size
-
-                pulseFormTextView.setOnClickListener { presenter.onPulseFormClick(currentIndex) }
-                pulseFormValueTextView.setOnClickListener { presenter.onPulseFormClick(currentIndex) }
-                presenter.setChannelIndex(currentIndex, index + 1)
+    private fun addChannel(id: Int): View {
+        val channel = layoutInflater.inflate(R.layout.content_create_receipt_data, channelContainer, false)
+        channel.visibility = View.GONE
+        return channel.apply {
+            amperageSeekBar.max = AMPERAGE_MAX - AMPERAGE_MIN
+            amperageSeekBar.onProgressChanged { _: SeekBar?, progress: Int, _: Boolean ->
+                amperageTextView.text =
+                        getString(R.string.create_receipt_amperage_format, (AMPERAGE_MIN + progress).toString())
             }
-            channelContainer.addView(view)
-            channels.add(view)
+
+            amperageSeekBar.progress = 230 - AMPERAGE_MIN
+
+            pulseDurabilitySeekBar.max = DURABILITY_MAX - DURABILITY_MIN
+            pulseDurabilitySeekBar.onProgressChanged { _: SeekBar?, progress: Int, _: Boolean ->
+                pulseDurabilityTextView.text =
+                        getString(R.string.create_receipt_pulse_durability_format, (DURABILITY_MIN + progress).toString())
+            }
+            val pulseDurability = (DURABILITY_MAX - DURABILITY_MIN) / 2
+            pulseDurabilitySeekBar.progress = pulseDurability
+            pulseFrequencyTextView.text =
+                    getString(R.string.create_receipt_pulse_frequency_format, (pulseDurability).toString())
+
+            pulseFrequencySeekBar.max = PULSE_FREQUENCY_MAX - PULSE_FREQUENCY_MIN
+            pulseFrequencySeekBar.onProgressChanged { _: SeekBar?, progress: Int, _: Boolean ->
+                pulseFrequencyTextView.text =
+                        getString(R.string.create_receipt_pulse_frequency_format, (PULSE_FREQUENCY_MIN + progress).toString())
+            }
+            val pulseFreqValue = (PULSE_FREQUENCY_MAX - PULSE_FREQUENCY_MIN) / 2
+            pulseFrequencySeekBar.progress = pulseFreqValue
+            pulseFrequencyTextView.text =
+                    getString(R.string.create_receipt_pulse_frequency_format, (pulseFreqValue).toString())
+
+            val currentIndex = channels.size
+
+            pulseFormTextView.setOnClickListener { presenter.onPulseFormClick(currentIndex) }
+            pulseFormValueTextView.setOnClickListener { presenter.onPulseFormClick(currentIndex) }
+            presenter.setChannelIndex(currentIndex, id)
+
+            channels.add(this)
+            channelContainer.addView(this)
+        }
+    }
+
+    private fun addChannels() {
+        val channel1 = this.addChannel(1).apply {
+            visibility = View.VISIBLE
+            channelName.text = "Программа ${channels.size/2 + 1}\n\n"+getString(R.string.create_receipt_channel_1)
         }
 
+        val channel2 = this.addChannel(2).apply {
+            visibility = View.VISIBLE
+            channelName.text = getString(R.string.create_receipt_channel_2)
+        }
 
     }
 
@@ -226,6 +236,42 @@ class CreateProgramFragment : BaseFragment(), CreateReceiptView {
         presenter.onBackPressed()
     }
 
+    override fun setProgramTitle(title: String) {
+        name.setText("Копия ${title}")
+    }
+
+    override fun setProgramChannels(data: List<ChannelData>) {
+        data.forEach { item ->
+            addChannel(item.channelIndex).apply {
+                visibility = View.VISIBLE
+                channelStatusSwitch.isChecked = item.isEnabled
+                pulseFormValueTextView.text = item.pulseForm?.name
+                bipolarRegimeSwitch.isChecked = item.bipolar
+                amperageSeekBar.progress = item.amperage
+                pulseDurabilitySeekBar.progress = item.durationMs.toInt() - DURABILITY_MIN
+                pulseFrequencySeekBar.progress = item.frequency - PULSE_FREQUENCY_MIN
+                channelName.text = if (item.channelIndex==1) "Программа ${channels.size/2 + 1}\n\n"+getString(R.string.create_receipt_channel_1) else getString(R.string.create_receipt_channel_2)
+            }
+        }
+    }
+
+    override fun setProgramDuration(duration: Int) {
+        executionTimeSeekBar.progress = duration - EXECUTION_TIME_MIN
+    }
+
+    override fun setProgramStartTime(time: String) {
+        startValue.text = time
+    }
+
+    override fun setProgramEndTime(time: String) {
+        endValue.text = time
+    }
+
+    override fun setProgramType(typeName: String, typeId: Int) {
+        typeValue.text = typeName
+        presenter.onProgramTypeChosen(typeId)
+    }
+
     companion object {
         const val EXECUTION_TIME_MIN = 1
         const val EXECUTION_TIME_MAX = 30
@@ -235,5 +281,16 @@ class CreateProgramFragment : BaseFragment(), CreateReceiptView {
         const val DURABILITY_MAX = 10000
         const val PULSE_FREQUENCY_MIN = 20
         const val PULSE_FREQUENCY_MAX = 2000
+
+        val KEY_PROGRAM_ID = "key_program_id"
+
+        fun newInstance(programId: String): CreateProgramFragment? {
+            val createFragment = CreateProgramFragment()
+            val bundle = Bundle()
+            bundle.putString(KEY_PROGRAM_ID, programId)
+            createFragment.arguments = bundle
+            return createFragment
+        }
     }
+
 }

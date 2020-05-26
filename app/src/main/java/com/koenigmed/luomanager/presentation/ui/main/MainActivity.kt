@@ -87,7 +87,11 @@ class MainActivity : BaseActivity(), MainActivityView {
             }
             Screens.DEVICE_SEARCH_SCREEN -> DeviceSearchFragment()
             Screens.PROGRAM_SCREEN -> ProgramFragment()
-            Screens.PROGRAM_CREATE_RECEIPT_SCREEN -> CreateProgramFragment()
+            Screens.PROGRAM_CREATE_RECEIPT_SCREEN -> if (data != null) {
+                CreateProgramFragment.newInstance(data.toString())
+            } else {
+                CreateProgramFragment()
+            }
             Screens.PROGRAM_VIEW_RECEIPT_SCREEN -> if (data != null) {
                 ViewProgramFragment.newInstance(data as ViewProgramBundle)
             }else {

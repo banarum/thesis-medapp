@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 import org.threeten.bp.LocalDate
 import timber.log.Timber
 import toothpick.Toothpick
+import javax.inject.Inject
 
 class TreatmentFragment : BaseFragment(), TreatmentView {
 
@@ -72,6 +73,10 @@ class TreatmentFragment : BaseFragment(), TreatmentView {
         }
         treatmentProgramNameTextView.setOnClickListener {
             presenter.onProgramClick()
+        }
+
+        treatment_btn_sync.setOnClickListener {
+            presenter.onSyncClick()
         }
 
         treatmentScheduleRecycler.apply {

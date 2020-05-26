@@ -45,7 +45,6 @@ class DeviceBtApi(private val gatt: BluetoothGatt,
 
     private var rssiEmmiters: MutableList<ObservableEmitter<Int>> = mutableListOf()
 
-
     override fun executeCommand(command: DeviceCommand): Observable<ProgressResponse<JsonDeviceResponse>> {
         val subject = PublishSubject.create<ProgressResponse<JsonDeviceResponse>>()
         currentPublisher = subject
@@ -127,6 +126,7 @@ class DeviceBtApi(private val gatt: BluetoothGatt,
 
     private fun onResponseSuccess(response: JsonDeviceResponse, resultSubject: PublishSubject<ProgressResponse<JsonDeviceResponse>>? = takeNextResultSubject()) =
             resultSubject?.apply {onNext(ProgressResponse(response, 1f)); onComplete()}
+
     private fun onResponseFail(response: JsonDeviceResponse, resultSubject: PublishSubject<ProgressResponse<JsonDeviceResponse>>? = takeNextResultSubject()) =
             resultSubject?.onError(Exception("${response.response} ${response.errorCode}"))
 
@@ -157,7 +157,8 @@ class DeviceBtApi(private val gatt: BluetoothGatt,
     }
 
     override fun getRssi(): Observable<Int> {
-        gatt.readRemoteRssi()
+        if (rssiEmmiters.isEmpty())
+            gatt.readRemoteRssi()
         return Observable.create { emmiter -> rssiEmmiters.add(emmiter) }
     }
 }

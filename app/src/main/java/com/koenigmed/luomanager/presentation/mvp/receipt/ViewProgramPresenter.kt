@@ -61,6 +61,10 @@ class ViewProgramPresenter @Inject constructor(
 
     }
 
+    fun onDuplicate() {
+        router.navigateTo(Screens.PROGRAM_CREATE_RECEIPT_SCREEN, programId)
+    }
+
     fun onStartClick() {
         viewState.showTimePicker(true, receiptPresentation.startTime)
     }

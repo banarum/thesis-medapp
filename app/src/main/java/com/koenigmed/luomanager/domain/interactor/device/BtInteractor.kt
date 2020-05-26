@@ -25,6 +25,7 @@ import com.koenigmed.luomanager.system.IResourceManager
 import com.koenigmed.luomanager.util.PermissionUtil
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.observables.ConnectableObservable
 import io.reactivex.subjects.PublishSubject

@@ -54,11 +54,23 @@
             app:layout_constraintTop_toBottomOf="@+id/treatmentProgramTitleTextView"
             tools:text="Фитнес"/>
 
+        <TextView
+            android:id="@+id/treatment_btn_sync"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:text="Синхронизация"
+            style="@style/Title"
+            app:layout_constraintTop_toBottomOf="@+id/treatmentProgramNameTextView"
+            />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/treatmentProgramHistoryRecycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="75dp"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/treatmentProgramNameTextView"/>
 
     </android.support.constraint.ConstraintLayout>

@@ -19,7 +19,10 @@ class ReceiptPresentation(
     var endTime: LocalTime = LocalTime.of(20, 0, 0)
     var channels: List<ChannelData> = listOf()
 
-    fun isValid() = name.isNotBlank() && !channels.map { it.isValid() } .contains(false)
+    fun isValid(): Boolean {
+        Timber.d(channels.map { it.isValid() }.toString())
+        return name.isNotBlank() && !channels.map { it.isValid() } .contains(false)
+    }
 
     fun getDurationSec() = 0L
 

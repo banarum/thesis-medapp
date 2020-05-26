@@ -42,7 +42,7 @@ class TreatmentPresenter @Inject constructor(
             showSync()
         }
 
-        btInteractor.chargeNotifier.observeOn(schedulers.ui()).subscribe({
+       btInteractor.chargeNotifier.observeOn(schedulers.ui()).subscribe({
             Timber.d("$it")
             if (it?.isCompleted() == true)
                 viewState.setBattery((((it.result!!.voltage!!.dropLast(2).toFloat() - 2300f) / (4500f - 2300f))*100).toInt())
@@ -57,10 +57,6 @@ class TreatmentPresenter @Inject constructor(
         btInteractor.stateObservable.observeOn(schedulers.ui()).subscribe {
             onBtStateChange(it)
         }
-
-
-
-
 
         programInteractor.getSelectedProgram()
                 .subscribe(

@@ -3,6 +3,7 @@ package com.koenigmed.luomanager.presentation.mvp.receipt
 import android.annotation.SuppressLint
 import com.arellomobile.mvp.InjectViewState
 import com.koenigmed.luomanager.R
+import com.koenigmed.luomanager.domain.interactor.program.ProgramInteractor
 import com.koenigmed.luomanager.domain.interactor.program.ReceiptInteractor
 import com.koenigmed.luomanager.domain.model.program.ProgramType
 import com.koenigmed.luomanager.domain.model.program.PulseForm
@@ -24,7 +25,8 @@ class CreateProgramPresenter @Inject constructor(
         private val router: FlowRouter,
         private val receiptInteractor: ReceiptInteractor,
         private val errorHandler: ErrorHandler,
-        private val schedulers: SchedulersProvider
+        private val schedulers: SchedulersProvider,
+        private val programInteractor: ProgramInteractor
 ) : BasePresenter<CreateReceiptView>() {
 
     private val pulseForms: HashMap<Int, PulseForm> = HashMap()
@@ -39,6 +41,45 @@ class CreateProgramPresenter @Inject constructor(
     }
 
     fun onBackPressed() = router.exit()
+
+    @SuppressLint("CheckResult")
+    fun setProgramPresentation(programId: String) {
+        programInteractor.getReceiptPresentation(programId)
+                .subscribe { receiptPresentation ->
+                    this.receiptPresentation = receiptPresentation
+                    this.setInfo(receiptPresentation)
+                    this.setType(receiptPresentation.programType)
+                    setChannels(receiptPresentation)
+                }
+    }
+
+    private fun setInfo(receiptPresentation: ReceiptPresentation) {
+        viewState.setProgramTitle(receiptPresentation.name)
+        viewState.setProgramDuration(TimeUnit.SECONDS.toMinutes(receiptPresentation.executionTimeS).toInt())
+        viewState.setProgramStartTime(receiptPresentation.startTime.getTimeString())
+        viewState.setProgramEndTime(receiptPresentation.endTime.getTimeString())
+        viewState.setIsSchedule(receiptPresentation.programType.isSchedule())
+    }
+
+    @SuppressLint("CheckResult")
+    private fun setChannels(program: ReceiptPresentation) {
+        receiptInteractor.getPulseForms()
+                .subscribe({ forms ->
+                    program.channels.onEach {channel ->
+                        var index = 0
+                        channel.pulseForm = forms.find { it.id == channel.pulseForm?.id }
+                        pulseForms[index++] = channel.pulseForm!!
+                    }
+                    viewState.setProgramChannels(program.channels)
+                }, { Timber.e(it) })
+
+    }
+
+    private fun setType(programType: ProgramType) {
+        val types = resourceManager.getStringArray(R.array.program_types)
+        viewState.setProgramType(types[programType.number - 1], programType.number - 1)
+
+    }
 
     @SuppressLint("CheckResult")
     fun onSaveReceiptClick(
