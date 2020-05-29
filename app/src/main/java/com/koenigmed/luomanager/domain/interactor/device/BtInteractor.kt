@@ -57,7 +57,8 @@ class BtInteractor
         this.btState = it
     }
 
-    val chargeNotifier: Observable<ProgressResponse<JsonDeviceResponse>> = Observable.interval(0, 10, TimeUnit.SECONDS)
+    val chargeNotifier: Observable<ProgressResponse<JsonDeviceResponse>> =
+            Observable.interval(0, 10, TimeUnit.SECONDS)
             .flatMap { if (deviceApi!= null) deviceApi!!.getChargeLevel() else Observable.empty() }
             .retry()
             .publish().autoConnect()
@@ -167,8 +168,6 @@ class BtInteractor
     }
 
     fun onDeviceChosen(device: BluetoothDevice) {
-        Timber.d("device $device")
-        Timber.d("gatt == null " + (gatt == null))
         if (gatt == null) {
             stateEmmiter.onNext(BT_CONNECTION_PROGRESS)
             gatt = device.connectGatt(context, true, gattCallback)
