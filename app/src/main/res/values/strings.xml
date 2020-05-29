@@ -65,7 +65,7 @@
 
     <!--syncTime-->
     <string name="sync_title">Синхронизация</string>
-    <string name="sync_text">Убедитесь, что устройство подачи импульса включено и находится рядом с устройством</string>
+    <string name="sync_text">Убедитесь, что миостимулятор включен и находится рядом с устройством</string>
     <string name="sync_progress">0\%</string>
     <string name="sync_progress_format">%s\%</string>
     <string name="treatment_connect">Подключиться</string>
@@ -100,7 +100,7 @@
     <string name="device_search_title">Поиск</string>
     <string name="device_search_no_bt_text">Не включен блютус. Включите блютус в настройках вашего телефона</string>
     <string name="device_search_no_bt_open_settings">Перейти в настройки</string>
-    <string name="device_search_in_progress_text">Убедитесь, что устройство подачи импульса включено и находится рядом с устройством</string>
+    <string name="device_search_in_progress_text">Убедитесь, что миостимулятор включен и находится рядом с устройством</string>
     <string name="device_search_success_text_format">Успешно создана пара с устройством\n%s</string>
     <string name="device_search_success_another_device_text">У меня другое устройство</string>
     <string name="device_search_next">Далее</string>

@@ -131,7 +131,7 @@ class ViewProgramFragment : BaseFragment(), ViewReceiptView {
                 amperageSeekBar.progress = item.amperage
                 pulseDurabilitySeekBar.progress = item.durationMs.toInt() - DURABILITY_MIN
                 pulseFrequencySeekBar.progress = item.frequency - PULSE_FREQUENCY_MIN
-                channelName.text = if (item.channelIndex==1) "Программа ${channels.size/2 + 1}\n\n"+getString(R.string.create_receipt_channel_1) else getString(R.string.create_receipt_channel_2)
+                channelName.text = if (item.channelIndex==1) "Сеанс ${channels.size/2 + 1}\n\n"+getString(R.string.create_receipt_channel_1) else getString(R.string.create_receipt_channel_2)
             }
         }
     }
