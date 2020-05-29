@@ -13,6 +13,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.jakewharton.rxbinding2.widget.RxSearchView
 import com.koenigmed.luomanager.R
+import com.koenigmed.luomanager.presentation.mvp.program.MyoProgramPresentation
 import com.koenigmed.luomanager.presentation.mvp.program.ProgramPresenter
 import com.koenigmed.luomanager.presentation.mvp.program.ProgramView
 import com.koenigmed.luomanager.presentation.mvp.program.ProgramsPresentation
@@ -68,6 +69,24 @@ class ProgramFragment : BaseFragment(), ProgramView {
         })
     }
 
+    fun deleteProgram(program: MyoProgramPresentation) {
+        AlertDialog.Builder(activity!!)
+                .setTitle("Удаление программы")
+                .setMessage("Вы уверенны, что хотите удалить программу?")
+                .setPositiveButton("Да", { dialog, i ->
+                    presenter.onProgramDeleteClick(program)
+                    dialog.dismiss()
+                })
+                .setNegativeButton("Нет", {dialog, i ->
+                    dialog.dismiss()
+                })
+                .setOnKeyListener { dialog, keyCode, _ ->
+                    if (keyCode == KeyEvent.KEYCODE_BACK) dialog.dismiss()
+                    true
+                }
+                .show()
+    }
+
     override fun selectProgram(userProgmar: Boolean, programId: String) {
         if (userProgmar) {
             userProgramsAdapter.switchItem(programId)
@@ -92,7 +111,7 @@ class ProgramFragment : BaseFragment(), ProgramView {
                         when (i) {
                             0 -> presenter.onEditProgramClick(it)
                             1 -> presenter.onDuplicateProgramClick(it)
-                            2 -> presenter.onProgramDeleteClick(it)
+                            2 -> deleteProgram(it)
                         }
                         dialog.dismiss()
                     }
