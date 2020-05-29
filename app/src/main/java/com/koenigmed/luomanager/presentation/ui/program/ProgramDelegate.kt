@@ -17,7 +17,8 @@ import timber.log.Timber
 class ProgramDelegate(
         private val switchListener: (String) -> Unit,
         private val deleteListener: (String) -> Unit,
-        private val clickListener: (MyoProgramPresentation) -> Unit
+        private val clickListener: (MyoProgramPresentation) -> Unit,
+        private val longClickListener: (MyoProgramPresentation) -> Boolean
 ) : AdapterDelegate<MutableList<Any>>() {
     var multiSelect: Boolean = false
 
@@ -60,6 +61,9 @@ class ProgramDelegate(
                 programTitle.text = program.name
                 itemView.setOnClickListener {
                     clickListener(program)
+                }
+                itemView.setOnLongClickListener {
+                    longClickListener(program)
                 }
                 if (multiSelect) {
                     //programSwitch.visibleOrGone(false)

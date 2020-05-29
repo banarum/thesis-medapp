@@ -14,7 +14,8 @@ import timber.log.Timber
 class ProgramsAdapter(
         switchListener: (String) -> Unit,
         deleteListener: (String) -> Unit,
-        clickListener: (MyoProgramPresentation) -> Unit
+        clickListener: (MyoProgramPresentation) -> Unit,
+        longClickListener: (MyoProgramPresentation) -> Boolean
 ) : ListDelegationAdapter<MutableList<Any>>() {
 
     private val disposables = CompositeDisposable()
@@ -22,7 +23,7 @@ class ProgramsAdapter(
 
     init {
         items = mutableListOf()
-        programDelegate = ProgramDelegate(switchListener, deleteListener, clickListener)
+        programDelegate = ProgramDelegate(switchListener, deleteListener, clickListener, longClickListener)
         delegatesManager.addDelegate(programDelegate)
     }
 
@@ -44,7 +45,6 @@ class ProgramsAdapter(
                         { Timber.e(it) }
                 ))
     }
-
     fun switchItem(programId: String) {
         items.find { (it as MyoProgramPresentation).id == programId }?.let {
             (it as MyoProgramPresentation).isSelected = true

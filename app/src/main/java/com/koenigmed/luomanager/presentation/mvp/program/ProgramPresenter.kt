@@ -103,6 +103,22 @@ class ProgramPresenter @Inject constructor(
         programIdsToDelete.add(programId)
     }
 
+    fun onDuplicateProgramClick(program: MyoProgramPresentation) {
+        router.navigateTo(Screens.PROGRAM_CREATE_RECEIPT_SCREEN, program.id)
+    }
+
+    fun onEditProgramClick(program: MyoProgramPresentation) = onProgramSelected(program)
+
+    fun onProgramDeleteClick(program: MyoProgramPresentation) {
+        programInteractor.deletePrograms(mutableSetOf(program.id))
+                .subscribe(
+                        {
+                            onMultiSelectEnabled(false)
+                        },
+                        { Timber.e(it) }
+                )
+    }
+
     fun onDeleteProgramsClick() {
         programInteractor.deletePrograms(programIdsToDelete)
                 .subscribe(

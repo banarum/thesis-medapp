@@ -5,8 +5,10 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.view.ActionMode
 import android.support.v7.widget.LinearLayoutManager
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.jakewharton.rxbinding2.widget.RxSearchView
@@ -48,6 +50,21 @@ class ProgramFragment : BaseFragment(), ProgramView {
             presenter.onSelectedProgramSwitch(programId)
         }, {}, {program ->
             presenter.onProgramSelected(program)
+        },{
+            AlertDialog.Builder(activity!!)
+                    .setItems(arrayOf<String>("Клонировать")
+                    ) { dialog, i ->
+                        when (i) {
+                            0 -> presenter.onDuplicateProgramClick(it)
+                        }
+                        dialog.dismiss()
+                    }
+                    .setOnKeyListener { dialog, keyCode, _ ->
+                        if (keyCode == KeyEvent.KEYCODE_BACK) dialog.dismiss()
+                        true
+                    }
+                    .show()
+            true
         })
     }
 
@@ -68,7 +85,24 @@ class ProgramFragment : BaseFragment(), ProgramView {
             userProgramsAdapter.deleteItem(programId)
         }, {program ->
             presenter.onProgramSelected(program)
-        })
+        }) {
+            AlertDialog.Builder(activity!!)
+                    .setItems(arrayOf<String>("Изменить", "Клонировать", "Удалить")
+                    ) { dialog, i ->
+                        when (i) {
+                            0 -> presenter.onEditProgramClick(it)
+                            1 -> presenter.onDuplicateProgramClick(it)
+                            2 -> presenter.onProgramDeleteClick(it)
+                        }
+                        dialog.dismiss()
+                    }
+                    .setOnKeyListener { dialog, keyCode, _ ->
+                        if (keyCode == KeyEvent.KEYCODE_BACK) dialog.dismiss()
+                        true
+                    }
+                    .show()
+            true
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
