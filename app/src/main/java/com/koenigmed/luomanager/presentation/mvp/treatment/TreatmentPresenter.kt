@@ -43,6 +43,8 @@ class TreatmentPresenter @Inject constructor(
             showSync()
         }
 
+        viewState.setLoading(false, false)
+
         TreatmentPresenter.addChargeNotifier(btInteractor, schedulers) {viewState.setBattery(it)}
         TreatmentPresenter.addRssiNotifier(btInteractor, schedulers) {viewState.setBtPower(it)}
         TreatmentPresenter.addBtStateNotifier(btInteractor, schedulers) { it1, it2 -> viewState.setLoading(it1, it2)}

@@ -36,21 +36,11 @@ class ProfilePresenter @Inject constructor(
         super.onFirstViewAttach()
         getUserInfo()
 
+        viewState.setLoading(false, false)
+        
         TreatmentPresenter.addChargeNotifier(btInteractor, schedulers) {viewState.setBattery(it)}
         TreatmentPresenter.addRssiNotifier(btInteractor, schedulers) {viewState.setBtPower(it)}
         TreatmentPresenter.addBtStateNotifier(btInteractor, schedulers) { it1, it2 -> viewState.setLoading(it1, it2)}
-    }
-
-
-    private fun onBtStateChange(state: Int) {
-        when (state) {
-            BtInteractor.BT_CONNECTION_PROGRESS ->
-                viewState.setLoading(true)
-            BtInteractor.BT_CONNECTION_ACTIVE ->
-                viewState.setLoading(false, true)
-            BtInteractor.BT_CONNECTION_INACTIVE ->
-                viewState.setLoading(false, false)
-        }
     }
 
     fun getUserInfo() {
