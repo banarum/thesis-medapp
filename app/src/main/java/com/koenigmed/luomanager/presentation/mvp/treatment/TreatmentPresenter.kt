@@ -74,14 +74,6 @@ class TreatmentPresenter @Inject constructor(
                         { Timber.e(it) }
                 )
                 .connect()
-        programInteractor.getHistory()
-                .subscribe(
-                        { history ->
-                            viewState.showHistory(history)
-                        },
-                        { Timber.e(it) }
-                )
-                .connect()
     }
 
     private fun showSync() {

@@ -84,11 +84,6 @@ class TreatmentFragment : BaseFragment(), TreatmentView {
             addItemDecoration(BottomSpacesItemDecoration(resources.getDimensionPixelSize(R.dimen.treatment_schedule_grid_bottom_space)))
             adapter = this@TreatmentFragment.scheduleAdapter
         }
-
-        treatmentProgramHistoryRecycler.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = this@TreatmentFragment.historyAdapter
-        }
     }
 
     override fun showProgram(myoProgram: MyoProgramPresentation) {
@@ -180,12 +175,6 @@ class TreatmentFragment : BaseFragment(), TreatmentView {
         treatmentNoDeviceConnectionImage.visibleOrGone(visible)
         treatmentNoDeviceConnectionTitle.visibleOrGone(visible)
         treatmentConnectButton.visibleOrGone(visible)
-    }
-
-    override fun showHistory(dateTreatmentMap: Map<LocalDate, List<MyoProgramHistoryPresentation>>) {
-        treatmentProgramHistoryRecycler.post {
-            historyAdapter.setData(dateTreatmentMap)
-        }
     }
 
     override fun setBattery(charge: Int) {
