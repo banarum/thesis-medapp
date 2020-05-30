@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import android.widget.ImageView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.koenigmed.luomanager.R
@@ -16,6 +17,7 @@ import com.koenigmed.luomanager.presentation.mvp.treatment.TreatmentPresenter
 import com.koenigmed.luomanager.presentation.mvp.treatment.TreatmentState
 import com.koenigmed.luomanager.presentation.mvp.treatment.TreatmentView
 import com.koenigmed.luomanager.presentation.ui.global.BaseFragment
+import com.koenigmed.luomanager.presentation.ui.widget.BatteryView
 import com.koenigmed.luomanager.presentation.ui.widget.BottomSpacesItemDecoration
 import com.koenigmed.luomanager.toothpick.DI
 import kotlinx.android.synthetic.main.content_treatment_no_device_connection.*
@@ -88,13 +90,6 @@ class TreatmentFragment : BaseFragment(), TreatmentView {
 
     override fun showProgram(myoProgram: MyoProgramPresentation) {
         treatmentProgramNameTextView.text = myoProgram.name
-    }
-
-    override fun setLoading(isLoading: Boolean, isSuccess: Boolean) {
-        toolbar_progress_bar.visibility = if (isLoading) View.VISIBLE else View.GONE
-        toolbar_device_fail.visibility = if (isLoading || isSuccess) View.GONE else View.VISIBLE
-        bt_connection.visibility = if (isLoading || !isSuccess) View.GONE else View.VISIBLE
-        battery_view.visibility = if (isLoading || !isSuccess) View.GONE else battery_view.visibility
     }
 
     override fun setScreenState(state: TreatmentState) {
@@ -177,21 +172,39 @@ class TreatmentFragment : BaseFragment(), TreatmentView {
         treatmentConnectButton.visibleOrGone(visible)
     }
 
-    override fun setBattery(charge: Int) {
-        battery_view.visibility = View.VISIBLE
-        Timber.d("$charge")
-        battery_view.setPercent(charge)
-    }
+    override fun setLoading(isLoading: Boolean, isSuccess: Boolean) =
+            TreatmentFragment.setLoading(toolbar_progress_bar, toolbar_device_fail, bt_connection, battery_view, isLoading, isSuccess)
 
-    override fun setBtPower(state: BtInteractor.BtPower) {
-        when (state){
-            BtInteractor.BtPower.STRONG -> bt_connection.setImageResource(R.drawable.bt_strong)
-            BtInteractor.BtPower.MID -> bt_connection.setImageResource(R.drawable.bt_mid)
-            BtInteractor.BtPower.WEAK -> bt_connection.setImageResource(R.drawable.bt_weak)
-            BtInteractor.BtPower.EXTRA_WEAK -> bt_connection.setImageResource(R.drawable.bt_extra_weak)
-        }
-    }
+    override fun setBattery(charge: Int) =
+            TreatmentFragment.setBattery(battery_view, charge)
+
+    override fun setBtPower(state: BtInteractor.BtPower) =
+            TreatmentFragment.setBtPower(bt_connection, state)
 
     companion object {
+        fun setLoading(toolbar_progress_bar: View, toolbar_device_fail: View, bt_connection: View, battery_view: BatteryView, isLoading: Boolean, isSuccess: Boolean) {
+            toolbar_progress_bar.visibility = if (isLoading) View.VISIBLE else View.GONE
+            toolbar_device_fail.visibility = if (isLoading || isSuccess) View.GONE else View.VISIBLE
+            bt_connection.visibility = if (isLoading || !isSuccess) View.GONE else View.VISIBLE
+            battery_view.visibility = View.VISIBLE
+
+            if (isLoading || !isSuccess) {
+                battery_view.setPercent(0)
+            }
+        }
+
+        fun setBattery(battery_view: BatteryView, charge: Int) {
+            battery_view.visibility = View.VISIBLE
+            battery_view.setPercent(charge)
+        }
+
+        fun setBtPower(bt_connection: ImageView, state: BtInteractor.BtPower) {
+            when (state){
+                BtInteractor.BtPower.STRONG -> bt_connection.setImageResource(R.drawable.bt_strong)
+                BtInteractor.BtPower.MID -> bt_connection.setImageResource(R.drawable.bt_mid)
+                BtInteractor.BtPower.WEAK -> bt_connection.setImageResource(R.drawable.bt_weak)
+                BtInteractor.BtPower.EXTRA_WEAK -> bt_connection.setImageResource(R.drawable.bt_extra_weak)
+            }
+        }
     }
 }

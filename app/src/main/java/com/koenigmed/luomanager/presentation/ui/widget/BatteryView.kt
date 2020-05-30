@@ -5,9 +5,13 @@ import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.PaintDrawable
 import android.support.v7.content.res.AppCompatResources
+import android.text.Layout
+import android.text.StaticLayout
+import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.View
 import com.koenigmed.luomanager.R
+
 
 class BatteryView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
         View(context, attrs, defStyleAttr) {
@@ -43,6 +47,9 @@ class BatteryView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     init {
         init(attrs)
         chargingBitmap = getBitmap(R.drawable.ic_charging)
+
+
+
     }
 
     private fun init(attrs: AttributeSet?) {
@@ -120,6 +127,21 @@ class BatteryView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         percentPaint.color = getPercentColor(percent)
         percentRect.top = percentRectTopMin + (percentRect.bottom - percentRectTopMin) * (100 - percent) / 100
         canvas.drawRect(percentRect, percentPaint)
+        canvas.save()
+        canvas.rotate(90f, measuredWidth.toFloat()*0.25f, measuredHeight.toFloat()*0.3f)
+        TextPaint().apply {
+            isAntiAlias = true
+            textSize = 9 * resources.displayMetrics.density
+            color = Color.BLACK
+            val text = if (percent==0) "?" else "${percent}%"
+            val width = this.measureText(text).toInt()
+            canvas.translate(measuredWidth.toFloat()*0.7f - width/2, 0f)
+            StaticLayout(text, this, width, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0f, false).apply {
+                draw(canvas)
+            }
+        }
+        canvas.restore()
+
     }
 
     // todo change color

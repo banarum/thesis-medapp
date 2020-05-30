@@ -12,6 +12,7 @@ import com.koenigmed.luomanager.presentation.mvp.profile.ProfilePresenter
 import com.koenigmed.luomanager.presentation.mvp.profile.ProfileView
 import com.koenigmed.luomanager.presentation.mvp.profile.UserProfilePresentation
 import com.koenigmed.luomanager.presentation.ui.global.BaseFragment
+import com.koenigmed.luomanager.presentation.ui.treatment.TreatmentFragment
 import com.koenigmed.luomanager.presentation.ui.widget.PainLevelView
 import com.koenigmed.luomanager.toothpick.DI
 import kotlinx.android.synthetic.main.content_profile_feels.*
@@ -52,13 +53,6 @@ class ProfileFragment : BaseFragment(), ProfileView {
         initUserData()
         initFeelsData()
         initPainLevelData()
-    }
-
-    override fun setLoading(isLoading: Boolean, isSuccess: Boolean) {
-        toolbar_progress_bar.visibility = if (isLoading) View.VISIBLE else View.GONE
-        toolbar_device_fail.visibility = if (isLoading || isSuccess) View.GONE else View.VISIBLE
-        bt_connection.visibility = if (isLoading || !isSuccess) View.GONE else View.VISIBLE
-        battery_view.visibility = if (isLoading || !isSuccess) View.GONE else battery_view.visibility
     }
 
     private fun initUserData() {
@@ -106,19 +100,14 @@ class ProfileFragment : BaseFragment(), ProfileView {
         })
     }
 
-    override fun setBattery(charge: Int) {
-        battery_view.visibility = View.VISIBLE
-        battery_view.setPercent(charge)
-    }
+    override fun setLoading(isLoading: Boolean, isSuccess: Boolean) =
+            TreatmentFragment.setLoading(toolbar_progress_bar, toolbar_device_fail, bt_connection, battery_view, isLoading, isSuccess)
 
-    override fun setBtPower(state: BtInteractor.BtPower) {
-        when (state){
-            BtInteractor.BtPower.STRONG -> bt_connection.setImageResource(R.drawable.bt_strong)
-            BtInteractor.BtPower.MID -> bt_connection.setImageResource(R.drawable.bt_mid)
-            BtInteractor.BtPower.WEAK -> bt_connection.setImageResource(R.drawable.bt_weak)
-            BtInteractor.BtPower.EXTRA_WEAK -> bt_connection.setImageResource(R.drawable.bt_extra_weak)
-        }
-    }
+    override fun setBattery(charge: Int) =
+            TreatmentFragment.setBattery(battery_view, charge)
+
+    override fun setBtPower(state: BtInteractor.BtPower) =
+            TreatmentFragment.setBtPower(bt_connection, state)
 
     companion object {
     }

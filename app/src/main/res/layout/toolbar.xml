@@ -21,6 +21,19 @@
         android:textSize="@dimen/toolbar_text_size"
         tools:text="Title" />
 
+    <com.koenigmed.luomanager.presentation.ui.widget.BatteryView
+        android:id="@+id/battery_view"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:rotation="-90"
+        android:padding = "10dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/ic_charging"
+        app:bv_charging="false"
+        app:bv_percent="100"
+        android:layout_gravity="right"
+        android:visibility="invisible"/>
+
     <ProgressBar
         android:id="@+id/toolbar_progress_bar"
         android:layout_width="50dp"
@@ -45,18 +58,7 @@
 
 
 
-    <com.koenigmed.luomanager.presentation.ui.widget.BatteryView
-        android:id="@+id/battery_view"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:rotation="-90"
-        android:padding = "10dp"
-        android:layout_marginEnd="20dp"
-        android:src="@drawable/ic_charging"
-        app:bv_charging="false"
-        app:bv_percent="100"
-        android:layout_gravity="right"
-        android:visibility="invisible"/>
+
     <ImageView
         android:layout_width="50dp"
         android:id="@+id/bt_connection"
