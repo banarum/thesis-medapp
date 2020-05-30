@@ -46,5 +46,9 @@ class DeviceApi(gatt: BluetoothGatt, characteristic: BluetoothGattCharacteristic
     override fun onCharacteristicWrite(status: Int, response: String?) = btApi.onCharacteristicWrite(status, response)
     override fun onDeviceDisconnected() = btApi.onDeviceDisconnected()
     override fun onReadRemoteRssi(gatt: BluetoothGatt?, rssi: Int, status: Int) = btApi.onReadRemoteRssi(gatt, rssi, status)
+
+    companion object {
+        fun mvToPercent(mv: String) = (((mv.dropLast(2).toFloat() - 3200f) / (4200f - 3200f))*100).toInt()
+    }
 }
 

@@ -9,6 +9,7 @@ import com.koenigmed.luomanager.presentation.flow.Screens
 import com.koenigmed.luomanager.presentation.flow.Screens.RESULT_CODE_PROFILE_EDIT
 import com.koenigmed.luomanager.presentation.global.ErrorHandler
 import com.koenigmed.luomanager.presentation.mvp.base.BasePresenter
+import com.koenigmed.luomanager.presentation.mvp.treatment.TreatmentPresenter
 import com.koenigmed.luomanager.system.IResourceManager
 import com.koenigmed.luomanager.system.SchedulersProvider
 import timber.log.Timber
@@ -35,20 +36,9 @@ class ProfilePresenter @Inject constructor(
         super.onFirstViewAttach()
         getUserInfo()
 
-        btInteractor.chargeNotifier.observeOn(schedulers.ui()).subscribe({
-            Timber.d("$it")
-            if (it?.isCompleted() == true)
-                viewState.setBattery((((it.result!!.voltage!!.dropLast(2).toFloat() - 2300f) / (4500f - 2300f))*100).toInt())
-        }, {Timber.d("$it")})
-
-        btInteractor.rssiNotifier.observeOn(schedulers.ui()).subscribe {
-            viewState.setBtPower(it)
-        }
-
-        onBtStateChange(btInteractor.btState)
-        btInteractor.stateObservable.observeOn(schedulers.ui()).subscribe {
-            onBtStateChange(it)
-        }
+        TreatmentPresenter.addChargeNotifier(btInteractor, schedulers) {viewState.setBattery(it)}
+        TreatmentPresenter.addRssiNotifier(btInteractor, schedulers) {viewState.setBtPower(it)}
+        TreatmentPresenter.addBtStateNotifier(btInteractor, schedulers) { it1, it2 -> viewState.setLoading(it1, it2)}
     }
 
 

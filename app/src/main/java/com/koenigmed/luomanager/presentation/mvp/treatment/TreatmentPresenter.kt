@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Handler
 import com.arellomobile.mvp.InjectViewState
 import com.koenigmed.luomanager.R
+import com.koenigmed.luomanager.data.decice.DeviceApi
 import com.koenigmed.luomanager.data.decice.Progress
 import com.koenigmed.luomanager.domain.interactor.device.BtInteractor
 import com.koenigmed.luomanager.domain.interactor.device.DeviceInteractor
@@ -42,24 +43,9 @@ class TreatmentPresenter @Inject constructor(
             showSync()
         }
 
-       btInteractor.chargeNotifier.observeOn(schedulers.ui()).subscribe({
-            Timber.d("$it")
-            if (it?.isCompleted() == true)
-                viewState.setBattery((((it.result!!.voltage!!.dropLast(2).toFloat() - 2300f) / (4500f - 2300f))*100).toInt())
-        }, {Timber.d("$it")})
-
-
-        btInteractor.rssiNotifier
-                .observeOn(schedulers.ui())
-                .subscribe {
-                    viewState.setBtPower(it)
-                }
-
-        onBtStateChange(btInteractor.btState)
-
-        btInteractor.stateObservable.observeOn(schedulers.ui()).subscribe {
-            onBtStateChange(it)
-        }
+        TreatmentPresenter.addChargeNotifier(btInteractor, schedulers) {viewState.setBattery(it)}
+        TreatmentPresenter.addRssiNotifier(btInteractor, schedulers) {viewState.setBtPower(it)}
+        TreatmentPresenter.addBtStateNotifier(btInteractor, schedulers) { it1, it2 -> viewState.setLoading(it1, it2)}
 
         programInteractor.getSelectedProgram()
                 .subscribe(
@@ -86,14 +72,7 @@ class TreatmentPresenter @Inject constructor(
     }
 
     private fun onBtStateChange(state: Int) {
-        when (state) {
-            BtInteractor.BT_CONNECTION_PROGRESS ->
-                viewState.setLoading(true)
-            BtInteractor.BT_CONNECTION_ACTIVE ->
-                viewState.setLoading(false, true)
-            BtInteractor.BT_CONNECTION_INACTIVE ->
-                viewState.setLoading(false, false)
-        }
+
     }
 
     fun onBackPressed() = router.exit()
@@ -161,5 +140,40 @@ class TreatmentPresenter @Inject constructor(
     override fun onDestroy() {
         super.onDestroy()
         runningTimeDisposable?.dispose()
+    }
+
+    companion object {
+        @SuppressLint("CheckResult")
+        fun addChargeNotifier(btInteractor: BtInteractor, schedulers: SchedulersProvider, setBattery: (Int)->Unit){
+            btInteractor.chargeNotifier.observeOn(schedulers.ui()).subscribe({
+                Timber.d("$it")
+                if (it?.isCompleted() == true)
+                    setBattery(DeviceApi.mvToPercent(it.result!!.voltage!!))
+            }, {Timber.d("$it")})
+        }
+
+        @SuppressLint("CheckResult")
+        fun addRssiNotifier(btInteractor: BtInteractor, schedulers: SchedulersProvider, setBtPower: (BtInteractor.BtPower)->Unit){
+            btInteractor.rssiNotifier
+                    .observeOn(schedulers.ui())
+                    .subscribe {
+                        setBtPower(it)
+                    }
+        }
+
+        @SuppressLint("CheckResult")
+        fun addBtStateNotifier(btInteractor: BtInteractor, schedulers: SchedulersProvider, setLoading: (Boolean, Boolean)->Unit) {
+            btInteractor.stateObservable.observeOn(schedulers.ui()).subscribe {
+                when (it) {
+                    BtInteractor.BT_CONNECTION_PROGRESS ->
+                        setLoading(true, false)
+                    BtInteractor.BT_CONNECTION_ACTIVE ->
+                        setLoading(false, true)
+                    BtInteractor.BT_CONNECTION_INACTIVE ->
+                        setLoading(false, false)
+                }
+            }
+        }
+
     }
 }
