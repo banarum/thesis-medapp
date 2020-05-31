@@ -68,7 +68,7 @@ class ProgramMapper @Inject constructor() {
 
     private fun mapToChannelData(tasks: List<MyoProgramMyoTask>) : List<ChannelData>{
         return tasks.map {
-            ChannelData(true, PulseForm(it.myoTask!!.waveFormId!!, ""), it.myoTask.bipolar!!, it.myoTask.current!!, it.myoTask.burstMs!!, (1000.0 / it.myoTask.pulseMs!!).toInt(), it.channelNumber!!)
+            ChannelData(true, PulseForm(it.myoTask!!.waveFormId!!, ""), it.myoTask.bipolar!!, it.myoTask.current!!, it.myoTask.burstMs!!,it.myoTask.pauseMs ?: it.myoTask.burstMs,  (1000.0 / it.myoTask.pulseMs!!).toInt(), it.channelNumber!!)
         }
     }
 
@@ -86,7 +86,7 @@ class ProgramMapper @Inject constructor() {
                         current = channel.amperage,
                         waveFormId = channel.pulseForm!!.id,
                         burstMs = channel.durationMs,
-                        pauseMs = channel.durationMs,
+                        pauseMs = channel.pauseMs,
                         pulseMs = (1.0 / channel.frequency.toDouble()) * 1_000,
                         bipolar = channel.bipolar
                 )

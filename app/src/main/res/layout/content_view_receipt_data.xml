@@ -21,17 +21,18 @@
         android:id="@+id/channelStatusTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="28dp"
         android:text="@string/create_receipt_channel_status"
         style="@style/Title"
         />
 
-    <Switch
-        android:id="@+id/channelStatusSwitch"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/channelStatus"
+        style="@style/Subtitle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintRight_toRightOf="parent"
-        />
+        android:paddingBottom="16dp"
+
+        android:text="Выкл" />
 
     <TextView
         android:id="@+id/pulseFormTextView"
@@ -46,7 +47,7 @@
         style="@style/Subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="26dp"
+        android:paddingBottom="16dp"
 
         android:text="@string/create_receipt_pulse_form_not_chosen" />
 
@@ -56,15 +57,17 @@
         style="@style/Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="21dp"
         android:text="@string/create_receipt_bipolar_regime" />
 
 
-    <Switch
-        android:id="@+id/bipolarRegimeSwitch"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/bipolarStatus"
+        style="@style/Subtitle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:paddingBottom="10dp"
+
+        android:text="Выкл" />
 
 
 
@@ -78,13 +81,6 @@
         style="@style/Title" />
 
 
-    <SeekBar
-        android:id="@+id/amperageSeekBar"
-        style="@style/CreateReceiptSeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-
     <TextView
         android:id="@+id/pulseDurabilityTextView"
         android:layout_width="wrap_content"
@@ -96,13 +92,6 @@
         />
 
 
-    <SeekBar
-        android:id="@+id/pulseDurabilitySeekBar"
-        style="@style/CreateReceiptSeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-
     <TextView
         android:id="@+id/pulsePauseTextView"
         android:layout_width="wrap_content"
@@ -112,13 +101,6 @@
         style="@style/Title"
         android:text="Длительность паузы = %s мс"
         />
-
-
-    <SeekBar
-        android:id="@+id/pulsePauseSeekBar"
-        style="@style/CreateReceiptSeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/pulseFrequencyTextView"
         android:layout_width="wrap_content"
@@ -128,11 +110,5 @@
         style="@style/Title"
         android:text="@string/create_receipt_pulse_frequency_format"
         />
-
-    <SeekBar
-        android:id="@+id/pulseFrequencySeekBar"
-        style="@style/CreateReceiptSeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -52,6 +52,7 @@ data class ChannelData(
         var bipolar: Boolean = false,
         var amperage: Int = 230,
         var durationMs: Long = 10,
+        var pauseMs: Long = 10,
         var frequency: Int = 10,
         var channelIndex: Int
 ) {

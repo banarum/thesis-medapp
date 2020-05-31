@@ -114,6 +114,15 @@ class CreateProgramFragment : BaseFragment(), CreateReceiptView {
             }
             val pulseDurability = (DURABILITY_MAX - DURABILITY_MIN) / 2
             pulseDurabilitySeekBar.progress = pulseDurability
+
+            pulsePauseSeekBar.max = DURABILITY_MAX - DURABILITY_MIN
+            pulsePauseSeekBar.onProgressChanged { _: SeekBar?, progress: Int, _: Boolean ->
+                pulsePauseTextView.text =
+                        getString(R.string.create_receipt_pulse_pause_format, (DURABILITY_MIN + progress).toString())
+            }
+
+            pulsePauseSeekBar.progress = pulseDurability
+
             pulseFrequencyTextView.text =
                     getString(R.string.create_receipt_pulse_frequency_format, (pulseDurability).toString())
 
@@ -226,6 +235,7 @@ class CreateProgramFragment : BaseFragment(), CreateReceiptView {
                 channel.bipolarRegimeSwitch.isChecked,
                 channel.amperageSeekBar.progress,
                 channel.pulseDurabilitySeekBar.progress.toLong() + DURABILITY_MIN,
+                channel.pulsePauseSeekBar.progress.toLong() + DURABILITY_MIN,
                 channel.pulseFrequencySeekBar.progress + PULSE_FREQUENCY_MIN,
                 1
         )

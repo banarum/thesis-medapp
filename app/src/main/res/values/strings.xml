@@ -142,6 +142,7 @@
     <string name="create_receipt_bipolar_regime">Двухполярный режим</string>
     <string name="create_receipt_amperage_format">Величина тока = %s mA</string>
     <string name="create_receipt_pulse_durability_format">Длительность импульса = %s мс</string>
+    <string name="create_receipt_pulse_pause_format">Длительность паузы = %s мс</string>
     <string name="create_receipt_pulse_frequency_format">Частота импульса = %s Гц</string>
     <string name="create_receipt_hint">Введите название</string>
     <string name="create_receipt_error_validate">Введите все поля</string>
