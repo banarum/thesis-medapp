@@ -65,8 +65,9 @@ class CreateProgramPresenter @Inject constructor(
     private fun setChannels(program: ReceiptPresentation) {
         receiptInteractor.getPulseForms()
                 .subscribe({ forms ->
+                    var index = 0
                     program.channels.onEach {channel ->
-                        var index = 0
+
                         channel.pulseForm = forms.find { it.id == channel.pulseForm?.id }
                         pulseForms[index++] = channel.pulseForm!!
                     }
