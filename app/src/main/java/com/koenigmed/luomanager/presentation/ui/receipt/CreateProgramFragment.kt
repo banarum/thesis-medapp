@@ -53,8 +53,9 @@ class CreateProgramFragment : BaseFragment(), CreateReceiptView {
         initData()
 
         if (this.arguments != null) {
-            this.presenter.setProgramPresentation(this.arguments!!.getString(KEY_PROGRAM_ID, ""))
+            this.presenter.setProgramPresentation(this.arguments!!.getString(KEY_PROGRAM_ID, ""), this.arguments!!.getBoolean(KEY_EDIT, true))
         }
+        this.toolbar.title = if (this.arguments!!.getBoolean(KEY_EDIT, false)) "Редактирование" else getString(R.string.create_receipt_title)
     }
 
     private fun initToolbar() {
@@ -137,6 +138,12 @@ class CreateProgramFragment : BaseFragment(), CreateReceiptView {
                     getString(R.string.create_receipt_pulse_frequency_format, (pulseFreqValue).toString())
 
             val currentIndex = channels.size
+
+            delete_program.setOnClickListener {
+                channels.remove(this)
+                this.visibility = View.GONE
+                true
+            }
 
             pulseFormTextView.setOnClickListener { presenter.onPulseFormClick(currentIndex) }
             pulseFormValueTextView.setOnClickListener { presenter.onPulseFormClick(currentIndex) }
@@ -246,8 +253,9 @@ class CreateProgramFragment : BaseFragment(), CreateReceiptView {
         presenter.onBackPressed()
     }
 
-    override fun setProgramTitle(title: String) {
-        name.setText("Копия ${title}")
+    override fun setProgramTitle(title: String, editable: Boolean) {
+        name.setText(title)
+        name.isEnabled = editable
     }
 
     override fun setProgramChannels(data: List<ChannelData>) {
@@ -293,14 +301,16 @@ class CreateProgramFragment : BaseFragment(), CreateReceiptView {
         const val PULSE_FREQUENCY_MAX = 2000
 
         val KEY_PROGRAM_ID = "key_program_id"
+        val KEY_EDIT = "key_EDIT"
 
-        fun newInstance(programId: String): CreateProgramFragment? {
+        fun newInstance(programBundle: InputBundle): CreateProgramFragment? {
             val createFragment = CreateProgramFragment()
             val bundle = Bundle()
-            bundle.putString(KEY_PROGRAM_ID, programId)
+            bundle.putString(KEY_PROGRAM_ID, programBundle.programId)
+            bundle.putBoolean(KEY_EDIT, programBundle.edit)
             createFragment.arguments = bundle
             return createFragment
         }
     }
-
+    data class InputBundle(val programId: String?, val edit: Boolean=false)
 }

@@ -8,6 +8,7 @@ import com.koenigmed.luomanager.presentation.flow.Screens.RESULT_CODE_DEVICE_PRO
 import com.koenigmed.luomanager.presentation.flow.Screens.RESULT_CODE_PROGRAM_ADDED
 import com.koenigmed.luomanager.presentation.global.ErrorHandler
 import com.koenigmed.luomanager.presentation.mvp.base.BasePresenter
+import com.koenigmed.luomanager.presentation.ui.receipt.CreateProgramFragment
 import com.koenigmed.luomanager.presentation.ui.receipt.ViewProgramBundle
 import com.koenigmed.luomanager.system.IResourceManager
 import com.koenigmed.luomanager.system.SchedulersProvider
@@ -104,10 +105,12 @@ class ProgramPresenter @Inject constructor(
     }
 
     fun onDuplicateProgramClick(program: MyoProgramPresentation) {
-        router.navigateTo(Screens.PROGRAM_CREATE_RECEIPT_SCREEN, program.id)
+        router.navigateTo(Screens.PROGRAM_CREATE_RECEIPT_SCREEN, CreateProgramFragment.InputBundle(program.id))
     }
 
-    fun onEditProgramClick(program: MyoProgramPresentation) = onProgramSelected(program)
+    fun onEditProgramClick(program: MyoProgramPresentation) {
+        router.navigateTo(Screens.PROGRAM_CREATE_RECEIPT_SCREEN, CreateProgramFragment.InputBundle(program.id, true))
+    }
 
     fun onProgramDeleteClick(program: MyoProgramPresentation) {
         programInteractor.deletePrograms(mutableSetOf(program.id))

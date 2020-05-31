@@ -15,6 +15,7 @@ import com.koenigmed.luomanager.presentation.global.ErrorHandler
 import com.koenigmed.luomanager.presentation.mapper.ProgramMapper
 import com.koenigmed.luomanager.presentation.mvp.base.BasePresenter
 import com.koenigmed.luomanager.presentation.mvp.program.MyoProgramPresentation
+import com.koenigmed.luomanager.presentation.ui.receipt.CreateProgramFragment
 import com.koenigmed.luomanager.system.IResourceManager
 import com.koenigmed.luomanager.system.SchedulersProvider
 import org.threeten.bp.Duration
@@ -62,7 +63,7 @@ class ViewProgramPresenter @Inject constructor(
     }
 
     fun onDuplicate() {
-        router.navigateTo(Screens.PROGRAM_CREATE_RECEIPT_SCREEN, programId)
+        router.navigateTo(Screens.PROGRAM_CREATE_RECEIPT_SCREEN, CreateProgramFragment.InputBundle(programId))
     }
 
     fun onStartClick() {

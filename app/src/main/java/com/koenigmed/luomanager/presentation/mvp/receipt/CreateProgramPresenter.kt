@@ -33,6 +33,9 @@ class CreateProgramPresenter @Inject constructor(
     private val channelIndexes: HashMap<Int, Int> = HashMap()
     private var receiptPresentation = ReceiptPresentation()
 
+    private var isEdit = false
+    private var programId: String? = null
+
     @SuppressLint("CheckResult")
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -43,18 +46,24 @@ class CreateProgramPresenter @Inject constructor(
     fun onBackPressed() = router.exit()
 
     @SuppressLint("CheckResult")
-    fun setProgramPresentation(programId: String) {
+    fun setProgramPresentation(programId: String, edit: Boolean) {
+        this.isEdit = edit
         programInteractor.getReceiptPresentation(programId)
                 .subscribe { receiptPresentation ->
                     this.receiptPresentation = receiptPresentation
                     this.setInfo(receiptPresentation)
                     this.setType(receiptPresentation.programType)
                     setChannels(receiptPresentation)
+
+                    this.programId = programId
                 }
     }
 
     private fun setInfo(receiptPresentation: ReceiptPresentation) {
-        viewState.setProgramTitle(receiptPresentation.name)
+        if (!this.isEdit)
+            viewState.setProgramTitle("Копия ${receiptPresentation.name}")
+        else
+            viewState.setProgramTitle(receiptPresentation.name, false)
         viewState.setProgramDuration(TimeUnit.SECONDS.toMinutes(receiptPresentation.executionTimeS).toInt())
         viewState.setProgramStartTime(receiptPresentation.startTime.getTimeString())
         viewState.setProgramEndTime(receiptPresentation.endTime.getTimeString())
@@ -101,11 +110,26 @@ class CreateProgramPresenter @Inject constructor(
             viewState.showMessage(resourceManager.getString(R.string.create_receipt_error_validate))
             return
         }
-        receiptInteractor.saveReceipt(receiptPresentation)
-                .subscribe(
-                        { router.exitWithResult(Screens.RESULT_CODE_PROGRAM_ADDED, null) },
-                        { Timber.e(it) }
-                )
+        if (this.programId == null){
+            receiptInteractor.saveReceipt(receiptPresentation)
+                    .subscribe(
+                            { router.exitWithResult(Screens.RESULT_CODE_PROGRAM_ADDED, null) },
+                            { Timber.e(it) }
+                    )
+        } else {
+            receiptInteractor.saveReceipt(receiptPresentation)
+                    .subscribe(
+                            {
+                                programInteractor.deletePrograms(mutableSetOf(this.programId!!)).subscribe({
+                                    router.exitWithResult(Screens.RESULT_CODE_PROGRAM_ADDED, null)
+                                },
+                                        { Timber.e(it) })
+
+                            },
+                            { Timber.e(it) }
+                    )
+        }
+
     }
 
     @SuppressLint("CheckResult")

@@ -88,7 +88,7 @@ class MainActivity : BaseActivity(), MainActivityView {
             Screens.DEVICE_SEARCH_SCREEN -> DeviceSearchFragment()
             Screens.PROGRAM_SCREEN -> ProgramFragment()
             Screens.PROGRAM_CREATE_RECEIPT_SCREEN -> if (data != null) {
-                CreateProgramFragment.newInstance(data.toString())
+                CreateProgramFragment.newInstance(data as CreateProgramFragment.InputBundle)
             } else {
                 CreateProgramFragment()
             }

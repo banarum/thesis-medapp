@@ -14,7 +14,7 @@ interface CreateReceiptView : BaseView {
     fun showTimeSet(start: Boolean, time: String)
     fun setIsSchedule(isSchedule: Boolean)
 
-    fun setProgramTitle(title: String)
+    fun setProgramTitle(title: String, editable: Boolean = true)
     fun setProgramType(typeName: String, typeId: Int)
     fun setProgramDuration(duration: Int)
     fun setProgramStartTime(time: String)
