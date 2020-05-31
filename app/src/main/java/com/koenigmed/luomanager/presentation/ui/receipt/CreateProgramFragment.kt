@@ -139,11 +139,19 @@ class CreateProgramFragment : BaseFragment(), CreateReceiptView {
 
             val currentIndex = channels.size
 
-            delete_program.setOnClickListener {
-                channels.remove(this)
-                this.visibility = View.GONE
-                true
+            if (id%2==1) {
+                delete_program.setOnClickListener {
+                    this.visibility = View.GONE
+                    channels[channels.indexOf(this) + 1].visibility = View.GONE
+                    channels.removeAt(channels.indexOf(this) + 1)
+                    channels.removeAt(channels.indexOf(this))
+
+                }
+            } else {
+                delete_program.visibility = View.GONE
             }
+
+
 
             pulseFormTextView.setOnClickListener { presenter.onPulseFormClick(currentIndex) }
             pulseFormValueTextView.setOnClickListener { presenter.onPulseFormClick(currentIndex) }
