@@ -54,8 +54,8 @@ class CreateProgramPresenter @Inject constructor(
                     this.setInfo(receiptPresentation)
                     this.setType(receiptPresentation.programType)
                     setChannels(receiptPresentation)
-
-                    this.programId = programId
+                    if (edit)
+                        this.programId = programId
                 }
     }
 
