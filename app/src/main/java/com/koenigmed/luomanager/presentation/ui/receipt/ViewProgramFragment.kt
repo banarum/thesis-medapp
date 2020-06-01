@@ -72,7 +72,7 @@ class ViewProgramFragment : BaseFragment(), ViewReceiptView {
             setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.action_view_receipt_delete -> {
-                        presenter.deleteProgram()
+                        deleteProgram()
                     }
                     R.id.action_view_receipt_save -> {
                         onSaveClick()
@@ -140,6 +140,24 @@ class ViewProgramFragment : BaseFragment(), ViewReceiptView {
                         getString(R.string.create_receipt_pulse_frequency_format, (item.frequency).toString())
             }
         }
+    }
+
+    fun deleteProgram() {
+        AlertDialog.Builder(activity!!)
+                .setTitle("Удаление программы")
+                .setMessage("Вы уверенны, что хотите удалить программу?")
+                .setPositiveButton("Да", { dialog, i ->
+                    presenter.deleteProgram()
+                    dialog.dismiss()
+                })
+                .setNegativeButton("Нет", {dialog, i ->
+                    dialog.dismiss()
+                })
+                .setOnKeyListener { dialog, keyCode, _ ->
+                    if (keyCode == KeyEvent.KEYCODE_BACK) dialog.dismiss()
+                    true
+                }
+                .show()
     }
 
     override fun setProgramStartTime(time: String) {

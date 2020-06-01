@@ -54,8 +54,9 @@ class CreateProgramFragment : BaseFragment(), CreateReceiptView {
 
         if (this.arguments != null) {
             this.presenter.setProgramPresentation(this.arguments!!.getString(KEY_PROGRAM_ID, ""), this.arguments!!.getBoolean(KEY_EDIT, true))
+            this.toolbar.title = if (this.arguments!!.getBoolean(KEY_EDIT, false)) "Редактирование" else getString(R.string.create_receipt_title)
         }
-        this.toolbar.title = if (this.arguments!!.getBoolean(KEY_EDIT, false)) "Редактирование" else getString(R.string.create_receipt_title)
+
     }
 
     private fun initToolbar() {
